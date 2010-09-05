@@ -6,6 +6,8 @@ let g:ragtag_global_maps = 1
 set number tabstop=2 sw=2 bs=2 mouse=a
 set ignorecase smartcase showmatch hlsearch incsearch
 set ruler title cursorline
+" enabling the use of the meta key (alt/option)
+set macmeta
 " set the initial window size
 set co=160
 set lines=50
@@ -56,17 +58,17 @@ inoremap <C-S-Up> <Esc>:m-2<CR>==gi
 vnoremap <C-S-Down> :m'>+<CR>gv=gv
 vnoremap <C-S-Up> :m-2<CR>gv=gv
 " set Command-Shift-t to search for files 
-noremap <A-S-f>f :FufFile!<CR>
-noremap <A-S-o> :FufBuffer!<CR>
+noremap <M-S-f>f :FufFile!<CR>
+noremap <M-S-o> :FufBuffer!<CR>
 " set mapping to Rails plugin
-noremap <A-S-m> :Rmodel<Space>
-noremap <A-S-c> :Rcontroller<Space>
-noremap <A-S-v> :Rview<Space>
-noremap <A-S-s> :Rscript<Space>
-noremap <A-S-e> :Rextract<Space>
+noremap <M-S-m> :Rmodel<Space>
+noremap <M-S-c> :Rcontroller<Space>
+noremap <M-S-v> :Rview<Space>
+noremap <M-S-s> :Rscript<Space>
+noremap <M-S-e> :Rextract<Space>
 noremap <S-C-l> :Rlog<CR>
-noremap <A-S-p> :Rpreview<CR>
-noremap <A-S-f>r :Rfind<Space>
+noremap <M-S-p> :Rpreview<CR>
+noremap <M-S-f>r :Rfind<Space>
 noremap <F3> :A<CR>
 noremap <F4> :R<CR>
 " set mapping to run rake tests
@@ -80,8 +82,6 @@ noremap <C-S-Right> gt
 nmap <C-Tab> gt
 noremap <C-S-Left> gT
 nmap <C-S-Tab> gT
-" map the autocomplete command
-noremap <A-Space> <C-x><C-i>
 " roll down and roll up
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
