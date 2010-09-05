@@ -49,12 +49,6 @@ set nofoldenable        "dont fold by default
 noremap <F2> :NERDTreeToggle<Return>
 " set Control-Shift-{j-k} to move lines up and down
 " set Control-Shift-{Down-Up} to move lines up and down
-nnoremap <C-S-J> :m+<CR>==
-nnoremap <C-S-K> :m-2<CR>==
-inoremap <C-S-J> <Esc>:m+<CR>==gi
-inoremap <C-S-K> <Esc>:m-2<CR>==gi
-vnoremap <C-S-J> :m'>+<CR>gv=gv
-vnoremap <C-S-k> :m-2<CR>gv=gv
 nnoremap <C-S-Down> :m+<CR>==
 nnoremap <C-S-Up> :m-2<CR>==
 inoremap <C-S-Down> <Esc>:m+<CR>==gi
@@ -62,17 +56,17 @@ inoremap <C-S-Up> <Esc>:m-2<CR>==gi
 vnoremap <C-S-Down> :m'>+<CR>gv=gv
 vnoremap <C-S-Up> :m-2<CR>gv=gv
 " set Command-Shift-t to search for files 
-noremap <C-S-f>f :FufFile!<CR>
-noremap <C-S-o> :FufBuffer!<CR>
+noremap <A-S-f>f :FufFile!<CR>
+noremap <A-S-o> :FufBuffer!<CR>
 " set mapping to Rails plugin
-noremap <C-S-M> :Rmodel<Space>
-noremap <C-S-C> :Rcontroller<Space>
-noremap <C-S-V> :Rview<Space>
-noremap <C-S-S> :Rscript<Space>
-noremap <C-S-E> :Rextract<Space>
-noremap <S-C-L> :Rlog<CR>
-noremap <C-S-P> :Rpreview<CR>
-noremap <C-S-F>r :Rfind<Space>
+noremap <A-S-m> :Rmodel<Space>
+noremap <A-S-c> :Rcontroller<Space>
+noremap <A-S-v> :Rview<Space>
+noremap <A-S-s> :Rscript<Space>
+noremap <A-S-e> :Rextract<Space>
+noremap <S-C-l> :Rlog<CR>
+noremap <A-S-p> :Rpreview<CR>
+noremap <A-S-f>r :Rfind<Space>
 noremap <F3> :A<CR>
 noremap <F4> :R<CR>
 " set mapping to run rake tests
@@ -87,7 +81,7 @@ nmap <C-Tab> gt
 noremap <C-S-Left> gT
 nmap <C-S-Tab> gT
 " map the autocomplete command
-noremap <C-Space>c <C-x><C-i>
+noremap <A-Space> <C-x><C-i>
 " roll down and roll up
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
