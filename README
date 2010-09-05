@@ -1,0 +1,4 @@
+A set of Vim configuratons to use specially with Rails + Git
+
+-- to set up the .vimrc file, use this command to create a symbolic link
+ln -s vimrc ~/.vimrc
