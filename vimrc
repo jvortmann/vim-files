@@ -58,8 +58,8 @@ inoremap <C-S-Up> <Esc>:m-2<CR>==gi
 vnoremap <C-S-Down> :m'>+<CR>gv=gv
 vnoremap <C-S-Up> :m-2<CR>gv=gv
 " set Command-Shift-t to search for files 
-noremap <M-S-f>f :FufFile!<CR>
-noremap <M-S-o> :FufBuffer!<CR>
+noremap <M-S-f>f :FufFile **/<CR>
+noremap <M-S-o> :FufBuffer **/<CR>
 " set mapping to Rails plugin
 noremap <M-S-m> :Rmodel<Space>
 noremap <M-S-c> :Rcontroller<Space>
