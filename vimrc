@@ -66,6 +66,7 @@ noremap <M-S-c> :Rcontroller<Space>
 noremap <M-S-v> :Rview<Space>
 noremap <M-S-s> :Rscript<Space>
 noremap <M-S-e> :Rextract<Space>
+noremap <M-S-g> :Rgenerate<Space>
 noremap <S-C-l> :Rlog<CR>
 noremap <M-S-p> :Rpreview<CR>
 noremap <M-S-f>r :Rfind<Space>
