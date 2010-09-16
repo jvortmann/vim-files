@@ -51,12 +51,12 @@ set nofoldenable        "dont fold by default
 noremap <F2> :NERDTreeToggle<Return>
 " set Control-Shift-{j-k} to move lines up and down
 " set Control-Shift-{Down-Up} to move lines up and down
-nnoremap <C-S-Down> :m+<CR>==
-nnoremap <C-S-Up> :m-2<CR>==
-inoremap <C-S-Down> <Esc>:m+<CR>==gi
-inoremap <C-S-Up> <Esc>:m-2<CR>==gi
-vnoremap <C-S-Down> :m'>+<CR>gv=gv
-vnoremap <C-S-Up> :m-2<CR>gv=gv
+nnoremap <M-S-Down> :m+<CR>==
+nnoremap <M-S-Up> :m-2<CR>==
+inoremap <M-S-Down> <Esc>:m+<CR>==gi
+inoremap <M-S-Up> <Esc>:m-2<CR>==gi
+vnoremap <M-S-Down> :m'>+<CR>gv=gv
+vnoremap <M-S-Up> :m-2<CR>gv=gv
 " set Command-Shift-t to search for files 
 noremap <M-S-f>f :FufFile **/<CR>
 noremap <M-S-o> :FufBuffer **/<CR>
@@ -67,7 +67,7 @@ noremap <M-S-v> :Rview<Space>
 noremap <M-S-s> :Rscript<Space>
 noremap <M-S-e> :Rextract<Space>
 noremap <M-S-g> :Rgenerate<Space>
-noremap <S-C-l> :Rlog<CR>
+noremap <M-S-l> :Rlog<CR>
 noremap <M-S-p> :Rpreview<CR>
 noremap <M-S-f>r :Rfind<Space>
 noremap <F3> :A<CR>
