@@ -7,7 +7,6 @@ set number tabstop=2 sw=2 bs=2 mouse=a
 set ignorecase smartcase showmatch hlsearch incsearch
 set ruler title cursorline
 " enable auto-saving
-set autosave 1
 set autowriteall
 " enabling the use of the meta key (alt/option)
 set macmeta
