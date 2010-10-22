@@ -36,14 +36,14 @@ set statusline+=%#warningmsg#
 set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 " set the format of the status line
 set statusline+=%*
-set statusline+=%h      "help file flag
-set statusline+=%y      "filetype
-set statusline+=%r      "read only flag
-set statusline+=%m      "modified flag
-set statusline+=%=      "left/right separator
-set statusline+=%c,     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set statusline+=\ %P    "percent through file
+set statusline+=%h              "help file flag
+set statusline+=%y              "filetype
+set statusline+=%r              "read only flag
+set statusline+=%m              "modified flag
+set statusline+=%=              "left/right separator
+set statusline+=[%l,%c]         "cursor line,column
+set statusline+=\ \|%L\ lines\| "/total lines
+set statusline+=\ %P            "percent through file
 set laststatus=2
 " folding settings
 set foldmethod=indent   "fold based on indent
