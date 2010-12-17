@@ -87,6 +87,8 @@ noremap <C-S-Right> gt
 nmap <C-Tab> gt
 noremap <C-S-Left> gT
 nmap <C-S-Tab> gT
+" set mapping to duplicate lines
+noremap <M-S-d> Yp
 " roll down and roll up
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
