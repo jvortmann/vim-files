@@ -33,6 +33,7 @@ Git specific
 <F8>                        : diff
 
 Other
+<Alt/Option-Shift-d>        : duplicate the line under the cursor
 <Control-Tab>               : goes to the next tab
 <Control-Shift-Tab>         : goes to the previous tab
 <Control-Down>              : scrolls down
