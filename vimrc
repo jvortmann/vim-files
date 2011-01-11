@@ -81,7 +81,7 @@ noremap <F5> :Rake<CR>
 noremap <F6> :.Rake<CR>
 " set mapping to Fugitive plugin
 noremap <F7> :Gblame<CR>
-noremap <F8> :Gdiff<CR>
+noremap <S-F7> :Gdiff<CR>
 " set mapping to move between tabs
 noremap <C-S-Right> gt
 nmap <C-Tab> gt

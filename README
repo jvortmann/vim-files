@@ -30,7 +30,7 @@ Rails specific (you can press tab to auto-complete in most of them)
 
 Git specific
 <F7>                        : blame
-<F8>                        : diff
+<Shift-F7>                  : diff
 
 Other
 <Alt/Option-Shift-d>        : duplicate the line under the cursor
