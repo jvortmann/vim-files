@@ -87,6 +87,11 @@ noremap <C-S-Right> gt
 nmap <C-Tab> gt
 noremap <C-S-Left> gT
 nmap <C-S-Tab> gT
+" set mapping to navigate between open slip windows
+noremap <C-h> <C-w><Left>
+noremap <C-j> <C-w><Down>
+noremap <C-k> <C-w><Up>
+noremap <C-l> <C-w><Right>
 " set mapping to duplicate lines
 noremap <M-S-d> Yp
 " roll down and roll up
