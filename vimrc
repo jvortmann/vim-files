@@ -96,6 +96,8 @@ noremap <C-l> <C-w><Right>
 noremap <Space><Space> <C-w>_
 " set mapping to duplicate lines
 noremap <M-S-d> Yp
+" set mapping to autocomplete
+imap <S-Space> <C-x><C-p>
 " roll down and roll up
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
