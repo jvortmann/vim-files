@@ -94,6 +94,7 @@ noremap <C-k> <C-w><Up>
 noremap <C-l> <C-w><Right>
 " set mapping expand the window
 noremap <Space><Space> <C-w>_
+noremap <Space>= <C-w>=
 " set mapping to duplicate lines
 noremap <M-S-d> Yp
 " set mapping to autocomplete
