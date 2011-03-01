@@ -8,13 +8,14 @@ set ignorecase smartcase showmatch hlsearch incsearch
 set ruler title cursorline
 " enable auto-saving
 set autowriteall
-" enabling the use of the meta key (alt/option) on the Mac
+" active when using the gui
 if has("gui_running")
-    set macmeta
+  " enabling the use of the meta key (alt/option) on the Mac
+  set macmeta
+  " set the initial window size
+  set co=160
+  set lines=50
 endif
-" set the initial window size
-set co=160
-set lines=50
 " set proper encoding for files
 set encoding=utf-8
 set fileencoding=utf-8
