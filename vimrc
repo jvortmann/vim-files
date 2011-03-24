@@ -110,3 +110,6 @@ imap <S-Space> <C-x><C-p>
 " roll down and roll up
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
+" configuring tagbar
+noremap <M-i> :TagbarOpenAutoClose<CR>
+noremap <M-S-i> :TagbarToggle<CR>
