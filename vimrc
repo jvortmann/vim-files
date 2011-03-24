@@ -93,7 +93,7 @@ noremap <C-S-Right> gt
 nmap <C-Tab> gt
 noremap <C-S-Left> gT
 nmap <C-S-Tab> gT
-" set mapping to navigate between open slip windows
+" set mapping to navigate between open split windows
 noremap <C-h> <C-w><Left>
 noremap <C-j> <C-w><Down>
 noremap <C-k> <C-w><Up>
@@ -103,10 +103,10 @@ noremap <Space><Space> <C-w>_
 noremap <Space>= <C-w>=
 " set mapping to duplicate lines
 noremap <M-S-d> Yp
+" shortcut to select all
+noremap <M-a> ggVG
 " set mapping to autocomplete
 imap <S-Space> <C-x><C-p>
 " roll down and roll up
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
-" shortcut to select all
-noremap <M-a> ggVG
