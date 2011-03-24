@@ -108,3 +108,5 @@ imap <S-Space> <C-x><C-p>
 " roll down and roll up
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
+" shortcut to select all
+noremap <M-a> ggVG
