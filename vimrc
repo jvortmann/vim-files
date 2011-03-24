@@ -57,16 +57,10 @@ set nofoldenable        "dont fold by default
 :inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" set mapping to autocomplete
+imap <S-Space> <C-x><C-p>
 " map the F2 key to open a side panel with the folder tree
 noremap <F2> :NERDTreeToggle<Return>
-" set Control-Shift-{j-k} to move lines up and down
-" set Control-Shift-{Down-Up} to move lines up and down
-nnoremap <M-S-Down> :m+<CR>==
-nnoremap <M-S-Up> :m-2<CR>==
-inoremap <M-S-Down> <Esc>:m+<CR>==gi
-inoremap <M-S-Up> <Esc>:m-2<CR>==gi
-vnoremap <M-S-Down> :m'>+<CR>gv=gv
-vnoremap <M-S-Up> :m-2<CR>gv=gv
 " set Command-Shift-t to search for files 
 noremap <M-S-f>f :FufFile **/<CR>
 noremap <M-S-o> :FufBuffer **/<CR>
@@ -93,23 +87,28 @@ noremap <C-S-Right> gt
 nmap <C-Tab> gt
 noremap <C-S-Left> gT
 nmap <C-S-Tab> gT
+" roll down and roll up
+noremap <C-Down> <C-d>
+noremap <C-Up> <C-u>
+" set mapping expand the window
+noremap <Space><Space> <C-w>_
+noremap <Space>= <C-w>=
 " set mapping to navigate between open split windows
 noremap <C-h> <C-w><Left>
 noremap <C-j> <C-w><Down>
 noremap <C-k> <C-w><Up>
 noremap <C-l> <C-w><Right>
-" set mapping expand the window
-noremap <Space><Space> <C-w>_
-noremap <Space>= <C-w>=
+" set Option-Shift-{Down-Up} to move lines up and down
+nnoremap <M-S-Down> :m+<CR>==
+nnoremap <M-S-Up> :m-2<CR>==
+inoremap <M-S-Down> <Esc>:m+<CR>==gi
+inoremap <M-S-Up> <Esc>:m-2<CR>==gi
+vnoremap <M-S-Down> :m'>+<CR>gv=gv
+vnoremap <M-S-Up> :m-2<CR>gv=gv
 " set mapping to duplicate lines
 noremap <M-S-d> Yp
 " shortcut to select all
 noremap <M-a> ggVG
-" set mapping to autocomplete
-imap <S-Space> <C-x><C-p>
-" roll down and roll up
-noremap <C-Down> <C-d>
-noremap <C-Up> <C-u>
 " configuring tagbar
 noremap <M-i> :TagbarOpenAutoClose<CR>
 noremap <M-S-i> :TagbarToggle<CR>

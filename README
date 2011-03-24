@@ -3,16 +3,33 @@ A set of Vim configurations to use specially with Rails + Git
 -- to set up the .vimrc file, use this command to create a symbolic link
 ln -s vimrc ~/.vimrc
 
+Needs:
+- ctags               (>= 5.8)
+
+Have:
+- snipMate
+- fugitive
+- rails
+- matchit
+- ragtag
+- surround
+- repeat
+- fuf (FuzzyFinder)
+- nerdtree
+- tagbar
+
 Shortcuts:
+
+AutoComplete
+<Shift-Space>               : opens the autocomplete menu
 
 NerdTree
 <F2>                        : open the NERDTree windows (drawer)
 
 Search/Open
-<Alt/Option-Shift-Up/Down>  : move the selected text or the current line up/down
-<Alt/Option-Shift-f> f      : opens a dialog to search for a file (it is possible to filter the search)
-<Alt/Option-Shift-f> r      : searches using the rails plugin
-<Alt/Option-Shift-o>        : opens a dialog with the open files (buffers). The last viewed file is selected and you can also filter the result
+<Alt/Option-Shift-f> f      : search for a file (it is possible to filter the search)
+<Alt/Option-Shift-f> r      : search using the rails plugin
+<Alt/Option-Shift-o>        : show the open files (buffers). The last viewed file is selected and you can also filter the result
 
 Rails specific (you can press tab to auto-complete in most of them)
 <Alt/Option-Shift-m>        : opens a model 
@@ -26,15 +43,34 @@ Rails specific (you can press tab to auto-complete in most of them)
 <F3>                        : goes to the test file (test unit/rspec)
 <F4>                        : goes to the migration file (models) or view file (controller method)
 <F5>                        : runs the test file
-<F6>                        : runs the current test over the cursor
+<F6>                        : runs the test under the cursor
 
 Git specific
 <F7>                        : blame
 <Shift-F7>                  : diff
 
-Other
-<Alt/Option-Shift-d>        : duplicate the line under the cursor
+Navigation
 <Control-Tab>               : goes to the next tab
 <Control-Shift-Tab>         : goes to the previous tab
 <Control-Down>              : scrolls down
 <Control-Up>                : scrolls up
+
+Splitted windows
+<Space><Space>              : expand the current window
+<Space>=                    : set the window back to the default size
+<Control-h>                 : goes to the splitted window at the left
+<Control-j>                 : goes to the splitted window at the down
+<Control-k>                 : goes to the splitted window at the up
+<Control-l>                 : goes to the splitted window at the right
+
+Dealing with lines
+<Alt/Option-Shift-Up>       : move the selected text or line up
+<Alt/Option-Shift-Down>     : move the selected text or line down
+<Alt/Option-Shift-d>        : duplicate the line under the cursor
+
+Other
+<Alt/Option-a>              : select all
+
+TagBar
+<Alt/Option-i>              : open the tagbar and focus it
+<Alt/Option-Shift-i>        : toggle the tagbar
