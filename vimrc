@@ -1,21 +1,31 @@
-colorscheme molokai 
 set nocompatible
+
+" active when using the gui
+if has("gui_running")
+  colorscheme molokai
+  " set the initial window size
+  set co=160
+  set lines=50
+
+  let osys=system('uname -s')
+  if osys =~ "Darwin"
+    " enabling the use of the meta key (alt/option) on the Mac
+    set macmeta
+  endif
+else
+  colorscheme candycode
+endif
+
 filetype indent on
 filetype plugin on
 let g:ragtag_global_maps = 1
 set number tabstop=2 sw=2 bs=2 mouse=a
 set ignorecase smartcase showmatch hlsearch incsearch
 set ruler title cursorline
-" enable auto-saving
+" enable auto write read and hidden of files
 set autowriteall
-" active when using the gui
-if has("gui_running")
-  " enabling the use of the meta key (alt/option) on the Mac
-  set macmeta
-  " set the initial window size
-  set co=160
-  set lines=50
-endif
+set autoread
+set hidden
 " set proper encoding for files
 set encoding=utf-8
 set fileencoding=utf-8
@@ -34,6 +44,8 @@ set noguipty
 set wmnu
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
+" set the history to display more itens
+set history=100
 " display a warning if file encoding isnt utf-8
 set statusline=
 set statusline+=%#warningmsg#
