@@ -39,6 +39,8 @@ set go-=L
 set go-=r
 " enable syntax highligh
 syntax on
+" set the space from the current line when scrolling
+set scrolloff=3
 " set the colors when using terminal commands
 set noguipty
 " command-line completion shows a list of matches
