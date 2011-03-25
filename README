@@ -4,22 +4,26 @@ A set of Vim configurations to use specially with Rails + Git
 ln -s vimrc ~/.vimrc
 
 Needs:
-- ctags               (>= 5.8)
+- ctags               (>= 5.8)  http://ctags.sourceforge.net/
 
-Have:
-- snipMate
-- fugitive
-- rails
-- matchit
-- ragtag
-- surround
-- repeat
-- fuf (FuzzyFinder)
-- nerd tree
-- nerd commenter
-- tagbar
-- showmarks
-- autoclose
+Have: (downloaded form http://www.vim.org/scripts/script.php?script_id={plugin_id})
+----------------------------------------------------------------------
+  plugin              version   id      [g]ithub/[b]itbucket
+----------------------------------------------------------------------
+- snipMate            (0.84)    [2540]  [g] msanders/snipmate.vim
+- fugitive            (1.1)     [2975]  [g] tpope/vim-fugitive
+- rails               (4.3)     [1567]  [g] tpope/vim-rails
+- repeat              (1.0)     [2136]  [g] tpope/vim-repeat
+- matchit             (1.13.2)  [ 39 ]
+- ragtag              (2.0)     [1896]  [g] tpope/vim-ragtag
+- surround            (1.9)     [1697]  [g] tpope/vim-surround
+- fuf (FuzzyFinder)   (4.2.2)   [1984]  [b] ns9tks/vim-fuzzyfinder
+- nerd tree           (4.1)     [1658]  [g] scrooloose/nerdtree
+- nerd commenter      (2.3)     [1218]  [g] scrooloose/nerdcommenter
+- tagbar              (1.5)     [3465]  [g] majutsushi/tagbar
+- showmarks           (2.2)     [ 152]  [g] vim-scripts/ShowMarks
+- autoclose           (2.0)     [1849]  [g] Townk/vim-autoclose
+----------------------------------------------------------------------
 
 Shortcuts:
 

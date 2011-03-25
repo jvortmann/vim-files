@@ -1,241 +1,468 @@
-" File: autoclose.vim
-" Author: Karl Guertin <grayrest@gr.ayre.st>
-" Version: 1.2
-" Last Modified: June 18, 2009
-" Description: AutoClose, closes what's opened.
-"
-"    This plugin closes opened parenthesis, braces, brackets, quotes as you
-"    type them. As of 1.1, if you type the open brace twice ({{), the closing
-"    brace will be pushed down to a new line.
-"
-"    You can enable or disable this plugin by typing \a (or <Leader>a if you
-"    changed your Leader char). You can define your own mapping and will need
-"    to do so if you have something else mapped to \a since this plugin won't
-"    clobber your mapping. Here's how to map \x:
-"
-"       nmap <Leader>x <Plug>ToggleAutoCloseMappings
-"
-"    You'll also probably want to know you can type <C-V> (<C-Q> if mswin is
-"    set) and the next character you type doesn't have mappings applied. This
-"    is useful when you want to insert only an opening paren or something.
-"
-"    NOTE: If you're using this on a terminal and your arrow keys are broken,
-"          be sure to :set ttimeout and :set ttimeoutlen=100
-"
-"    Version Changes: --------------------------------------------------{{{2
-"    1.2   -- Fixed some edge cases where double the closing characters are
-"             entered when exiting insert mode.
-"             Finally (!) reproduced the arrow keys problem other people were
-"             running into and fixed.
-"             Typing a closing character will now behave consistently (jump
-"             out) regardless of the plugin's internal state.
-"
-"             As a part of the close fix, I've opted to not try tracking the
-"             position of the closing characters through all the things that
-"             could be done with them, so arrowing/jumping around and not
-"             winding up back where you started will cause the input to not be
-"             repeatable.
-"             June 18, 2009
-"    1.1.2 -- Fixed a mapping typo and caught a double brace problem,
-"             September 20, 2007
-"    1.1.1 -- Missed a bug in 1.1, September 19, 2007
-"    1.1   -- When not inserting at the end, previous version would eat chars
-"             at end of line, added double open->newline, September 19, 2007
-"    1.0.1 -- Cruft from other parts of the mapping, knew I shouldn't have
-"             released the first as 1.0, April 3, 2007
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" AutoClose.vim - Automatically close pair of characters: ( with ), [ with ], { with }, etc.
+" Version: 2.0
+" Author: Thiago Alves <talk@thiagoalves.com.br>
+" Maintainer: Thiago Alves <talk@thiagoalves.com.br>
+" URL: http://thiagoalves.com.br
+" Licence: This script is released under the Vim License.
+" Last modified: 02/02/2011
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Setup -----------------------------------------------------{{{2
-if exists('g:autoclose_loaded') || &cp
-    finish
+let s:debug = 1
+
+" check if script is already loaded
+if s:debug == 0 && exists("g:loaded_AutoClose")
+    finish "stop loading the script"
 endif
+let g:loaded_AutoClose = 1
 
+let s:global_cpo = &cpo " store compatible-mode in local variable
+set cpo&vim             " go into nocompatible-mode
 
-let g:autoclose_loaded = 1
-let s:cotstate = &completeopt
-
-if !exists('g:autoclose_on')
-    let g:autoclose_on = 1
-endif
-
-" (Toggle) Mappings -----------------------------{{{1
-"
-nmap <Plug>ToggleAutoCloseMappings :call <SID>ToggleAutoCloseMappings()<CR>
-if (!hasmapto( '<Plug>ToggleAutoCloseMappings', 'n' ))
-    nmap <unique> <Leader>a <Plug>ToggleAutoCloseMappings
-endif
-fun <SID>ToggleAutoCloseMappings() " --- {{{2
-    if g:autoclose_on
-        iunmap "
-        iunmap '
-        iunmap (
-        iunmap )
-        iunmap [
-        iunmap ]
-        iunmap {
-        iunmap }
-        iunmap <BS>
-        iunmap <C-h>
-        iunmap <Esc>
-        let g:autoclose_on = 0
-        echo "AutoClose Off"
-    else
-        inoremap <silent> " <C-R>=<SID>QuoteDelim('"')<CR>
-        inoremap <silent> ' <C-R>=match(getline('.')[col('.') - 2],'\w') == 0 && getline('.')[col('.')-1] != "'" ? "'" : <SID>QuoteDelim("'")<CR>
-        inoremap <silent> ( (<C-R>=<SID>CloseStackPush(')')<CR>
-        inoremap ) <C-R>=<SID>CloseStackPop(')')<CR>
-        inoremap <silent> [ [<C-R>=<SID>CloseStackPush(']')<CR>
-        inoremap <silent> ] <C-R>=<SID>CloseStackPop(']')<CR>
-        "inoremap <silent> { {<C-R>=<SID>CloseStackPush('}')<CR>
-        inoremap <silent> { <C-R>=<SID>OpenSpecial('{','}')<CR>
-        inoremap <silent> } <C-R>=<SID>CloseStackPop('}')<CR>
-        inoremap <silent> <BS> <C-R>=<SID>OpenCloseBackspace()<CR>
-        inoremap <silent> <C-h> <C-R>=<SID>OpenCloseBackspace()<CR>
-        inoremap <silent> <Esc> <C-R>=<SID>CloseStackPop('')<CR><Esc>
-        inoremap <silent> <C-[> <C-R>=<SID>CloseStackPop('')<CR><C-[>
-        "the following simply creates an ambiguous mapping so vim fully
-        "processes the escape sequence for terminal keys, see 'ttimeout' for a
-        "rough explanation, this just forces it to work
-        if &term[:4] == "xterm"
-            inoremap <silent> <C-[>OC <RIGHT>
-        endif
-        let g:autoclose_on = 1
-        if a:0 == 0
-            "this if is so this message doesn't show up at load
-            echo "AutoClose On"
-        endif
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Functions
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! s:GetCharAhead(len)
+    if col('$') == col('.')
+        return "\0"
     endif
-endf
-let s:closeStack = []
-
-" AutoClose Utilities -----------------------------------------{{{1
-function <SID>OpenSpecial(ochar,cchar) " ---{{{2
-    let line = getline('.')
-    let col = col('.') - 2
-    "echom string(col).':'.line[:(col)].'|'.line[(col+1):]
-    if a:ochar == line[(col)] && a:cchar == line[(col+1)] "&& strlen(line) - (col) == 2
-        "echom string(s:closeStack)
-        while len(s:closeStack) > 0
-            call remove(s:closeStack, 0)
-        endwhile
-        return "\<esc>a\<CR>;\<CR>".a:cchar."\<esc>\"_xk$\"_xa"
-    endif
-    return a:ochar.<SID>CloseStackPush(a:cchar)
+    return strpart(getline('.'), col('.')-2 + a:len, 1)
 endfunction
 
-function <SID>CloseStackPush(char) " ---{{{2
-    "echom "push"
-    let line = getline('.')
-    let col = col('.')-2
-    if (col) < 0
-        call setline('.',a:char.line)
-    else
-        "echom string(col).':'.line[:(col)].'|'.line[(col+1):]
-        call setline('.',line[:(col)].a:char.line[(col+1):])
+function! s:GetCharBehind(len)
+    if col('.') == 1
+        return "\0"
     endif
-    call insert(s:closeStack, a:char)
-    "echom join(s:closeStack,'').' -- '.a:char
-    return ''
-endf
+    return strpart(getline('.'), col('.') - (1 + a:len), 1)
+endfunction
 
-function <SID>JumpOut(char) " ----------{{{2
-    let column = col('.') - 1
-    let line = getline('.')
-    let mcol = match(line[column :], a:char)
-    if a:char != '' &&  mcol >= 0
-        "Yeah, this is ugly but vim actually requires each to be special
-        "cased to avoid screen flashes/not doing the right thing.
-        echom len(line).' '.(column+mcol)
-        if line[column] == a:char
-            return "\<Right>"
-        elseif column+mcol == len(line)-1
-            return "\<C-O>A"
+function! s:GetNextChar()
+    return s:GetCharAhead(1)
+endfunction
+
+function! s:GetPrevChar()
+    return s:GetCharBehind(1)
+endfunction
+
+function! s:IsEmptyPair()
+    let l:prev = s:GetPrevChar()
+    let l:next = s:GetNextChar()
+    if l:prev == "\0" || l:next == "\0"
+        return 0
+    endif
+    return (l:prev == l:next) || (get(b:AutoClosePairs, l:prev, "\0") == l:next)
+endfunction
+
+function! s:GetCurrentSyntaxRegion()
+    return synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+endfunction
+
+function! s:GetCurrentSyntaxRegionIf(char)
+    let l:origin_line = getline('.')
+    let l:changed_line = strpart(l:origin_line, 0, col('.')-1) . a:char . strpart(l:origin_line, col('.')-1)
+    call setline('.', l:changed_line)
+    let l:region = synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+    call setline('.', l:origin_line)
+    return l:region
+endfunction
+
+function! s:IsForbidden(char)
+    let l:result = index(b:AutoCloseProtectedRegions, s:GetCurrentSyntaxRegion()) >= 0
+    if l:result
+        return l:result
+    endif
+    let l:region = s:GetCurrentSyntaxRegionIf(a:char)
+    let l:result = index(b:AutoCloseProtectedRegions, l:region) >= 0
+    return l:result || l:region == 'Comment'
+endfunction
+
+function! s:AllowQuote(char, isBS)
+    let l:result = 1
+    if b:AutoCloseSmartQuote
+        let l:initPos = 1 + (a:isBS ? 1 : 0)
+        let l:charBehind = s:GetCharBehind(l:initPos)
+        let l:prev = l:charBehind
+        let l:backSlashCount = 0
+        while l:charBehind == '\'
+            let l:backSlashCount = l:backSlashCount + 1
+            let l:charBehind = s:GetCharBehind(l:initPos + l:backSlashCount)
+        endwhile
+
+        if l:backSlashCount % 2
+            let l:result = 0
         else
-            return "\<C-O>f".a:char."\<Right>"
-        endif
-    else
-        return a:char
-    endif
-endf
-function <SID>CloseStackPop(char) " ---{{{2
-    "echom "pop"
-    if(a:char == '')
-        pclose
-    endif
-    if len(s:closeStack) == 0
-        return <SID>JumpOut(a:char)
-    endif
-    let column = col('.') - 1
-    let line = getline('.')
-    let popped = ''
-    let lastpop = ''
-    "echom join(s:closeStack,'').' || '.lastpop
-    while len(s:closeStack) > 0 && ((lastpop == '' && popped == '') || lastpop != a:char)
-        let lastpop = remove(s:closeStack,0)
-        let popped .= lastpop
-        "echom join(s:closeStack,'').' || '.lastpop.' || '.popped
-    endwhile
-    "echom ' --> '.popped
-    if line[column : column+strlen(popped)-1] != popped
-        return <SID>JumpOut('')
-    endif
-    if column > 0
-        call setline('.',line[:column-1].line[(column+strlen(popped)):])
-    else
-        call setline('.','')
-    endif
-    return popped
-endf
-
-function <SID>QuoteDelim(char) " ---{{{2
-  let line = getline('.')
-  let col = col('.')
-  if line[col - 2] == "\\"
-    "Inserting a quoted quotation mark into the string
-    return a:char
-  elseif line[col - 1] == a:char
-    "Escaping out of the string
-    return "\<C-R>=".s:SID()."CloseStackPop(\"\\".a:char."\")\<CR>"
-  else
-    "Starting a string
-    return a:char."\<C-R>=".s:SID()."CloseStackPush(\"\\".a:char."\")\<CR>"
-  endif
-endf
-
-" The strings returned from QuoteDelim aren't in scope for <SID>, so I
-" have to fake it using this function (from the Vim help, but tweaked)
-function s:SID()
-    return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID$')
-endfun
-
-function <SID>OpenCloseBackspace() " ---{{{2
-    "if pumvisible()
-    "    pclose
-    "    call <SID>StopOmni()
-    "    return "\<C-E>"
-    "else
-        let curline = getline('.')
-        let curpos = col('.')
-        let curletter = curline[curpos-1]
-        let prevletter = curline[curpos-2]
-        if (prevletter == '"' && curletter == '"') ||
-\          (prevletter == "'" && curletter == "'") ||
-\          (prevletter == "(" && curletter == ")") ||
-\          (prevletter == "{" && curletter == "}") ||
-\          (prevletter == "[" && curletter == "]")
-            if len(s:closeStack) > 0
-                call remove(s:closeStack,0)
+            if a:char == "'" && l:prev =~ '[a-zA-Z0-9]'
+                let l:result = 0
             endif
-            return "\<Delete>\<BS>"
-        else
-            return "\<BS>"
         endif
-    "endif
-endf
+    endif
+    return l:result
+endfunction 
 
-" Initialization ----------------------------------------{{{1
-if g:autoclose_on
-    let g:autoclose_on = 0
-    silent call <SID>ToggleAutoCloseMappings()
-endif
-" vim: set ft=vim ff=unix et sw=4 ts=4 :
-" vim600: set foldmethod=marker foldmarker={{{,}}} foldlevel=1 :
+function! s:CountQuotes(char)
+    let l:currPos = col('.')-1
+    let l:line = strpart(getline('.'), 0, l:currPos)
+    let l:result = 0
+
+    if l:currPos >= 0
+        for q in b:AutoCloseQuotes
+            if b:AutoCloseSmartQuote != 0
+                let l:regex = q . '[ˆ\\' . q . ']*(\\.[ˆ\\' . q . ']*)*' . q
+            else
+                let l:regex = q . '[ˆ' . q . ']*' . q
+            endif
+
+            let l:closedQuoteIdx = match(l:line, l:regex)
+            while l:closedQuoteIdx >= 0
+                let l:matchedStr = matchstr(l:line, l:regex, l:closedQuoteIdx)
+                let l:line = strpart(l:line, 0, l:closedQuoteIdx) . strpart(l:line, l:closedQuoteIdx + strlen(l:matchedStr))
+                let l:closedQuoteIdx = match(l:line, l:regex)
+            endwhile
+        endfor
+
+        for c in split(l:line, '\zs')
+            if c == a:char
+                let l:result = l:result + 1
+            endif
+        endfor
+    endif
+    return l:result
+endfunction
+
+function! s:PushBuffer(char)
+    if !exists("b:AutoCloseBuffer")
+        let b:AutoCloseBuffer = []
+    endif
+    call insert(b:AutoCloseBuffer, a:char)
+endfunction
+
+function! s:PopBuffer()
+    if exists("b:AutoCloseBuffer") && len(b:AutoCloseBuffer) > 0
+	   call remove(b:AutoCloseBuffer, 0)
+	endif
+endfunction
+
+function! s:EmptyBuffer()
+    if exists("b:AutoCloseBuffer")
+        let b:AutoCloseBuffer = []
+    endif
+endfunction
+
+function! s:FlushBuffer()
+    let l:result = ''
+    if exists("b:AutoCloseBuffer")
+        let l:len = len(b:AutoCloseBuffer)
+        if l:len > 0
+            let l:result = join(b:AutoCloseBuffer, '') . repeat("\<Left>", l:len)
+            let b:AutoCloseBuffer = []
+            call s:EraseCharsOnLine(l:len)
+        endif
+    endif
+	return l:result
+endfunction
+
+function! s:InsertCharsOnLine(str)
+    let l:line = getline('.')
+    let l:column = col('.')-2
+
+    if l:column < 0
+        call setline('.', a:str . l:line)
+    else
+        call setline('.', l:line[:l:column] . a:str . l:line[l:column+1:])
+    endif
+endfunction
+
+function! s:EraseCharsOnLine(len)
+    let l:line = getline('.')
+    let l:column = col('.')-2
+
+    if l:column < 0
+        call setline('.', l:line[a:len + 1:])
+    else
+        call setline('.', l:line[:l:column] . l:line[l:column + a:len + 1:])
+    endif
+endfunction 
+
+function! s:InsertPair(char)
+    let l:save_ve = &ve
+    set ve=all
+
+    let l:next = s:GetNextChar()
+    let l:result = a:char
+    if b:AutoCloseOn && !s:IsForbidden(a:char) && (l:next == "\0" || l:next !~ '\w') && s:AllowQuote(a:char, 0)
+        call s:InsertCharsOnLine(b:AutoClosePairs[a:char])
+        call s:PushBuffer(b:AutoClosePairs[a:char])
+    endif
+
+    exec "set ve=" . l:save_ve
+    return l:result
+endfunction
+
+function! s:ClosePair(char)
+    let l:save_ve = &ve
+    set ve=all
+
+    let l:result = a:char
+    if b:AutoCloseOn && s:GetNextChar() == a:char
+        call s:EraseCharsOnLine(1)
+        call s:PopBuffer()
+    endif
+
+    exec "set ve=" . l:save_ve
+    return l:result
+endfunction
+
+function! s:CheckPair(char)
+    let l:occur = s:CountQuotes(a:char)
+
+    if l:occur == 0 || l:occur%2 == 0
+        " Opening char
+        return s:InsertPair(a:char)
+    else
+        " Closing char
+        return s:ClosePair(a:char)
+    endif
+endfunction
+
+function! s:Delete()
+    let l:save_ve = &ve
+    set ve=all
+
+    if exists("b:AutoCloseBuffer") && len(b:AutoCloseBuffer) > 0 && b:AutoCloseBuffer[0] == s:GetNextChar()
+        call s:PopBuffer()
+    endif    
+
+    exec "set ve=" . l:save_ve
+    return "\<Del>"
+endfunction
+
+function! s:Backspace()
+    let l:save_ve = &ve
+    let l:prev = s:GetPrevChar()
+    let l:next = s:GetNextChar()
+    set ve=all
+
+    if b:AutoCloseOn && s:IsEmptyPair() && (l:prev != l:next || s:AllowQuote(l:prev, 1))
+        call s:EraseCharsOnLine(1)
+        call s:PopBuffer()
+    endif    
+
+    exec "set ve=" . l:save_ve
+    return "\<BS>"
+endfunction
+
+function! s:ToggleAutoClose()
+    let b:AutoCloseOn = !b:AutoCloseOn
+    if b:AutoCloseOn
+        echo "AutoClose ON"
+    else
+        echo "AutoClose OFF"
+    endif
+endfunction
+
+function! s:DefineVariables()
+    " all the following variable can be set per buffer or global. If both are set
+    " the buffer variable has priority.
+
+    " let user define which character he/she wants to autocomplete
+    if !exists("b:AutoClosePairs") || type(b:AutoClosePairs) != type({})
+        if exists("g:AutoClosePairs") && type(g:AutoClosePairs) == type({})
+            let b:AutoClosePairs = g:AutoClosePairs
+        else
+            let b:AutoClosePairs = {'(': ')', '{': '}', '[': ']', '"': '"', "'": "'"}
+        endif
+    endif
+    "
+    " let user define explicit which chars should be consider quotes
+    if !exists("b:AutoCloseQuotes") || type(b:AutoCloseQuotes) != type([])
+        if exists("g:AutoCloseQuotes") && type(g:AutoCloseQuotes) == type([])
+            let b:AutoCloseQuotes = g:AutoCloseQuotes
+        else
+            let b:AutoCloseQuotes = []
+        endif
+    endif
+
+    " let user define in which regions the autocomplete feature should not occur
+    if !exists("b:AutoCloseProtectedRegions") || type(b:AutoCloseProtectedRegions) != type([])
+        if exists("g:AutoCloseProtectedRegions") && type(g:AutoCloseProtectedRegions) == type([])
+            let b:AutoCloseProtectedRegions = g:AutoCloseProtectedRegions
+        else
+            let b:AutoCloseProtectedRegions = ["Comment", "String", "Character"]
+        endif
+    endif
+
+    " let user define if he/she wants the plugin to do quotes on a smart way
+    if !exists("b:AutoCloseSmartQuote") || type(b:AutoCloseSmartQuote) != type(0)
+        if exists("g:AutoCloseSmartQuote") && type(g:AutoCloseSmartQuote) == type(0)
+            let b:AutoCloseSmartQuote = g:AutoCloseSmartQuote
+        else
+            let b:AutoCloseSmartQuote = 1
+        endif
+    endif
+
+    " let user define if he/she wants the plugin turned on when vim start. Defaul is YES
+    if !exists("b:AutoCloseOn") || type(b:AutoCloseOn) != type(0)
+        if exists("g:AutoCloseOn") && type(g:AutoCloseOn) == type(0)
+            let b:AutoCloseOn = g:AutoCloseOn
+        else
+            let b:AutoCloseOn = 1
+        endif
+    endif
+
+    " let user define if he/she wants the plugin preserv the completion chars into the ". register
+    if !exists("b:AutoClosePreservDotReg") || type(b:AutoClosePreservDotReg) != type(0)
+        if exists("g:AutoClosePreservDotReg") && type(g:AutoClosePreservDotReg) == type(0)
+            let b:AutoClosePreservDotReg = g:AutoClosePreservDotReg
+        else
+            let b:AutoClosePreservDotReg = 1
+        endif
+    endif
+
+    " let user define if he/she wants the plugin to do special action when popup menu is visible and 
+    " the <Esc> key is pressed
+    if !exists("b:AutoClosePumvisibleEsc") || type(b:AutoClosePumvisibleEsc) != type("")
+        if exists("g:AutoClosePumvisibleEsc") && type(g:AutoClosePumvisibleEsc) == type("")
+            let b:AutoClosePumvisibleEsc = g:AutoClosePumvisibleEsc
+        else
+            let b:AutoClosePumvisibleEsc = ""
+        endif
+    endif
+
+    " let user define if he/she wants the plugin to do special action when popup menu is visible and 
+    " the <Left> key is pressed
+    if !exists("b:AutoClosePumvisibleLeft") || type(b:AutoClosePumvisibleLeft) != type("")
+        if exists("g:AutoClosePumvisibleLeft") && type(g:AutoClosePumvisibleLeft) == type("")
+            let b:AutoClosePumvisibleLeft = g:AutoClosePumvisibleLeft
+        else
+            let b:AutoClosePumvisibleLeft = ""
+        endif
+    endif
+
+    " let user define if he/she wants the plugin to do special action when popup menu is visible and 
+    " the <Right> key is pressed
+    if !exists("b:AutoClosePumvisibleRight") || type(b:AutoClosePumvisibleRight) != type("")
+        if exists("g:AutoClosePumvisibleRight") && type(g:AutoClosePumvisibleRight) == type("")
+            let b:AutoClosePumvisibleRight = g:AutoClosePumvisibleRight
+        else
+            let b:AutoClosePumvisibleRight = ""
+        endif
+    endif
+
+    " let user define if he/she wants the plugin to do special action when popup menu is visible and 
+    " the <Up> key is pressed
+    if !exists("b:AutoClosePumvisibleUp") || type(b:AutoClosePumvisibleUp) != type("")
+        if exists("g:AutoClosePumvisibleUp") && type(g:AutoClosePumvisibleUp) == type("")
+            let b:AutoClosePumvisibleUp = g:AutoClosePumvisibleUp
+        else
+            let b:AutoClosePumvisibleUp = ""
+        endif
+    endif
+
+    " let user define if he/she wants the plugin to do special action when popup menu is visible and 
+    " the <Down> key is pressed
+    if !exists("b:AutoClosePumvisibleDown") || type(b:AutoClosePumvisibleDown) != type("")
+        if exists("g:AutoClosePumvisibleDown") && type(g:AutoClosePumvisibleDown) == type("")
+            let b:AutoClosePumvisibleDown = g:AutoClosePumvisibleDown
+        else
+            let b:AutoClosePumvisibleDown = ""
+        endif
+    endif
+
+endfunction
+
+function! s:CreatePairsMaps()
+    let l:appendQuote = (len(b:AutoCloseQuotes) == 0)
+    " create appropriate maps to defined open/close characters
+    for key in keys(b:AutoClosePairs)
+        let map_open = ( has_key(s:mapRemap, key) ? s:mapRemap[key] : key )
+        let map_close = ( has_key(s:mapRemap, b:AutoClosePairs[key]) ? s:mapRemap[b:AutoClosePairs[key]] : b:AutoClosePairs[key] )
+
+        let open_func_arg = ( has_key(s:argRemap, map_open) ? '"' . s:argRemap[map_open] . '"' : '"' . map_open . '"' )
+        let close_func_arg = ( has_key(s:argRemap, map_close) ? '"' . s:argRemap[map_close] . '"' : '"' . map_close . '"' )
+
+        exec "vnoremap <buffer> <silent> <LEADER>a" . map_open . " <Esc>`>a" . map_close .  "<Esc>`<i" . map_open . "<Esc>"
+        exec "vnoremap <buffer> <silent> <LEADER>a" . map_close . " <Esc>`>a" . map_close .  "<Esc>`<i" . map_open . "<Esc>"
+        if key == b:AutoClosePairs[key]
+            if l:appendQuote
+                call add(b:AutoCloseQuotes, key)
+            endif
+            exec "inoremap <buffer> <silent> " . map_open . " <C-R>=<SID>CheckPair(" . open_func_arg . ")<CR>"
+        else
+            exec "inoremap <buffer> <silent> " . map_open . " <C-R>=<SID>InsertPair(" . open_func_arg . ")<CR>"
+            exec "inoremap <buffer> <silent> " . map_close . " <C-R>=<SID>ClosePair(" . close_func_arg . ")<CR>"
+        endif
+    endfor
+endfunction
+
+function! s:CreateExtraMaps()
+    " Extra mapping
+    inoremap <buffer> <silent> <BS>         <C-R>=<SID>Backspace()<CR>
+    inoremap <buffer> <silent> <Del>        <C-R>=<SID>Delete()<CR>
+
+    if b:AutoClosePreservDotReg == 1
+        " Fix the re-do feature:
+        if !empty(b:AutoClosePumvisibleEsc)
+            exec "inoremap <buffer> <silent> <expr>  <Esc>  pumvisible() ? \"\\" . b:AutoClosePumvisibleEsc . "\" : \"\\<C-R>=<SID>FlushBuffer()\\<CR>\\<Esc>\""
+        else
+            inoremap <buffer> <silent> <Esc>   <C-R>=<SID>FlushBuffer()<CR><Esc>
+        endif
+
+        " Flush the char buffer on key movements:
+        if !empty(b:AutoClosePumvisibleLeft)
+            exec "inoremap <buffer> <silent> <expr>  <Left>  pumvisible() ? \"\\" . b:AutoClosePumvisibleLeft . "\" : \"\\<C-R>=<SID>FlushBuffer()\\<CR>\\<Left>\""
+        else
+            inoremap <buffer> <silent> <Left>  <C-R>=<SID>FlushBuffer()<CR><Left>
+        endif
+        
+        if !empty(b:AutoClosePumvisibleRight)
+            exec "inoremap <buffer> <silent> <expr>  <Right>  pumvisible() ? \"\\" . b:AutoClosePumvisibleRight . "\" : \"\\<C-R>=<SID>FlushBuffer()\\<CR>\\<Right>\""
+        else
+            inoremap <buffer> <silent> <Right> <C-R>=<SID>FlushBuffer()<CR><Right>
+        endif
+
+        if !empty(b:AutoClosePumvisibleDown)
+            exec "inoremap <buffer> <silent> <expr>  <Down>  pumvisible() ? \"\\" . b:AutoClosePumvisibleDown . "\" : \"\\<C-R>=<SID>FlushBuffer()\\<CR>\\<Down>\""
+        else
+            inoremap <buffer> <silent> <Down>  <C-R>=<SID>FlushBuffer()<CR><Down>
+        endif
+
+        if !empty(b:AutoClosePumvisibleUp)
+            exec "inoremap <buffer> <silent> <expr>  <Up>  pumvisible() ? \"\\" . b:AutoClosePumvisibleUp . "\" : \"\\<C-R>=<SID>FlushBuffer()\\<CR>\\<Up>\""
+        else
+            inoremap <buffer> <silent> <Up>    <C-R>=<SID>FlushBuffer()<CR><Up>
+        endif
+
+        " Flush the char buffer on mouse click:
+        inoremap <buffer> <silent> <LeftMouse>  <C-R>=<SID>FlushBuffer()<CR><LeftMouse>
+        inoremap <buffer> <silent> <RightMouse> <C-R>=<SID>FlushBuffer()<CR><RightMouse>
+    endif
+endfunction
+
+function! s:CreateMaps()
+    call s:DefineVariables()
+    call s:CreatePairsMaps()
+    call s:CreateExtraMaps()
+
+    let b:loaded_AutoClose = 1
+endfunction
+
+function! s:IsLoadedOnBuffer()
+    return (exists("b:loaded_AutoClose") && b:loaded_AutoClose)
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" here is a dictionary of characters that need to be converted before being used as map
+let s:mapRemap = {'|': '<Bar>', ' ': '<Space>'}
+let s:argRemap = {'"': '\"'}
+
+autocmd FileType * call <SID>CreateMaps()
+autocmd BufNewFile,BufRead,BufEnter * if !<SID>IsLoadedOnBuffer() | call <SID>CreateMaps() | endif
+autocmd InsertEnter * call <SID>EmptyBuffer()
+autocmd BufEnter * if mode() == 'i' | call <SID>EmptyBuffer() | endif
+
+" Define convenient commands
+command! AutoCloseOn :let b:AutoCloseOn = 1
+command! AutoCloseOff :let b:AutoCloseOn = 0
+command! AutoCloseToggle :call s:ToggleAutoClose()
