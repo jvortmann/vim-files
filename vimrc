@@ -14,6 +14,7 @@ if has("gui_running")
   endif
 else
   colorscheme candycode
+  let g:loaded_showmarks = 0
 endif
 
 filetype indent on
@@ -125,3 +126,5 @@ noremap <M-a> ggVG
 " configuring tagbar
 noremap <M-i> :TagbarOpenAutoClose<CR>
 noremap <M-S-i> :TagbarToggle<CR>
+" disable show marks when startups
+let g:showmarks_enable = 0
