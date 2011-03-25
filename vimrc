@@ -1,4 +1,4 @@
-colorscheme candycode
+colorscheme molokai 
 set nocompatible
 filetype indent on
 filetype plugin on
@@ -35,6 +35,7 @@ set wmnu
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 " display a warning if file encoding isnt utf-8
+set statusline=
 set statusline+=%#warningmsg#
 set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 " set the format of the status line
