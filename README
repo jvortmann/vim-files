@@ -7,23 +7,25 @@ Needs:
 - ctags               (>= 5.8)  http://ctags.sourceforge.net/
 
 Have: (downloaded form http://www.vim.org/scripts/script.php?script_id={plugin_id})
-----------------------------------------------------------------------
-  plugin              version   id      [g]ithub/[b]itbucket
-----------------------------------------------------------------------
-- snipMate            (0.84)    [2540]  [g] msanders/snipmate.vim
-- fugitive            (1.1)     [2975]  [g] tpope/vim-fugitive
-- rails               (4.3)     [1567]  [g] tpope/vim-rails
-- repeat              (1.0)     [2136]  [g] tpope/vim-repeat
-- matchit             (1.13.2)  [ 39 ]
-- ragtag              (2.0)     [1896]  [g] tpope/vim-ragtag
-- surround            (1.9)     [1697]  [g] tpope/vim-surround
-- fuf (FuzzyFinder)   (4.2.2)   [1984]  [b] ns9tks/vim-fuzzyfinder
-- nerd tree           (4.1)     [1658]  [g] scrooloose/nerdtree
-- nerd commenter      (2.3)     [1218]  [g] scrooloose/nerdcommenter
-- tagbar              (1.5)     [3465]  [g] majutsushi/tagbar
-- showmarks           (2.2)     [ 152]  [g] vim-scripts/ShowMarks
-- autoclose           (2.0)     [1849]  [g] Townk/vim-autoclose
-----------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+  plugin              version   id      install
+---------------------------------------------------------------------------------------------------------------
+- snipMate            (0.84)    [2540]  git clone https://github.com/msanders/snipmate.vim
+- fugitive            (1.1)     [2975]  git clone https://github.com/tpope/vim-fugitive
+- rails               (4.3)     [1567]  git clone https://github.com/tpope/vim-rails
+- repeat              (1.0)     [2136]  git clone https://github.com/tpope/vim-repeat
+- matchit             (1.13.2)  [ 39 ]  git clone https://github.com/tsaleh/vim-matchit
+- ragtag              (2.0)     [1896]  git clone https://github.com/tpope/vim-ragtag
+- surround            (1.9)     [1697]  git clone https://github.com/tpope/vim-surround
+- fuf (FuzzyFinder)   (4.2.2)   [1984]  hg  clone https://bitbucket.org/ns9tks/vim-fuzzyfinder
+- nerd tree           (4.1)     [1658]  git clone https://github.com/scrooloose/nerdtree
+- nerd commenter      (2.3)     [1218]  git clone https://github.com/scrooloose/nerdcommenter
+- tagbar              (1.5)     [3465]  git clone https://github.com/majutsushi/tagbar
+- showmarks           (2.2)     [ 152]  git clone https://github.com/vim-scripts/ShowMarks
+- autoclose           (2.0)     [1849]  git clone https://github.com/Townk/vim-autoclose
+! indexer             (2.01)    [3221]  hg  clone http://default:default@dfrank.ru:5000/vim__indexer_stable
+! project             (1.4.1)   [  69]  hg  clone http://default:default@dfrank.ru:5000/vim__indexer_stable
+---------------------------------------------------------------------------------------------------------------
 
 Shortcuts:
 
