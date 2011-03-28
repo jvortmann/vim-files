@@ -5,8 +5,7 @@ call pathogen#helptags()
 
 set nocompatible
 
-filetype indent on
-filetype plugin on
+filetype indent plugin on
 let g:ragtag_global_maps = 1
 set number tabstop=2 sw=2 bs=2 mouse=a
 set ignorecase smartcase showmatch hlsearch incsearch
