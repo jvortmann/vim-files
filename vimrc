@@ -63,7 +63,7 @@ set nofoldenable        "dont fold by default
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 " set mapping to autocomplete
-imap <S-Space> <C-x><C-p>
+imap <S-Space> <C-x><C-o>
 " map the F2 key to open a side panel with the folder tree
 noremap <F2> :NERDTreeToggle<Return>
 " set Command-Shift-t to search for files 
