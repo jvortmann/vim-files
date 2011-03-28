@@ -1,21 +1,6 @@
+colorscheme candycode
+
 set nocompatible
-
-" active when using the gui
-if has("gui_running")
-  colorscheme molokai
-  " set the initial window size
-  set co=160
-  set lines=50
-
-  let osys=system('uname -s')
-  if osys =~ "Darwin"
-    " enabling the use of the meta key (alt/option) on the Mac
-    set macmeta
-  endif
-else
-  colorscheme candycode
-  let g:loaded_showmarks = 0
-endif
 
 filetype indent on
 filetype plugin on
@@ -128,5 +113,11 @@ noremap <M-a> ggVG
 " configuring tagbar
 noremap <M-i> :TagbarOpenAutoClose<CR>
 noremap <M-S-i> :TagbarToggle<CR>
-" disable show marks when startups
+
+if !has("gui_running")
+  " disable showmarks when not graphical
+  let g:loaded_showmarks = 0
+end
+
+" disable showing marks when startups
 let g:showmarks_enable = 0
