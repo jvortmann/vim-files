@@ -37,6 +37,8 @@ set wmnu
 set backspace=indent,eol,start
 " set the history to display more itens
 set history=100
+" set the undo to have a thousand entries
+set undolevels=1000
 " display a warning if file encoding isnt utf-8
 set statusline=
 set statusline+=%#warningmsg#
