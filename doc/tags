@@ -69,8 +69,6 @@
 :NERDTreeFromBookmark	NERD_tree.txt	/*:NERDTreeFromBookmark*
 :NERDTreeMirror	NERD_tree.txt	/*:NERDTreeMirror*
 :NERDTreeToggle	NERD_tree.txt	/*:NERDTreeToggle*
-AutoClose.txt	autoclose.txt	/*AutoClose.txt*
-AutoClosePairs	autoclose.txt	/*AutoClosePairs*
 NERDComAbout	NERD_commenter.txt	/*NERDComAbout*
 NERDComAlignedComment	NERD_commenter.txt	/*NERDComAlignedComment*
 NERDComAltDelim	NERD_commenter.txt	/*NERDComAltDelim*
@@ -170,17 +168,6 @@ ShowMarksOn	showmarks.txt	/*ShowMarksOn*
 ShowMarksPlaceMark	showmarks.txt	/*ShowMarksPlaceMark*
 ShowMarksToggle	showmarks.txt	/*ShowMarksToggle*
 abc	fuf.txt	/*abc*
-acProtectedRegions	autoclose.txt	/*acProtectedRegions*
-ac_charstoclose	autoclose.txt	/*ac_charstoclose*
-ac_config	autoclose.txt	/*ac_config*
-ac_details	autoclose.txt	/*ac_details*
-ac_intro	autoclose.txt	/*ac_intro*
-ac_mappings	autoclose.txt	/*ac_mappings*
-ac_problems	autoclose.txt	/*ac_problems*
-ac_protectedregions	autoclose.txt	/*ac_protectedregions*
-ac_toggle	autoclose.txt	/*ac_toggle*
-ac_turnoff	autoclose.txt	/*ac_turnoff*
-ac_turnon	autoclose.txt	/*ac_turnon*
 fuf	fuf.txt	/*fuf*
 fuf-abbreviation	fuf.txt	/*fuf-abbreviation*
 fuf-about	fuf.txt	/*fuf-about*
