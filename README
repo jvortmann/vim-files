@@ -13,6 +13,7 @@ Have: (downloaded form http://www.vim.org/scripts/script.php?script_id={plugin_i
 ---------------------------------------------------------------------------------------------------------------
 - snipMate            (0.84)    [2540]  git clone https://github.com/msanders/snipmate.vim
 - fugitive            (1.1)     [2975]  git clone https://github.com/tpope/vim-fugitive
+- pathogen            (1.3)     [2332]  git clone https://github.com/tpope/vim-pathogen
 - rails               (4.3)     [1567]  git clone https://github.com/tpope/vim-rails
 - repeat              (1.0)     [2136]  git clone https://github.com/tpope/vim-repeat
 - matchit             (1.13.2)  [ 39 ]  git clone https://github.com/tsaleh/vim-matchit
