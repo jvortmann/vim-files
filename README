@@ -23,7 +23,7 @@ Have: (downloaded form http://www.vim.org/scripts/script.php?script_id={plugin_i
 - nerd tree           (4.1)     [1658]  git clone https://github.com/scrooloose/nerdtree
 - nerd commenter      (2.3)     [1218]  git clone https://github.com/scrooloose/nerdcommenter
 - tagbar              (1.5)     [3465]  git clone https://github.com/majutsushi/tagbar
-- showmarks           (2.2)     [ 152]  git clone https://github.com/vim-scripts/ShowMarks
+- showmarks           (2.2)     [ 152]  git clone https://github.com/garbas/vim-showmarks
 - autoclose           (2.0)     [1849]  git clone https://github.com/Townk/vim-autoclose
 ! indexer             (2.01)    [3221]  hg  clone http://default:default@dfrank.ru:5000/vim__indexer_stable
 ! project             (1.4.1)   [  69]  hg  clone http://default:default@dfrank.ru:5000/vim__indexer_stable
