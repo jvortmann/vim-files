@@ -9,25 +9,25 @@ Needs:
 
 Have: (downloaded form http://www.vim.org/scripts/script.php?script_id={plugin_id})
 ---------------------------------------------------------------------------------------------------------------
-  plugin              version   id      install
+  plugin              version   id      url
 ---------------------------------------------------------------------------------------------------------------
-- snipmate            (0.84)    [2540]  git clone https://github.com/msanders/snipmate.vim
-- fugitive            (1.1)     [2975]  git clone https://github.com/tpope/vim-fugitive
-- pathogen            (1.3)     [2332]  git clone https://github.com/tpope/vim-pathogen
-- rails               (4.3)     [1567]  git clone https://github.com/tpope/vim-rails
-- repeat              (1.0)     [2136]  git clone https://github.com/tpope/vim-repeat
-- matchit             (1.13.2)  [ 39 ]  git clone https://github.com/tsaleh/vim-matchit
-- ragtag              (2.0)     [1896]  git clone https://github.com/tpope/vim-ragtag
-- surround            (1.9)     [1697]  git clone https://github.com/tpope/vim-surround
-- fuf (fuzzyfinder)   (4.2.2)   [1984]  git clone https://github.com/vim-scripts/FuzzyFinder
-- nerd tree           (4.1)     [1658]  git clone https://github.com/scrooloose/nerdtree
-- nerd commenter      (2.3)     [1218]  git clone https://github.com/scrooloose/nerdcommenter
-- tagbar              (1.5)     [3465]  git clone https://github.com/majutsushi/tagbar
-- showmarks           (2.2)     [ 152]  git clone https://github.com/garbas/vim-showmarks
-- autoclose           (2.0)     [1849]  git clone https://github.com/Townk/vim-autoclose
-- syntatic            (1.2)     [2736]  git clone https://github.com/scrooloose/syntastic/
-! indexer             (2.01)    [3221]  hg  clone http://default:default@dfrank.ru:5000/vim__indexer_stable
-! project             (1.4.1)   [  69]  hg  clone http://default:default@dfrank.ru:5000/vim__indexer_stable
+- snipmate            (0.84)    [2540]  https://github.com/msanders/snipmate.vim
+- fugitive            (1.1)     [2975]  https://github.com/tpope/vim-fugitive
+- pathogen            (1.3)     [2332]  https://github.com/tpope/vim-pathogen
+- rails               (4.3)     [1567]  https://github.com/tpope/vim-rails
+- repeat              (1.0)     [2136]  https://github.com/tpope/vim-repeat
+- matchit             (1.13.2)  [ 39 ]  https://github.com/tsaleh/vim-matchit
+- ragtag              (2.0)     [1896]  https://github.com/tpope/vim-ragtag
+- surround            (1.9)     [1697]  https://github.com/tpope/vim-surround
+- fuf (fuzzyfinder)   (4.2.2)   [1984]  https://github.com/vim-scripts/FuzzyFinder
+- nerd tree           (4.1)     [1658]  https://github.com/scrooloose/nerdtree
+- nerd commenter      (2.3)     [1218]  https://github.com/scrooloose/nerdcommenter
+- tagbar              (1.5)     [3465]  https://github.com/majutsushi/tagbar
+- showmarks           (2.2)     [ 152]  https://github.com/garbas/vim-showmarks
+- autoclose           (2.0)     [1849]  https://github.com/Townk/vim-autoclose
+- syntatic            (1.2)     [2736]  https://github.com/scrooloose/syntastic/
+! indexer             (2.01)    [3221]  https://github.com/vim-scripts/indexer.tar.gz
+- project             (1.4.1)   [  69]  https://github.com/vim-scripts/project.tar.gz
 ---------------------------------------------------------------------------------------------------------------
 
 Shortcuts:
