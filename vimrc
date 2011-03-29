@@ -1,9 +1,9 @@
 colorscheme candycode
 
+set nocompatible
+
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
-
-set nocompatible
 
 filetype indent plugin on
 let g:ragtag_global_maps = 1
@@ -48,6 +48,11 @@ set statusline+=%h              "help file flag
 set statusline+=%y              "filetype
 set statusline+=%r              "read only flag
 set statusline+=%m              "modified flag
+set statusline+=%=              "left/right separator
+set statusline+=%*              "show the errors/warning in the status line
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 set statusline+=%=              "left/right separator
 set statusline+=[%l,%c]         "cursor line,column
 set statusline+=\ \|%L\ lines\| "/total lines
@@ -125,3 +130,8 @@ end
 
 " disable showing marks when startups
 let g:showmarks_enable = 0
+
+" set the options for syntatic to show marks and to open the error window
+let g:syntastic_enable_signs = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
