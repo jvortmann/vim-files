@@ -19,7 +19,7 @@ Have: (downloaded form http://www.vim.org/scripts/script.php?script_id={plugin_i
 - matchit             (1.13.2)  [ 39 ]  git clone https://github.com/tsaleh/vim-matchit
 - ragtag              (2.0)     [1896]  git clone https://github.com/tpope/vim-ragtag
 - surround            (1.9)     [1697]  git clone https://github.com/tpope/vim-surround
-- fuf (FuzzyFinder)   (4.2.2)   [1984]  hg  clone https://bitbucket.org/ns9tks/vim-fuzzyfinder
+- fuf (fuzzyfinder)   (4.2.2)   [1984]  git clone https://github.com/vim-scripts/FuzzyFinder
 - nerd tree           (4.1)     [1658]  git clone https://github.com/scrooloose/nerdtree
 - nerd commenter      (2.3)     [1218]  git clone https://github.com/scrooloose/nerdcommenter
 - tagbar              (1.5)     [3465]  git clone https://github.com/majutsushi/tagbar
