@@ -118,6 +118,7 @@ noremap <M-S-d> Yp
 " shortcut to select all
 noremap <M-a> ggVG
 " configuring tagbar
+let g:tagbar_width = 60
 noremap <M-i> :TagbarOpenAutoClose<CR>
 noremap <M-S-i> :TagbarToggle<CR>
 
