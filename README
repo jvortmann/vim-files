@@ -26,7 +26,7 @@ Have: (downloaded form http://www.vim.org/scripts/script.php?script_id={plugin_i
 - showmarks           (2.2)     [ 152]  https://github.com/garbas/vim-showmarks
 - autoclose           (2.0)     [1849]  https://github.com/Townk/vim-autoclose
 - syntatic            (1.2)     [2736]  https://github.com/scrooloose/syntastic/
-! indexer             (2.01)    [3221]  https://github.com/vim-scripts/indexer.tar.gz
+- indexer             (3.12)    [3221]  https://github.com/vim-scripts/indexer.tar.gz
 - project             (1.4.1)   [  69]  https://github.com/vim-scripts/project.tar.gz
 ---------------------------------------------------------------------------------------------------------------
 
