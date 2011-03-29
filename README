@@ -30,6 +30,7 @@ Have: (downloaded form http://www.vim.org/scripts/script.php?script_id={plugin_i
 - indexer             (3.12)    [3221]  https://github.com/vim-scripts/indexer.tar.gz
 - project             (1.4.1)   [  69]  https://github.com/vim-scripts/project.tar.gz
 - javacomplete        (0.77.1.2)[1785]  https://github.com/vim-scripts/javacomplete
+- vim-textobj-user    (0.3.9)   [2100]  https://github.com/kana/vim-textobj-user
 ---------------------------------------------------------------------------------------------------------------
 
 Shortcuts:
