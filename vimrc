@@ -140,3 +140,5 @@ if has("autocmd")
   autocmd Filetype java setlocal omnifunc=javacomplete#Complete
   autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInfo
 endif
+" adding a shortcut to toggle comment
+map <M-/> <Leader>c<Space>

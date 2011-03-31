@@ -83,6 +83,7 @@ Dealing with lines
 <Alt/Option-Shift-Up>       : move the selected text or line up
 <Alt/Option-Shift-Down>     : move the selected text or line down
 <Alt/Option-Shift-d>        : duplicate the line under the cursor
+<Alt/Option-/>              : comment the line
 
 Other
 <Alt/Option-a>              : select all
