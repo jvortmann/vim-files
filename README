@@ -4,8 +4,13 @@ A set of Vim configurations to use specially with Rails + Git
 ln -s vimrc ~/.vimrc
 ln -s gvimrc ~/.gvimrc
 
+-- to set up the plugins
+git submodule init
+git submodule update
+
 Needs:
-- ctags               (>= 5.8)  http://ctags.sourceforge.net/
+- ctags               (>= 5.8)      http://ctags.sourceforge.net/
+- git                 (>= 1.7.4.4)  http://git-scm.com/
 
 Have:
 ------------------------------------------------------------------------------------------
