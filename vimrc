@@ -1,9 +1,10 @@
+"load the initial configuration
+source ~/.vim/conf/init
+
 colorscheme candycode
 
 set nocompatible
 
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
 
 filetype indent plugin on
 set number tabstop=2 sw=2 bs=2 mouse=a
@@ -50,4 +51,3 @@ source ~/.vim/conf/statusline
 source ~/.vim/conf/shortcuts
 "load plugins configuration
 source ~/.vim/conf/plugins
-
