@@ -33,8 +33,9 @@ nmap <C-S-Tab> gT
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
 " set mapping expand the window
-noremap <Space><Space> <C-w>_
+noremap <expr> <silent> <Space><Space> ":vertical res<CR>:res<CR>"
 noremap <Space>= <C-w>=
+noremap <Space>o <C-w>o
 " set mapping to navigate between open split windows
 noremap <C-h> <C-w><Left>
 noremap <C-j> <C-w><Down>
