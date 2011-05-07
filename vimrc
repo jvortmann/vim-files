@@ -1,15 +1,10 @@
 "load the initial configuration
 source ~/.vim/conf/init
 
-colorscheme candycode
-
 set nocompatible
 
-
 filetype indent plugin on
-set number tabstop=2 sw=2 bs=2 mouse=a
 set ignorecase smartcase showmatch hlsearch incsearch
-set ruler title cursorline
 " enable auto write read and hidden of files
 set autowriteall
 set autoread
@@ -20,18 +15,8 @@ set fileencoding=utf-8
 " spaces instead of tabs
 set sta
 set et
-" hide toolbar by default
-set go-=T
-set go-=L
-set go-=r
 " enable syntax highligh
 syntax on
-" set the space from the current line when scrolling
-set scrolloff=3
-" set the colors when using terminal commands
-set noguipty
-" command-line completion shows a list of matches
-set wmnu
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 " set the history to display more itens
@@ -45,6 +30,8 @@ set nofoldenable        "dont fold by default
 " improve the autocomplete menu
 set completeopt=longest,menuone
 
+"load the gui options
+source ~/.vim/conf/guioptions
 "load the status line
 source ~/.vim/conf/statusline
 "load shortcuts

@@ -1,0 +1,13 @@
+colorscheme candycode
+set number tabstop=2 sw=2 bs=2 mouse=a
+set ruler title cursorline
+" hide toolbar by default
+set go-=T
+set go-=L
+set go-=r
+" set the space from the current line when scrolling
+set scrolloff=3
+" set the colors when using terminal commands
+set noguipty
+" command-line completion shows a list of matches
+set wmnu
