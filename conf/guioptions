@@ -11,3 +11,5 @@ set scrolloff=3
 set noguipty
 " command-line completion shows a list of matches
 set wmnu
+"load the status line
+source ~/.vim/conf/statusline
