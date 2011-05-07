@@ -6,7 +6,6 @@ call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
 filetype indent plugin on
-let g:ragtag_global_maps = 1
 set number tabstop=2 sw=2 bs=2 mouse=a
 set ignorecase smartcase showmatch hlsearch incsearch
 set ruler title cursorline
@@ -67,25 +66,6 @@ set completeopt=longest,menuone
 
 "load shortcuts
 source ~/.vim/conf/shortcuts
+"load plugins configuration
+source ~/.vim/conf/plugins
 
-" configuring tagbar
-let g:tagbar_width = 60
-
-if !has("gui_running")
-  " disable showmarks when not graphical
-  let g:loaded_showmarks = 0
-end
-
-" disable showing marks when startups
-let g:showmarks_enable = 0
-
-" set the options for syntatic to show marks and to open the error window
-let g:syntastic_enable_signs = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-
-" configure the java autocomple plugin
-if has("autocmd")
-  autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-  autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInfo
-endif
