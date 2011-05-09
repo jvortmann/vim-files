@@ -37,7 +37,7 @@ Have:
 Shortcuts:
 
 AutoComplete
-<Shift-Space>               : opens the autocomplete menu
+<Control-Shift-Space>       : opens the autocomplete menu
 
 NerdTree
 <F2>                        : open the NERDTree windows (drawer)
@@ -74,6 +74,7 @@ Navigation
 Splitted windows
 <Space><Space>              : expand the current window
 <Space>=                    : set the window back to the default size
+<Space>o                    : keep only the current window open
 <Control-h>                 : goes to the splitted window at the left
 <Control-j>                 : goes to the splitted window at the down
 <Control-k>                 : goes to the splitted window at the up
