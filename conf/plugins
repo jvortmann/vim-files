@@ -1,6 +1,11 @@
+"activate the global shortcuts for ragtag
 let g:ragtag_global_maps = 1
+
 " configuring tagbar
 let g:tagbar_width = 60
+
+"make the nerd tree use a new look
+let NERDTreeDirArrows=1
 
 if !has("gui_running")
    "showmarks only works when there is a gui
