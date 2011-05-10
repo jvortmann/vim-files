@@ -1,0 +1,1 @@
+for mod in bundle/*; do cd $mod; git co master; git pull; cd ../..; git add .; git commit -m "updated module $mod"; done
