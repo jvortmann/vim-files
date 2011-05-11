@@ -59,3 +59,5 @@ noremap <M-i> :TagbarOpenAutoClose<CR>
 noremap <M-S-i> :TagbarToggle<CR>
 " adding a shortcut to toggle comment
 map <M-/> <Leader>c<Space>
+" adding a map to open the gundo
+map <silent> <M-S-u> :GundoToggle<CR>
