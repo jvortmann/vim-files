@@ -67,3 +67,6 @@
 [submodule "bundle/gundo"]
 	path = bundle/gundo
 	url = http://github.com/sjl/gundo.vim.git
+[submodule "bundle/rake"]
+	path = bundle/rake
+	url = https://github.com/tpope/vim-rake.git
