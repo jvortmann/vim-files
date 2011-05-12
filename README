@@ -5,10 +5,9 @@ A set of Vim configurations to use specially with Rails + Git
 - 'ln -s gvimrc ~/.gvimrc'
 
 -- to set up the plugins
-- 'git submodule init'
-- 'git submodule update'
+- 'git submodule update --init'
 
-- You need to run 'git submodule update' everytime you update to fetch the new version of the modules
+- You need to run 'git submodule update --init' everytime you update to fetch the new version of the modules
 - To see a list of modules/plugins that are being used, look at the .gitmodules file
 
 Needs:
