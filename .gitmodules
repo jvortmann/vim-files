@@ -73,3 +73,6 @@
 [submodule "bundle/css-color"]
 	path = bundle/css-color
 	url = https://github.com/skammer/vim-css-color
+[submodule "bundle/foldsearch"]
+	path = bundle/foldsearch
+	url = https://github.com/vim-scripts/foldsearch.git
