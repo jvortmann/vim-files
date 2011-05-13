@@ -8,3 +8,7 @@ source $HOME/.vim/conf/guioptions
 source $HOME/.vim/conf/shortcuts
 "load plugins configuration
 source $HOME/.vim/conf/plugins
+"load local  if they exist
+if filereadable(expand("$HOME/.vimrc.local"))
+  source $HOME/.vimrc.local
+endif
