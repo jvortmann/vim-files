@@ -61,3 +61,5 @@ noremap <M-S-i> :TagbarToggle<CR>
 map <M-/> <Leader>c<Space>
 " adding a map to open the gundo
 map <silent> <M-S-u> :GundoToggle<CR>
+noremap <M-,> :Smaller<CR>
+noremap <M-.> :Bigger<CR>

@@ -51,7 +51,7 @@ Navigation
 <Control-Down>              : scrolls down
 <Control-Up>                : scrolls up
 
-Splitted windows
+Windows
 <Space><Space>              : expand the current window
 <Space>=                    : set the window back to the default size
 <Space>o                    : keep only the current window open
@@ -61,6 +61,8 @@ Splitted windows
 <Control-j>                 : goes to the splitted window at the down
 <Control-k>                 : goes to the splitted window at the up
 <Control-l>                 : goes to the splitted window at the right
+<Alt-,>                     : decrease the font size
+<Alt-.>                     : increase the font size
 
 Dealing with lines
 <Alt/Option-Shift-Up>       : move the selected text or line up
