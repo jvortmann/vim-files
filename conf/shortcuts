@@ -51,7 +51,7 @@ inoremap <M-S-Up> <Esc>:m-2<CR>==gi
 vnoremap <M-S-Down> :m'>+<CR>gv=gv
 vnoremap <M-S-Up> :m-2<CR>gv=gv
 " set mapping to duplicate lines
-noremap <M-S-d> Yp
+noremap <M-S-d> Y`]p
 " shortcut to select all
 noremap <M-a> ggVG
 " toggle tagbar
