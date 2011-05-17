@@ -26,6 +26,12 @@ Search/Open
 <Alt/Option-Shift-f> f      : search for a file (it is possible to filter the search)
 <Alt/Option-Shift-f> r      : search using the rails plugin
 <Alt/Option-Shift-o>        : show the open files (buffers). The last viewed file is selected and you can also filter the result
+<Alt/Option-Shift-t> c      : search for a tag in the current buffer
+<Alt/Option-Shift-t> a      : search for a tag in all open buffers
+<Alt/Option-Shift-t> w      : search for the word under the cursor as a tag in current buffer
+<Alt/Option-Shift-t> W      : search for the word under the cursor as a tag in all open buffers
+<Alt/Option-Shift-t> s      : search for the selection as a tag in current buffer
+<Alt/Option-Shift-t> S      : search for the selection as a tag in all open buffers
 
 Rails specific (you can press tab to auto-complete in most of them)
 <Alt/Option-Shift-m>        : opens a model 
