@@ -4,6 +4,7 @@ Plugins:
   ✓ foldsearch
   - vim-javascript
   - jsbeautifier
+  - jslint
   - zencoding
   - minibufexpl
   - sinatra
