@@ -1,0 +1,29 @@
+Plugins:
+  ✓ vim-task
+  ✓ css-color
+  ✓ foldsearch
+  - javascript
+  - jsbeautifier
+  - zencoding
+  - mini buffer
+  - sinatra
+  - haml
+  - ack
+  - scala
+  - jQuery
+  - Conque-Shell
+  - preview
+  - coffee-script
+  - haskel
+  - hier
+  - gsearch
+  - gist
+  - simple-javascript-indenter
+  - pair-tools
+  - opener
+  - indexer.tar.gz
+  - blockle
+  - neocomplcache
+
+Color Scheme:
+  - jellybeans
