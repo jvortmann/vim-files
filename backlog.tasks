@@ -2,7 +2,7 @@ Plugins:
   ✓ vim-task
   ✓ css-color
   ✓ foldsearch
-  - vim-javascript
+  ✓ vim-javascript
   - jsbeautifier
   - jslint
   - zencoding
