@@ -2,16 +2,18 @@ Plugins:
   ✓ vim-task
   ✓ css-color
   ✓ foldsearch
-  - javascript
+  - vim-javascript
   - jsbeautifier
   - zencoding
-  - mini buffer
+  - minibufexpl
   - sinatra
   - haml
   - ack
   - scala
   - jQuery
   - Conque-Shell
+  - AutoTag
+  - Jasmine snippets
   - preview
   - coffee-script
   - haskel
@@ -24,6 +26,13 @@ Plugins:
   - indexer.tar.gz
   - blockle
   - neocomplcache
+  - ProjectCTags
+  - html5
+  - css
+  - changed
+  - nginx
+  - AutoComplPop
+  - xml
 
 Color Scheme:
   - jellybeans
