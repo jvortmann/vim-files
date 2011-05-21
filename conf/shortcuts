@@ -50,12 +50,17 @@ noremap <C-j> <C-w><Down>
 noremap <C-k> <C-w><Up>
 noremap <C-l> <C-w><Right>
 " set Option-Shift-{Down-Up} to move lines up and down
-nnoremap <M-S-Down> :m+<CR>==
-nnoremap <M-S-Up> :m-2<CR>==
-inoremap <M-S-Down> <Esc>:m+<CR>==gi
-inoremap <M-S-Up> <Esc>:m-2<CR>==gi
-vnoremap <M-S-Down> :m'>+<CR>gv=gv
-vnoremap <M-S-Up> :m-2<CR>gv=gv
+nmap <silent> <M-S-Down> :m+<CR>==
+nmap <silent> <M-S-j> :m+<CR>==
+imap <silent> <M-S-Down> <Esc>:m+<CR>==gi
+imap <silent> <M-S-j> <Esc>:m+<CR>==gi
+vmap <silent> <M-S-Down> :m'>+<CR>gv=gv
+vmap <silent> <M-S-j> :m'>+<CR>gv=gv
+nmap <silent> <M-S-Up> :m-2<CR>==
+nmap <silent> <M-S-k> :m-2<CR>==
+imap <silent> <M-S-Up> <Esc>:m-2<CR>==gi
+imap <silent> <M-S-k> <Esc>:m-2<CR>==gi
+vmap <silent> <M-S-k> :m-2<CR>gv=gv
 " set mapping to duplicate lines
 noremap <M-S-d> Y`]p
 " shortcut to select all
