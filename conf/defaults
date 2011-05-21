@@ -2,9 +2,11 @@ set nocompatible
 
 filetype indent plugin on
 set ignorecase smartcase showmatch hlsearch incsearch
-"enable auto write read and hidden of files
+"enable auto write
 set autowriteall
+"automatically reload the files if they were modified outside vim
 set autoread
+"set the buffer to become hidden instead of preventing the user from changing to another buffer
 set hidden
 "set proper encoding for files
 set encoding=utf-8
