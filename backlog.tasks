@@ -4,6 +4,7 @@ Plugins:
   ✓ foldsearch
   ✓ vim-javascript
   ✓ jasmine
+  ✓ Jasmine snippets
   - jsbeautifier
   - jslint
   - zencoding
@@ -15,7 +16,6 @@ Plugins:
   - jQuery
   - Conque-Shell
   - AutoTag
-  - Jasmine snippets
   - preview
   - coffee-script
   - haskel
