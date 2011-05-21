@@ -69,3 +69,5 @@ map <M-/> <Leader>c<Space>
 map <silent> <M-S-u> :GundoToggle<CR>
 noremap <M-,> :Smaller<CR>
 noremap <M-.> :Bigger<CR>
+inoremap <silent> <M-S-CR> <ESC>:call Toggle_task_status()<CR>i
+noremap <silent> <M-S-CR> :call Toggle_task_status()<CR>

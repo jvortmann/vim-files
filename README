@@ -85,3 +85,6 @@ TagBar
 
 Gundo
 <Alt/Option-Shift-u>        : toggle gundo and focus it
+
+Tasks
+<Alt/Option-Shift-Enter>    : toggle task (done/undone)
