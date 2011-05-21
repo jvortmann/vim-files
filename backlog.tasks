@@ -3,6 +3,7 @@ Plugins:
   ✓ css-color
   ✓ foldsearch
   ✓ vim-javascript
+  ✓ jasmine
   - jsbeautifier
   - jslint
   - zencoding
