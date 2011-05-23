@@ -1,13 +1,13 @@
 " display a warning if file encoding isnt utf-8
 set statusline=
 set statusline+=%#warningmsg#
-set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 " set the format of the status line
 set statusline+=%*
 set statusline+=%t              "filename
 set statusline+=%m              "modified flag
 set statusline+=%r              "read only flag
 set statusline+=\ \%y           "filetype
+set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 set statusline+=%=              "left/right separator
 set statusline+=%*              "show the errors/warning in the status line
 set statusline+=%#warningmsg#
