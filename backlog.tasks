@@ -10,7 +10,7 @@ Plugins:
   - zencoding
   - minibufexpl
   - sinatra
-  - haml
+  ✓ haml
   - ack
   - scala
   - jQuery
