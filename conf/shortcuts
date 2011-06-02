@@ -66,13 +66,13 @@ noremap <M-S-d> Y`]p
 " shortcut to select all
 noremap <M-a> ggVG
 " toggle tagbar
-noremap <M-i> :TagbarOpenAutoClose<CR>
-noremap <M-S-i> :TagbarToggle<CR>
+noremap <silent> <M-i> :TagbarOpenAutoClose<CR>
+noremap <silent> <M-S-i> :TagbarToggle<CR>
 " adding a shortcut to toggle comment
 map <M-/> <Leader>c<Space>
 " adding a map to open the gundo
 map <silent> <M-S-u> :GundoToggle<CR>
-noremap <M-,> :Smaller<CR>
-noremap <M-.> :Bigger<CR>
+noremap <silent> <M-,> :Smaller<CR>
+noremap <silent> <M-.> :Bigger<CR>
 inoremap <silent> <M-S-CR> <ESC>:call Toggle_task_status()<CR>i
 noremap <silent> <M-S-CR> :call Toggle_task_status()<CR>
