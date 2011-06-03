@@ -30,3 +30,5 @@ set nofoldenable        "dont fold by default
 set completeopt=longest,menuone
 "disable going to the menu when pressing alt
 set wak=no
+"disable swap files
+set noswf
