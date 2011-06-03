@@ -5,6 +5,7 @@ Plugins:
   ✓ vim-javascript
   ✓ jasmine
   ✓ Jasmine snippets
+  - specky!
   - jsbeautifier
   - jslint
   - zencoding
