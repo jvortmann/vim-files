@@ -15,6 +15,10 @@ Plugins:
   - ack
   - scala
   - jQuery
+  - vimclojure
+  - gorilla
+  - slime
+  - slimv
   - Conque-Shell
   - AutoTag
   - preview
