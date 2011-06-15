@@ -30,3 +30,7 @@ let g:AutoClosePreservDotReg = 0
 
 "made gundo open in the right side
 let g:gundo_right = 1
+
+"set the clojure options
+let vimclojure#HighlightBuiltins=1
+let vimclojure#ParenRainbow=1
