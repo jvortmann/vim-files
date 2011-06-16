@@ -1,6 +1,4 @@
 " vim: filetype=vim
-set nocompatible
-
 filetype indent plugin on
 set ignorecase smartcase showmatch hlsearch incsearch
 "enable auto write
