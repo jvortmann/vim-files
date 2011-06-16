@@ -1,3 +1,6 @@
 " vim: filetype=vim
+set nocompatible
+" force reloading *after* pathogen loaded
+filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
