@@ -1,3 +1,4 @@
+" vim: filetype=vim
 colorscheme candycode
 set number tabstop=2 sw=2 bs=2 mouse=a
 set ruler title cursorline
