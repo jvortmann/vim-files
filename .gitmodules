@@ -91,3 +91,6 @@
 [submodule "bundle/vim-clojure"]
 	path = bundle/vim-clojure
 	url = https://github.com/vim-scripts/VimClojure.git
+[submodule "bundle/zoom"]
+	path = bundle/zoom
+	url = https://github.com/vim-scripts/zoom.vim.git

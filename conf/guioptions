@@ -14,23 +14,21 @@ set noguipty
 set wmnu
 "load the status line
 source ~/.vim/conf/statusline
-"Enable font settings like the type and increase or decrease the font size
+"Set a better font depending on system
 if (has("gui_running"))
   function! s:initialize_font()
     if exists("&guifont")
       if has("mac")
-        set guifont=Monaco:h12
+        set guifont=Monaco:h14
       elseif has("unix")
         if &guifont == ""
-          set guifont=bitstream\ vera\ sans\ mono\ 11
+          set guifont=bitstream\ vera\ sans\ mono\ 13
         endif
       elseif has("win32")
-        set guifont=Consolas:h11,Courier\ New:h10
+        set guifont=Consolas:h11,Courier\ New:h12
       endif
     endif
   endfunction
-  command! -bar -nargs=0 Bigger  :let &guifont = substitute(&guifont,'\d\+$','\=submatch(0)+1','')
-  command! -bar -nargs=0 Smaller :let &guifont = substitute(&guifont,'\d\+$','\=submatch(0)-1','')
   augroup RCVisual
     autocmd!
     autocmd GUIEnter *  call s:initialize_font()
