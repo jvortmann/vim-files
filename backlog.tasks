@@ -4,18 +4,17 @@ Plugins:
   ✓ foldsearch
   ✓ vim-javascript
   ✓ jasmine
-  ✓ Jasmine snippets
-  - specky!
+  ✓ haml
+  ✓ vimclojure
+  - specky! (need only some snippets)
   - jsbeautifier
   - jslint
   - zencoding
   - minibufexpl
   - sinatra
-  ✓ haml
   - ack
   - scala
   - jQuery
-  - vimclojure
   - gorilla
   - slime
   - slimv
@@ -42,4 +41,4 @@ Plugins:
   - xml
 
 Color Scheme:
-  - jellybeans
+  ✓ jellybeans
