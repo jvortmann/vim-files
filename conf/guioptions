@@ -22,7 +22,7 @@ if (has("gui_running"))
         set guifont=Monaco:h14
       elseif has("unix")
         if &guifont == ""
-          set guifont=bitstream\ vera\ sans\ mono\ 13
+          set guifont=bitstream\ vera\ sans\ mono\ 12
         endif
       elseif has("win32")
         set guifont=Consolas:h11,Courier\ New:h12
