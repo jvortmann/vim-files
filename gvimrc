@@ -1,3 +1,4 @@
+" vim: filetype=vim
 " active when using the gui
 colorscheme molokai
 " set the initial window size
