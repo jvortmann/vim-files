@@ -20,6 +20,7 @@ Plugins:
   - slimv
   - Conque-Shell
   - AutoTag
+  - easytags
   - preview
   - coffee-script
   - haskel
@@ -33,6 +34,7 @@ Plugins:
   - blockle
   - neocomplcache
   - ProjectCTags
+  - projtags
   - html5
   - css
   - changed
