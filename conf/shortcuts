@@ -5,7 +5,7 @@ inoremap <expr> <C-Space> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pu
 " map the F2 key to open a side panel with the folder tree
 noremap <silent> <F2> :NERDTreeToggle<Return>
 " set Alt-Shift-f f to search for files
-noremap <silent><M-S-f>f  :FufFile **/<CR>
+noremap <silent><M-S-f>   :FufFile **/<CR>
 noremap <silent><M-S-o>   :FufBuffer<CR>
 noremap <silent><M-S-t>c  :FufBufferTag<CR>
 noremap <silent><M-S-t>a  :FufBufferTagAll<CR>
@@ -22,7 +22,6 @@ noremap <M-S-e> :Rextract<Space>
 noremap <M-S-g> :Rgenerate<Space>
 noremap <M-S-l> :Rlog<CR>
 noremap <M-S-p> :Rpreview<CR>
-noremap <M-S-f>r :Rfind<Space>
 noremap <F3> :A<CR>
 noremap <F4> :R<CR>
 " set mapping to run rake tests
