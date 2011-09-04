@@ -6,6 +6,7 @@ Plugins:
   ✓ jasmine
   ✓ haml
   ✓ vimclojure
+  - UltiSnips https://github.com/vim-scripts/UltiSnips.git
   - specky! (need only some snippets)
   - jsbeautifier
   - jslint
