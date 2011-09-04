@@ -60,6 +60,7 @@ nmap <silent> <M-S-Up> :m-2<CR>==
 nmap <silent> <M-S-k> :m-2<CR>==
 imap <silent> <M-S-Up> <Esc>:m-2<CR>==gi
 imap <silent> <M-S-k> <Esc>:m-2<CR>==gi
+vmap <silent> <M-S-Up> :m-2<CR>gv=gv
 vmap <silent> <M-S-k> :m-2<CR>gv=gv
 " set mapping to duplicate lines
 noremap <M-S-d> Y`]p
