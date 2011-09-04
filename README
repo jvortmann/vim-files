@@ -23,8 +23,7 @@ NerdTree
 <F2>                        : open the NERDTree windows (drawer)
 
 Search/Open
-<Alt/Option-Shift-f> f      : search for a file (it is possible to filter the search)
-<Alt/Option-Shift-f> r      : search using the rails plugin
+<Alt/Option-Shift-f>        : search for a file (it is possible to filter the search)
 <Alt/Option-Shift-o>        : show the open files (buffers). The last viewed file is selected and you can also filter the result
 <Alt/Option-Shift-t> c      : search for a tag in the current buffer
 <Alt/Option-Shift-t> a      : search for a tag in all open buffers
@@ -67,8 +66,8 @@ Windows
 <Control-j>                 : goes to the splitted window at the down
 <Control-k>                 : goes to the splitted window at the up
 <Control-l>                 : goes to the splitted window at the right
-<Alt-,>                     : decrease the font size
-<Alt-.>                     : increase the font size
+-                           : decrease the font size
++                           : increase the font size
 
 Dealing with lines
 <Alt/Option-Shift-Up>       : move the selected text or line up
