@@ -41,6 +41,7 @@ Rails specific (you can press tab to auto-complete in most of them)
 <Alt/Option-Shift-g>        : runs generate
 <Alt/Option-Shift-l>        : opens the log
 <Alt/Option-Shift-p>        : preview the file
+<Alt/Option-Shift-t> t      : create tags file for the current project (works only for rails projects)
 <F3>                        : goes to the test file (test unit/rspec)
 <F4>                        : goes to the migration file (models) or view file (controller method)
 <F5>                        : runs the test file

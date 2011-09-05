@@ -13,7 +13,7 @@ noremap <silent><M-S-t>w  :FufBufferTagWithCursorWord<CR>
 noremap <silent><M-S-t>W  :FufBufferTagAllWithCursorWord<CR>
 noremap <silent><M-S-t>s  :FufBufferTagWithSelectedText<CR>
 noremap <silent><M-S-t>S  :FufBufferTagAllWithSelectedText<CR>
-" set mapping to Rails plugin
+" set mapping to Rails/Rake plugins
 noremap <M-S-m> :Rmodel<Space>
 noremap <M-S-c> :Rcontroller<Space>
 noremap <M-S-v> :Rview<Space>
@@ -22,6 +22,7 @@ noremap <M-S-e> :Rextract<Space>
 noremap <M-S-g> :Rgenerate<Space>
 noremap <M-S-l> :Rlog<CR>
 noremap <M-S-p> :Rpreview<CR>
+noremap <silent><M-S-t>t  :Rtags<CR>
 noremap <F3> :A<CR>
 noremap <F4> :R<CR>
 " set mapping to run rake tests
