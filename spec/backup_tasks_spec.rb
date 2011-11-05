@@ -2,23 +2,11 @@ require 'fakefs/safe'
 require 'fakefs/spec_helpers'
 require 'rake'
 require 'rspec'
-
-load File.expand_path(File.join(File.dirname(__FILE__), "..", "Rakefile"))
+require 'spec_helper'
 
 describe "Rake task" do
   include FakeFS::SpecHelpers
-
-  before :each do
-    ENV['HOME'] = "/home/john"
-    FileUtils.mkdir_p "/home/john"
-  end
-
-  def reenable_prerequisites(task)
-    Rake::Task[task].prerequisite_tasks.each do |prerequisite|
-      prerequisite.reenable
-    end
-  end
-  private :reenable_prerequisites
+  include Rake::SpecHelpers
 
   context "for backing up" do
     context "the vim folder" do
