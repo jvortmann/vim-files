@@ -59,7 +59,7 @@ describe "Rake task" do
 
       it "should not copy if it doesn't exist" do
         Rake::Task["backup:vimrc"].invoke
-        File.should_not exist File.expand_path("~/.vimrc")
+        File.should_not exist File.expand_path("~/.vimrc.backup")
       end
     end
 
@@ -80,7 +80,7 @@ describe "Rake task" do
 
       it "should not copy if it doesn't exist" do
         Rake::Task["backup:gvimrc"].invoke
-        File.should_not exist File.expand_path("~/.gvimrc")
+        File.should_not exist File.expand_path("~/.gvimrc.backup")
       end
     end
   end
