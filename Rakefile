@@ -82,4 +82,14 @@ namespace :remove do
   task :vim_folder do
     FileUtils.rm_r File.expand_path("~/.vim") if File.exist? File.expand_path("~/.vim")
   end
+
+  task :vimrc do
+    FileUtils.rm File.expand_path("~/.vimrc") if File.exist? File.expand_path("~/.vimrc")
+  end
+
+  task :gvimrc do
+    FileUtils.rm File.expand_path("~/.gvimrc") if File.exist? File.expand_path("~/.gvimrc")
+  end
+
+  task :all => ["remove:vim_folder", "remove:vimrc", "remove:gvimrc"]
 end
