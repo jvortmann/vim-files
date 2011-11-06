@@ -4,6 +4,9 @@ task :backup => 'backup:all'
 desc "Copy local all config"
 task :local => 'local:all'
 
+desc "Restore all config from backup"
+task :restore => 'restore:all'
+
 namespace :backup do
   desc "Backup vim folder"
   task :vim_folder do
@@ -35,4 +38,23 @@ namespace :local do
   end
 
   task :all => [:vimrc, :gvimrc]
+end
+
+namespace :restore do
+  desc "Restore vim folder from backup"
+  task :vim_folder do
+    FileUtils.cp_r File.expand_path("~/.vim.backup"), File.expand_path("~/.vim") if File.exist? File.expand_path("~/.vim.backup")
+  end
+
+  desc "Restore vimrc from backup"
+  task :vimrc do
+    FileUtils.cp File.expand_path("~/.vimrc.backup"), File.expand_path("~/.vimrc") if File.exist? File.expand_path("~/.vimrc.backup")
+  end
+
+  desc "Restore gvimrc from backup"
+  task :gvimrc do
+    FileUtils.cp File.expand_path("~/.gvimrc.backup"), File.expand_path("~/.gvimrc") if File.exist? File.expand_path("~/.gvimrc.backup")
+  end
+
+  task :all => [:vim_folder, :vimrc, :gvimrc]
 end
