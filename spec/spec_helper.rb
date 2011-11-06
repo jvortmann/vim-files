@@ -16,6 +16,9 @@ module Rake
       describe_block.before :each do
         ENV['HOME'] = "/home/john"
         FileUtils.mkdir_p "/home/john"
+
+        ENV['REPO_PWD'] = File.expand_path("~/vim_repo")
+        FileUtils.mkdir_p File.expand_path("~/vim_repo")
       end
    end
 
