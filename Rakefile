@@ -1,10 +1,10 @@
-desc "Backup all config"
+desc "Backup all configs"
 task :backup => 'backup:all'
 
-desc "Copy local all config"
+desc "Keep all local configs"
 task :local => 'local:all'
 
-desc "Restore all config from backup"
+desc "Restore all configs from backup"
 task :restore => 'restore:all'
 
 namespace :backup do
@@ -27,12 +27,12 @@ namespace :backup do
 end
 
 namespace :local do
-  desc "Keep local vimrc setup"
+  desc "Keep vimrc local config"
   task :vimrc do
     FileUtils.cp File.expand_path("~/.vimrc"), File.expand_path("~/.vimrc.local") if File.exist? File.expand_path("~/.vimrc")
   end
 
-  desc "Keep local gvimrc setup"
+  desc "Keep gvimrc local config"
   task :gvimrc do
     FileUtils.cp File.expand_path("~/.gvimrc"), File.expand_path("~/.gvimrc.local") if File.exist? File.expand_path("~/.gvimrc")
   end
