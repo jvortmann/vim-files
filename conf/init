@@ -2,5 +2,7 @@
 set nocompatible
 " force reloading *after* pathogen loaded
 filetype off
-call pathogen#runtime_append_all_bundles()
+" initiate pathogen from bundle
+runtime bundle/pathogen/autoload/pathogen.vim
+call pathogen#infect()
 call pathogen#helptags()

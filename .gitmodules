@@ -112,3 +112,6 @@
 [submodule "bundle/slim"]
 	path = bundle/slim
 	url = https://github.com/bbommarito/vim-slim.git
+[submodule "bundle/pathogen"]
+	path = bundle/pathogen
+	url = https://github.com/tpope/vim-pathogen.git
