@@ -79,9 +79,6 @@
 [submodule "bundle/vim-javascript"]
 	path = bundle/vim-javascript
 	url = http://github.com/pangloss/vim-javascript
-[submodule "bundle/jasmine"]
-	path = bundle/jasmine
-	url = https://github.com/claco/jasmine.vim.git
 [submodule "bundle/vim-haml"]
 	path = bundle/vim-haml
 	url = https://github.com/tpope/vim-haml.git
