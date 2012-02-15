@@ -112,6 +112,3 @@
 [submodule "bundle/pathogen"]
 	path = bundle/pathogen
 	url = https://github.com/tpope/vim-pathogen.git
-[submodule "bundle/jasmine"]
-	path = bundle/jasmine
-	url = https://jvortmann@github.com/jvortmann/jasmine.vim.git
