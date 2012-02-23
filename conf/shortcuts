@@ -82,3 +82,5 @@ cmap W w
 cmap WQ wq
 cmap wQ wq
 cmap Q q
+" remove highlight
+nmap <silent> <CR> :noh<CR>
