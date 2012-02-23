@@ -9,3 +9,5 @@ if has("mac")
   " enabling the use of the meta key (alt/option) on the Mac
   set macmeta
 endif
+" add marker for when changing something
+set cpo+=$
