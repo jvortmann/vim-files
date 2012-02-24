@@ -31,3 +31,5 @@ set completeopt=longest,menuone
 set wak=no
 "disable swap files
 set noswf
+" reducing update time to 0.5s
+set updatetime=500
