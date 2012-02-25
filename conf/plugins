@@ -37,5 +37,8 @@ let vimclojure#HighlightBuiltins=1
 let vimclojure#ParenRainbow=1
 
 " set how the tags will be updated and how often
-:let g:easytags_dynamic_files = 2
-:let g:easytags_updatetime_min = 500
+let g:easytags_dynamic_files = 2
+let g:easytags_updatetime_min = 500
+
+" make css color not change the update time to crazy 100ms
+let g:cssColorVimDoNotMessMyUpdatetime = 1
