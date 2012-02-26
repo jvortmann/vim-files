@@ -33,3 +33,5 @@ set wak=no
 set noswf
 " reducing update time to 0.5s
 set updatetime=500
+" saving when losing focus
+au FocusLost * :wa
