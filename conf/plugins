@@ -42,3 +42,6 @@ let g:easytags_updatetime_min = 500
 
 " make css color not change the update time to crazy 100ms
 let g:cssColorVimDoNotMessMyUpdatetime = 1
+
+" disable the default zoom shortcuts
+let g:do_not_use_default_shortcuts_for_zoom = 1

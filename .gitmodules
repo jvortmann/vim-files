@@ -82,9 +82,6 @@
 [submodule "bundle/vim-clojure"]
 	path = bundle/vim-clojure
 	url = https://github.com/vim-scripts/VimClojure.git
-[submodule "bundle/zoom"]
-	path = bundle/zoom
-	url = https://github.com/vim-scripts/zoom.vim.git
 [submodule "bundle/tlib"]
 	path = bundle/tlib
 	url = https://github.com/tomtom/tlib_vim.git
@@ -112,3 +109,6 @@
 [submodule "bundle/easytags"]
 	path = bundle/easytags
 	url = https://github.com/vim-scripts/easytags.vim.git
+[submodule "bundle/zoom"]
+	path = bundle/zoom
+	url = https://jvortmann@github.com/jvortmann/zoom.vim.git
