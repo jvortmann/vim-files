@@ -1,10 +1,11 @@
 " vim: filetype=vim
 " display a warning if file encoding isnt utf-8
 set statusline=
-set statusline+=%#warningmsg#
+set statusline=[%n]             "buffer number
+set statusline+=\ \%#warningmsg#
 " set the format of the status line
 set statusline+=%*
-set statusline+=%t              "filename
+set statusline+=%f              "filename
 set statusline+=%m              "modified flag
 set statusline+=%r              "read only flag
 set statusline+=\ \%y           "filetype

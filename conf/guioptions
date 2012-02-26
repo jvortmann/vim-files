@@ -1,11 +1,8 @@
 " vim: filetype=vim
 colorscheme molokai
+"colorscheme badwolf
 set number tabstop=2 sw=2 bs=2 mouse=a
 set ruler title cursorline
-" hide toolbar by default
-set go-=T
-set go-=L
-set go-=r
 " set the space from the current line when scrolling
 set scrolloff=3
 " set the colors when using terminal commands
@@ -16,9 +13,24 @@ set wmnu
 source ~/.vim/conf/statusline
 "Set a better font depending on system
 if (has("gui_running"))
+  " Remove all the UI cruft
+  set go-=T
+  set go-=l
+  set go-=L
+  set go-=r
+  set go-=R
+
+  highlight SpellBad term=underline gui=undercurl guisp=Orange
+
+  " Different cursors for different modes.
+  set guicursor=n-c:block-Cursor-blinkon0
+  set guicursor+=v:block-vCursor-blinkon0
+  set guicursor+=i-ci:ver20-iCursor
   function! s:initialize_font()
     if exists("&guifont")
       if has("mac")
+        " Full screen means FULL screen
+        set fuoptions=maxvert,maxhorz
         set guifont=Monaco:h14
       elseif has("unix")
         if &guifont == ""

@@ -1,6 +1,7 @@
 " vim: filetype=vim
 " active when using the gui
 colorscheme molokai
+"colorscheme badwolf
 " set the initial window size
 set co=160
 set lines=50
