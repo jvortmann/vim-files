@@ -10,6 +10,8 @@ A set of Vim configurations to use specially with Rails + Git
 - You need to run 'git submodule update --init' everytime you update to fetch the new version of the modules
 - To see a list of modules/plugins that are being used, look at the .gitmodules file
 
+Font from: https://gist.github.com/1595572
+
 Needs:
 - ctags               (>= 5.8)      http://ctags.sourceforge.net/
 - git                 (>= 1.7.4.4)  http://git-scm.com/

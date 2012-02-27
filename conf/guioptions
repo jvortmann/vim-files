@@ -31,7 +31,11 @@ if (has("gui_running"))
       if has("mac")
         " Full screen means FULL screen
         set fuoptions=maxvert,maxhorz
-        set guifont=Monaco:h14
+        if exists('g:enable_powerline')
+          set guifont=Menlo\ For\ Powerline:h14
+        else
+          set guifont=Monaco:h14
+        endif
       elseif has("unix")
         if &guifont == ""
           set guifont=bitstream\ vera\ sans\ mono\ 12

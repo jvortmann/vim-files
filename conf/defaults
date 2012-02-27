@@ -39,3 +39,5 @@ au FocusLost * :wa
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:⌴
 set showbreak=↪
 set fillchars=diff:⣿,vert:│
+"enable powerline
+let g:enable_powerline = 1
