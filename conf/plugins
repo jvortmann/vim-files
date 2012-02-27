@@ -47,7 +47,7 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 let g:do_not_use_default_shortcuts_for_zoom = 1
 
 " setup powerline
-if exists('g:enable_powerline')
+if g:enable_powerline
   let g:Powerline_symbols = 'fancy'
 else
   let g:Powerline_loaded = 0

@@ -11,6 +11,6 @@ endif
 set cpo+=$
 
 " setup powerline
-if exists('g:enable_powerline')
+if g:enable_powerline
   hi StatusLine guifg=#262626 guibg=fg
 endif
