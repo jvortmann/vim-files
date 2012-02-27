@@ -44,7 +44,7 @@ let g:easytags_updatetime_min = 500
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 " disable the default zoom shortcuts
-let g:do_not_use_default_shortcuts_for_zoom = 1
+let g:use_default_shortcuts_for_zoom = 0
 
 " setup powerline
 if g:enable_powerline
