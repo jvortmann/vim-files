@@ -1,12 +1,45 @@
+TODO update Readme
+TODO made Readme markdown
+TODO clean shortcuts
+
+
 Plugins:
-  ✓ vim-task
+  ✓ autoclose
+  ✓ bundler
   ✓ css-color
+  ✓ easytags
+  ✓ endwise
   ✓ foldsearch
-  ✓ vim-javascript
+  ✓ fugitive
+  ✓ fuzzyfinder
+  ✓ gundo
+  ✓ jade
   ✓ jasmine
+  ✓ javacomplete
+  ✓ matchit
+  ✓ nerdcommenter
+  ✓ nerdtree
+  ✓ pathogen
+  ✓ powerline
+  ✓ ragtag
+  ✓ rails
+  ✓ rake
+  ✓ repeat
+  ✓ ruby
+  ✓ showmarks
+  ✓ slim
+  ✓ snipmate
+  ✓ snippets
+  ✓ surround
+  ✓ syntactic
+  ✓ tagbar
+  ✓ textobj-rubyblock
+  ✓ textobj-user
+  ✓ clojure
   ✓ haml
-  ✓ vimclojure
-  - UltiSnips https://github.com/vim-scripts/UltiSnips.git
+  ✓ javascript
+  ✓ task
+  ✓ zoom
   - specky! (need only some snippets)
   - jsbeautifier
   - jslint
@@ -21,7 +54,6 @@ Plugins:
   - slimv
   - Conque-Shell
   - AutoTag
-  - easytags
   - preview
   - coffee-script
   - haskel
@@ -31,11 +63,8 @@ Plugins:
   - simple-javascript-indenter
   - pair-tools
   - opener
-  - indexer.tar.gz
   - blockle
   - neocomplcache
-  - ProjectCTags
-  - projtags
   - html5
   - css
   - changed
@@ -45,3 +74,5 @@ Plugins:
 
 Color Scheme:
   ✓ jellybeans
+  ✓ badwolf
+  ✓ molokai
