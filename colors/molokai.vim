@@ -103,8 +103,8 @@ hi MoreMsg         guifg=#E6DB74
 " Completion Menu {{{
 hi Pmenu           guifg=#cccccc guibg=#232728
 hi PmenuSel        guifg=#000000 guibg=#AAF412
-hi PmenuSbar                     guibg=#131414
-hi PmenuThumb      guifg=#777777
+hi PmenuSbar                     guibg=#232728
+hi PmenuThumb      guifg=#333333
 " }}}
 
 hi PreCondit       guifg=#A6E22E               gui=bold
@@ -202,8 +202,8 @@ if &t_Co > 255
    " complete menu
    hi Pmenu           ctermfg=242 ctermbg=234
    hi PmenuSel        ctermfg=235 ctermbg=118
-   hi PmenuSbar                   ctermbg=232
-   hi PmenuThumb      ctermfg=81
+   hi PmenuSbar       ctermfg=242 ctermbg=234
+   hi PmenuThumb      ctermfg=239
 
    hi PreCondit       ctermfg=118               cterm=bold
    hi PreProc         ctermfg=118
