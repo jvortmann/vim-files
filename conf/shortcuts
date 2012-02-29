@@ -55,6 +55,9 @@ inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
+" set mapping to not jump when using Shift Up/Down
+noremap <S-Up> <Up>
+noremap <S-Down> <Down>
 " set Option-Shift-{Down-Up} to move lines up and down
 nmap <silent> <M-S-Down> :m+<CR>==
 nmap <silent> <M-S-j> :m+<CR>==
