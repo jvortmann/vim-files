@@ -9,8 +9,3 @@ if has("mac")
 endif
 " add marker for when changing something
 set cpo+=$
-
-" setup powerline
-if g:enable_powerline
-  hi StatusLine guifg=#262626 guibg=fg
-endif
