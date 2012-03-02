@@ -40,6 +40,7 @@ Plugins:
   ✓ javascript
   ✓ task
   ✓ zoom
+  - easymotion
   - specky! (need only some snippets)
   - jsbeautifier
   - jslint
