@@ -86,9 +86,9 @@ map <silent> <M-S-u> :GundoToggle<CR>
 inoremap <silent> <M-S-CR> <ESC>:call Toggle_task_status()<CR>i
 noremap <silent> <M-S-CR> :call Toggle_task_status()<CR>
 " fix the damn uppercase WQs
-cmap W w
-cmap WQ wq
-cmap wQ wq
-cmap Q q
+"cmap W w
+"cmap WQ wq
+"cmap wQ wq
+"cmap Q q
 " remove highlight
 nmap <silent> <CR> :noh<CR>
