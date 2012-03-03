@@ -13,6 +13,9 @@ set fileencoding=utf-8
 "spaces instead of tabs
 set sta
 set et
+"set auto indent and smart indent
+set ai
+set si
 "enable syntax highligh
 syntax on
 "allow backspacing over everything in insert mode
