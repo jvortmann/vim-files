@@ -11,6 +11,8 @@ set noguipty
 set wmnu
 "load the status line
 source ~/.vim/conf/statusline
+" make fullscreen the default
+set fullscreen
 "Set a better font depending on system
 if (has("gui_running"))
   " Remove all the UI cruft
