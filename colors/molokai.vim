@@ -63,6 +63,7 @@ hi DiffText                      guibg=#4A4340 gui=italic,bold
 hi Cursor          guifg=#000000 guibg=#AAF412
 hi iCursor         guifg=#000000 guibg=#66D9EF
 hi vCursor         guifg=#000000 guibg=#FD971F
+hi rCursor         guifg=#000000 guibg=#D80000
 
 " }}}
 " Block Colors {{{
