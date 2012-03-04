@@ -9,3 +9,5 @@ if has("mac")
 endif
 " add marker for when changing something
 set cpo+=$
+" make fullscreen the default
+set fullscreen
