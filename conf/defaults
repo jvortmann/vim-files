@@ -1,6 +1,6 @@
 " vim: filetype=vim
 filetype indent plugin on
-set ignorecase smartcase showmatch hlsearch incsearch
+set ignorecase smartcase gdefault showmatch hlsearch incsearch
 "enable auto write
 set autowriteall
 "automatically reload the files if they were modified outside vim
