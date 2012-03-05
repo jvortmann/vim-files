@@ -40,6 +40,7 @@ Plugins:
   ✓ javascript
   ✓ task
   ✓ zoom
+  - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - easymotion
   - specky! (need only some snippets)
   - jsbeautifier
