@@ -92,9 +92,6 @@ noremap <silent> <M-S-CR> :call Toggle_task_status()<CR>
 "cmap Q q
 " remove highlight
 nmap <silent> <CR> :noh<CR>
-" use the tab in visual mode to indent
-vmap <Tab> >gv
-vmap <S-Tab> <gv
 " don't deselect when indenting in visual mode
-vmap > >gv
-vmap < <gv
+vnoremap > >gv
+vnoremap < <gv
