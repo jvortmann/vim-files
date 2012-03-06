@@ -10,12 +10,10 @@ set hidden
 "set proper encoding for files
 set encoding=utf-8
 set fileencoding=utf-8
-"spaces instead of tabs
-set sta
-set et
+" consistent indenting options
+set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
 "set auto indent and smart indent
-set ai
-set si
+set autoindent smartindent
 "enable syntax highligh
 syntax on
 "allow backspacing over everything in insert mode
