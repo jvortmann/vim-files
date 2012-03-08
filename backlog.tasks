@@ -42,6 +42,7 @@ Plugins:
   ✓ zoom
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - easymotion
+  - tabular
   - specky! (need only some snippets)
   - jsbeautifier
   - jslint
