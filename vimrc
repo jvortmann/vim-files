@@ -2,6 +2,8 @@
 source $HOME/.vim/conf/init
 "load the default options
 source $HOME/.vim/conf/defaults
+"load the autocmd options
+source $HOME/.vim/conf/autocmd
 "load the gui options
 source $HOME/.vim/conf/guioptions
 "load plugins configuration

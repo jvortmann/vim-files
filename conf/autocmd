@@ -1,0 +1,6 @@
+" vim: filetype=vim
+augroup RUBY
+  autocmd!
+  autocmd BufNewFile,BufRead */spec/**/*.rb,*_spec.rb compiler rspec " set the rspec compiler
+  autocmd BufNewFile,BufRead */test/**/*.rb,*_test.rb compiler rubyunit " set the test unit compiler
+augroup END
