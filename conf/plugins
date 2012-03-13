@@ -50,8 +50,6 @@ let g:use_default_shortcuts_for_zoom = 0
 if g:enable_powerline
   if has("mac")
     let g:Powerline_symbols = 'fancy'
-  else
-    let g:Powerline_symbols = 'complatible'
   endif
 else
   let g:Powerline_loaded = 0
