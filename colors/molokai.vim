@@ -60,9 +60,10 @@ hi DiffText                      guibg=#4A4340 gui=italic,bold
 " }}}
 " Cursor {{{
 
-hi Cursor          guifg=#000000 guibg=#F35FBC
-hi iCursor         guifg=#000000 guibg=#FDFF00
-hi vCursor         guifg=#000000 guibg=#AAF412
+hi Cursor          guifg=#000000 guibg=#AAF412
+hi iCursor         guifg=#000000 guibg=#66D9EF
+hi vCursor         guifg=#000000 guibg=#FD971F
+hi rCursor         guifg=#000000 guibg=#D80000
 
 " }}}
 " Block Colors {{{
@@ -75,8 +76,8 @@ hi BlockColor4 guibg=#424242
 " }}}
 " Makegreen {{{
 
-hi GreenBar term=reverse ctermfg=white ctermbg=green guifg=black guibg=#9edf1c
-hi RedBar   term=reverse ctermfg=white ctermbg=red guifg=white guibg=#C50048
+hi GreenBar term=reverse ctermfg=16 ctermbg=green guifg=black guibg=#9edf1c
+hi RedBar   term=reverse ctermfg=16 ctermbg=red guifg=white guibg=#C50048
 
 " }}}
 " EasyMotion {{{
@@ -103,8 +104,8 @@ hi MoreMsg         guifg=#E6DB74
 " Completion Menu {{{
 hi Pmenu           guifg=#cccccc guibg=#232728
 hi PmenuSel        guifg=#000000 guibg=#AAF412
-hi PmenuSbar                     guibg=#131414
-hi PmenuThumb      guifg=#777777
+hi PmenuSbar                     guibg=#232728
+hi PmenuThumb      guifg=#333333
 " }}}
 
 hi PreCondit       guifg=#A6E22E               gui=bold
@@ -120,7 +121,7 @@ hi SpecialComment  guifg=#465457               gui=bold
 hi Special         guifg=#66D9EF guibg=bg      gui=italic
 hi SpecialKey      guifg=#888A85               gui=italic
 hi Statement       guifg=#F92672               gui=bold
-hi StatusLine      guifg=#D05722 guibg=fg
+hi StatusLine      guibg=#cccccc guifg=#232728
 hi StatusLineNC    guifg=#262626 guibg=#080808
 hi StorageClass    guifg=#FD971F               gui=italic
 hi Structure       guifg=#66D9EF
@@ -133,7 +134,7 @@ hi Type            guifg=#66D9EF               gui=none
 hi Underlined      guifg=#808080               gui=underline
 
 hi WarningMsg      guifg=#FFFFFF guibg=#333333 gui=bold
-hi WildMenu        guifg=#66D9EF guibg=#000000
+hi WildMenu        guifg=#000000 guibg=#AAF412
 
 hi MyTagListFileName guifg=#F92672 guibg=bg gui=bold
 
@@ -146,8 +147,8 @@ if has("spell")
 endif
 " }}}
 " Visual Mode {{{
-hi VisualNOS  guibg=#403D3D
-hi Visual     guibg=#403D3D
+hi VisualNOS  guibg=#4F4B4B
+hi Visual     guibg=#4F4B4B
 " }}}
 " Invisible character colors {{{
 highlight NonText    guifg=#444444 guibg=bg
@@ -162,7 +163,7 @@ if &t_Co > 255
    hi String          ctermfg=144
    hi Conditional     ctermfg=161               cterm=bold
    hi Constant        ctermfg=135               cterm=bold
-   hi Cursor          ctermfg=16  ctermbg=253
+   hi Cursor          ctermfg=235 ctermbg=118
    hi Debug           ctermfg=225               cterm=bold
    hi Define          ctermfg=81
    hi Delimiter       ctermfg=241
@@ -200,10 +201,10 @@ if &t_Co > 255
    hi Operator        ctermfg=161
 
    " complete menu
-   hi Pmenu           ctermfg=81  ctermbg=16
-   hi PmenuSel                    ctermbg=244
-   hi PmenuSbar                   ctermbg=232
-   hi PmenuThumb      ctermfg=81
+   hi Pmenu           ctermfg=242 ctermbg=234
+   hi PmenuSel        ctermfg=235 ctermbg=118
+   hi PmenuSbar       ctermfg=242 ctermbg=234
+   hi PmenuThumb      ctermfg=239
 
    hi PreCondit       ctermfg=118               cterm=bold
    hi PreProc         ctermfg=118
@@ -219,8 +220,8 @@ if &t_Co > 255
    hi SpecialKey      ctermfg=245
 
    hi Statement       ctermfg=161               cterm=bold
-   hi StatusLine      ctermfg=130 ctermbg=15
-   hi StatusLineNC    ctermfg=242 ctermbg=15
+   hi StatusLine      ctermfg=234 ctermbg=255
+   hi StatusLineNC    ctermfg=233 ctermbg=233
    hi StorageClass    ctermfg=208
    hi Structure       ctermfg=81
    hi Tag             ctermfg=161
@@ -235,7 +236,7 @@ if &t_Co > 255
    hi VisualNOS                   ctermbg=238
    hi Visual                      ctermbg=235
    hi WarningMsg      ctermfg=231 ctermbg=238   cterm=bold
-   hi WildMenu        ctermfg=81  ctermbg=16
+   hi WildMenu        ctermfg=235 ctermbg=118
 
    hi Normal          ctermfg=252 ctermbg=233
    hi Comment         ctermfg=59

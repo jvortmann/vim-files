@@ -6,11 +6,8 @@ set lines=50
 if has("mac")
   " enabling the use of the meta key (alt/option) on the Mac
   set macmeta
+  " make fullscreen the default
+  set fullscreen
 endif
 " add marker for when changing something
 set cpo+=$
-
-" setup powerline
-if g:enable_powerline
-  hi StatusLine guifg=#262626 guibg=fg
-endif

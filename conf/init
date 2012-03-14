@@ -5,4 +5,3 @@ filetype off
 " initiate pathogen from bundle
 runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
-call pathogen#helptags()
