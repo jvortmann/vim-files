@@ -16,16 +16,16 @@ let g:colors_name="molokai"
 
 hi Normal          guifg=#F8F8F2 guibg=#1B1E1F
 hi Folded          guifg=#666666 guibg=bg
-hi CursorLine                    guibg=#232728
-hi CursorColumn                  guibg=#232728
-hi ColorColumn                   guibg=#232728
+hi CursorLine                    guibg=#393A3B
+hi CursorColumn                  guibg=#393A3B
+hi ColorColumn                   guibg=#393A3B
 hi LineNr          guifg=#AAAAAA guibg=bg
 hi FoldColumn      guifg=#AAAAAA guibg=bg
 hi VertSplit       guifg=#AAAAAA guibg=bg gui=none
-hi Search          guifg=#000000 guibg=#E4E500
-hi IncSearch       guibg=#000000 guifg=#FF8D00
+hi Search          guifg=#000000 guibg=#FF8D00
+hi IncSearch       guibg=#000000 guifg=#E4E500
 hi Operator        guifg=#F92672
-hi MatchParen      guifg=#ffec00 guibg=#232728 gui=bold
+hi MatchParen      guifg=#ffec00 guibg=#393A3B gui=bold
 
 " }}}
 " Syntax {{{
@@ -102,9 +102,9 @@ hi ModeMsg         guifg=#E6DB74
 hi MoreMsg         guifg=#E6DB74
 
 " Completion Menu {{{
-hi Pmenu           guifg=#cccccc guibg=#232728
+hi Pmenu           guifg=#cccccc guibg=#393A3B
 hi PmenuSel        guifg=#000000 guibg=#AAF412
-hi PmenuSbar                     guibg=#232728
+hi PmenuSbar                     guibg=#393A3B
 hi PmenuThumb      guifg=#333333
 " }}}
 
@@ -186,7 +186,7 @@ if &t_Co > 255
    hi Function        ctermfg=118
    hi Identifier      ctermfg=208
    hi Ignore          ctermfg=244 ctermbg=232
-   hi IncSearch       ctermfg=193 ctermbg=16
+   hi IncSearch       ctermfg=229 ctermbg=black
 
    hi Keyword         ctermfg=161               cterm=bold
    hi Label           ctermfg=229               cterm=none
@@ -201,16 +201,16 @@ if &t_Co > 255
    hi Operator        ctermfg=161
 
    " complete menu
-   hi Pmenu           ctermfg=242 ctermbg=234
-   hi PmenuSel        ctermfg=235 ctermbg=118
-   hi PmenuSbar       ctermfg=242 ctermbg=234
+   hi Pmenu           ctermfg=242 ctermbg=236
+   hi PmenuSel        ctermfg=black ctermbg=118
+   hi PmenuSbar       ctermfg=242 ctermbg=236
    hi PmenuThumb      ctermfg=239
 
    hi PreCondit       ctermfg=118               cterm=bold
    hi PreProc         ctermfg=118
    hi Question        ctermfg=81
    hi Repeat          ctermfg=161               cterm=bold
-   hi Search          ctermfg=253 ctermbg=66
+   hi Search          ctermfg=black ctermbg=166
 
    " marks column
    hi SignColumn      ctermfg=118 ctermbg=235
@@ -233,16 +233,16 @@ if &t_Co > 255
    hi Underlined      ctermfg=244               cterm=underline
 
    hi VertSplit       ctermfg=244 ctermbg=232   cterm=bold
-   hi VisualNOS                   ctermbg=238
-   hi Visual                      ctermbg=235
+   hi VisualNOS                   ctermbg=236
+   hi Visual                      ctermbg=236
    hi WarningMsg      ctermfg=231 ctermbg=238   cterm=bold
-   hi WildMenu        ctermfg=235 ctermbg=118
+   hi WildMenu        ctermfg=black ctermbg=118
 
    hi Normal          ctermfg=252 ctermbg=233
    hi Comment         ctermfg=59
-   hi CursorLine                  ctermbg=234   cterm=none
-   hi CursorColumn                ctermbg=234
-   hi ColorColumn                 ctermbg=234
+   hi CursorLine                  ctermbg=236   cterm=none
+   hi CursorColumn                ctermbg=236
+   hi ColorColumn                 ctermbg=236
    hi LineNr          ctermfg=250 ctermbg=233
    hi NonText         ctermfg=240 ctermbg=233
 end " }}}
