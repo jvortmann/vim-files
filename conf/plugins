@@ -54,3 +54,6 @@ if g:enable_powerline
 else
   let g:Powerline_loaded = 0
 endif
+
+" use own color for the redgreen bar
+let g:jasmine_use_own_colors = 0

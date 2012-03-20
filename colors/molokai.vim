@@ -76,8 +76,8 @@ hi BlockColor4 guibg=#424242
 " }}}
 " Makegreen {{{
 
-hi GreenBar term=reverse ctermfg=16 ctermbg=green guifg=black guibg=#9edf1c
-hi RedBar   term=reverse ctermfg=16 ctermbg=red guifg=white guibg=#C50048
+hi GreenBar term=reverse ctermfg=16 ctermbg=green guifg=black guibg=#A6E22E
+hi RedBar   term=reverse ctermfg=16 ctermbg=red guifg=#FAFAFA guibg=#D80000
 
 " }}}
 " EasyMotion {{{
