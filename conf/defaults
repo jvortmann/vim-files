@@ -32,8 +32,6 @@ set completeopt=longest,menuone,preview
 set wak=no
 "disable swap files
 set noswf
-" reducing update time to 0.5s
-set updatetime=500
 " saving when losing focus
 au FocusLost * :wa
 " change the invisible chars
