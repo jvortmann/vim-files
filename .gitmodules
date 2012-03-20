@@ -106,9 +106,6 @@
 [submodule "bundle/pathogen"]
 	path = bundle/pathogen
 	url = https://github.com/tpope/vim-pathogen.git
-[submodule "bundle/easytags"]
-	path = bundle/easytags
-	url = https://github.com/vim-scripts/easytags.vim.git
 [submodule "bundle/zoom"]
 	path = bundle/zoom
 	url = https://github.com/jvortmann/zoom.vim.git
