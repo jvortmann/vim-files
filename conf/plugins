@@ -53,3 +53,6 @@ endif
 
 " use own color for the redgreen bar
 let g:jasmine_use_own_colors = 0
+
+" setting exclude path for fuzzy finder removing /tmp and /vendor folders
+let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|(^|[/\\])(tmp|vendor)($|[/\\])'
