@@ -2,6 +2,6 @@
 set nocompatible
 " force reloading *after* pathogen loaded
 filetype off
-" initiate pathogen from bundle
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
+" initiate vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
