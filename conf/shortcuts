@@ -6,7 +6,9 @@ inoremap <expr> <C-Space> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pu
 noremap <silent> <F2> :NERDTreeToggle<Return>
 " set Alt-Shift-f f to search for files
 noremap <silent><M-S-f>   :FufFile **/<CR>
+noremap <silent><leader>f :FufFile **/<CR>
 noremap <silent><M-S-o>   :FufBuffer<CR>
+noremap <silent><leader>o   :FufBuffer<CR>
 noremap <silent><M-S-t>c  :FufBufferTag<CR>
 noremap <silent><M-S-t>a  :FufBufferTagAll<CR>
 noremap <silent><M-S-t>w  :FufBufferTagWithCursorWord<CR>
@@ -14,13 +16,15 @@ noremap <silent><M-S-t>W  :FufBufferTagAllWithCursorWord<CR>
 noremap <silent><M-S-t>s  :FufBufferTagWithSelectedText<CR>
 noremap <silent><M-S-t>S  :FufBufferTagAllWithSelectedText<CR>
 " set mapping to Rails/Rake plugins
-noremap <M-S-m> :Rmodel<Space>
-noremap <M-S-c> :Rcontroller<Space>
-noremap <M-S-v> :Rview<Space>
+noremap <M-S-m>   :Rmodel<Space>
+noremap <leader>m :Rmodel<Space>
+noremap <M-S-c>   :Rcontroller<Space>
+noremap <leader>c :Rcontroller<Space>
+noremap <M-S-v>   :Rview<Space>
+noremap <leader>v :Rview<Space>
 noremap <M-S-s> :Rscript<Space>
 noremap <M-S-e> :Rextract<Space>
 noremap <M-S-g> :Rgenerate<Space>
-noremap <M-S-l> :Rlog<CR>
 noremap <M-S-p> :Rpreview<CR>
 noremap <silent><M-S-t>t  :Rtags<CR>
 noremap <F3> :A<CR>
