@@ -8,7 +8,7 @@ noremap <silent> <F2> :NERDTreeToggle<Return>
 noremap <silent><M-S-f>   :FufFile **/<CR>
 noremap <silent><leader>f :FufFile **/<CR>
 noremap <silent><M-S-o>   :FufBuffer<CR>
-noremap <silent><leader>o   :FufBuffer<CR>
+noremap <silent><leader>o :FufBuffer<CR>
 noremap <silent><M-S-t>c  :FufBufferTag<CR>
 noremap <silent><M-S-t>a  :FufBufferTagAll<CR>
 noremap <silent><M-S-t>w  :FufBufferTagWithCursorWord<CR>
@@ -16,19 +16,50 @@ noremap <silent><M-S-t>W  :FufBufferTagAllWithCursorWord<CR>
 noremap <silent><M-S-t>s  :FufBufferTagWithSelectedText<CR>
 noremap <silent><M-S-t>S  :FufBufferTagAllWithSelectedText<CR>
 " set mapping to Rails/Rake plugins
-noremap <M-S-m>   :Rmodel<Space>
-noremap <leader>m :Rmodel<Space>
-noremap <M-S-c>   :Rcontroller<Space>
-noremap <leader>c :Rcontroller<Space>
-noremap <M-S-v>   :Rview<Space>
-noremap <leader>v :Rview<Space>
-noremap <M-S-s> :Rscript<Space>
-noremap <M-S-e> :Rextract<Space>
-noremap <M-S-g> :Rgenerate<Space>
-noremap <M-S-p> :Rpreview<CR>
-noremap <silent><M-S-t>t  :Rtags<CR>
-noremap <F3> :A<CR>
-noremap <F4> :R<CR>
+noremap <M-S-m>          :Rmodel<Space>
+noremap <leader>m        :Rmodel<Space>
+noremap <leader>m<space> :Rmodel<Space>
+noremap <leader>ms       :RSmodel<Space>
+noremap <leader>mv       :RVmodel<Space>
+noremap <M-S-c>          :Rcontroller<Space>
+noremap <leader>c        :Rcontroller<Space>
+noremap <leader>c<space> :Rcontroller<Space>
+noremap <leader>cs       :RScontroller<Space>
+noremap <leader>cv       :RVcontroller<Space>
+noremap <M-S-v>          :Rview<Space>
+noremap <leader>v        :Rview<Space>
+noremap <leader>v<space> :Rview<Space>
+noremap <leader>vs       :RSview<Space>
+noremap <leader>vv       :RVview<Space>
+noremap <M-S-s>          :Rstylesheet<Space>
+noremap <leader>s        :Rstylesheet<Space>
+noremap <leader>s<space> :Rstylesheet<Space>
+noremap <leader>ss       :RSstylesheet<Space>
+noremap <leader>sv       :RVstylesheet<Space>
+noremap <M-S-l>          :Rstylesheet<Space>
+noremap <leader>l        :Rlayout<Space>
+noremap <leader>l<space> :Rlayout<Space>
+noremap <leader>ls       :RSlayout<Space>
+noremap <leader>lv       :RVlayout<Space>
+noremap <M-S-e>          :Rextract<Space>
+noremap <leader>e        :Rextract<Space>
+noremap <M-S-g>          :Rgenerate<Space>
+noremap <leader>g        :Rgenerate<Space>
+noremap <M-S-p>          :Rpreview<CR>
+noremap <leader>p        :Rpreview<CR>
+noremap <silent><M-S-t>t :Rtags<CR>
+noremap <F3>             :A<CR>
+noremap <S-F3>           :AS<CR>
+noremap <leader>t        :A<CR>
+noremap <leader>t<space> :A<CR>
+noremap <leader>ts       :AS<CR>
+noremap <leader>tv       :AV<CR>
+noremap <F4>             :R<CR>
+noremap <S-F4>           :RS<CR>
+noremap <leader>r        :R<CR>
+noremap <leader>r<space> :R<CR>
+noremap <leader>rs       :RS<CR>
+noremap <leader>rv       :RV<CR>
 " set mapping to run rake tests
 noremap <F5> :make<CR>
 noremap <F6> :make %<CR>
