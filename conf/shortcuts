@@ -36,6 +36,10 @@ noremap <leader>s        :Rstylesheet<Space>
 noremap <leader>s<space> :Rstylesheet<Space>
 noremap <leader>ss       :RSstylesheet<Space>
 noremap <leader>sv       :RVstylesheet<Space>
+noremap <leader>j        :Rjavascript<Space>
+noremap <leader>j<space> :Rjavascript<Space>
+noremap <leader>js       :RSjavascript<Space>
+noremap <leader>jv       :RVjavascript<Space>
 noremap <M-S-l>          :Rstylesheet<Space>
 noremap <leader>l        :Rlayout<Space>
 noremap <leader>l<space> :Rlayout<Space>
