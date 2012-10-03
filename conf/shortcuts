@@ -82,8 +82,11 @@ noremap <M-a> ggVG
 " toggle tagbar
 noremap <silent> <M-i> :TagbarOpenAutoClose<CR>
 noremap <silent> <M-S-i> :TagbarToggle<CR>
+
 " adding a shortcut to toggle comment
-map <M-/> <Leader>c<Space>
+map <M-/> <Plug>NERDCommenterToggle
+map <leader>/ <Plug>NERDCommenterToggle
+
 " adding a map to open the gundo
 map <silent> <M-S-u> :GundoToggle<CR>
 "toggle task status
