@@ -4,19 +4,26 @@ A set of Vim configurations to use specially with Rails + Git
 - 'ln -s vimrc ~/.vimrc'
 - 'ln -s gvimrc ~/.gvimrc'
 
+We are now using Vundle to manage the plugins \o/.
+
+The first time you clone this repo you will also to clone the vundle plugin:
+'git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle'
+
 -- to set up the plugins
-- 'git submodule update --init'
+You can run this from command line:
+'vim +BundleInstall +qall'
 
-- You need to run 'git submodule update --init' everytime you update to fetch the new version of the modules
-- To see a list of modules/plugins that are being used, look at the .gitmodules file
+or after opening vim you can use the command:
+':BundleInstall'
 
+If you want to use the fancy status bar on the Mac (on by default on the Mac) you will also need to install the Menlo-Powerline font on the extra/ folder.
 Font from: https://gist.github.com/1595572
 
 Needs:
 - ctags               (>= 5.8)      http://ctags.sourceforge.net/
 - git                 (>= 1.7.4.4)  http://git-scm.com/
 
-Shortcuts:
+Shortcuts: (fairly outdated list, I will update them soon)
 
 AutoComplete
 <Control-Shift-Space>       : opens the autocomplete menu
