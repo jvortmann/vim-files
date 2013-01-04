@@ -1,45 +1,45 @@
 TODO update Readme
 TODO made Readme markdown
 TODO clean shortcuts
-
+TODO replace fuzzy finder with ctrlp
+TODO remove L9
+TODO check search shortcuts
 
 Plugins:
-  ✓ autoclose
-  ✓ bundler
-  ✓ css-color
-  ✓ easytags
-  ✓ endwise
-  ✓ foldsearch
+  ✓ vundle
   ✓ fugitive
+  ✓ rails
+  ✓ repeat
+  ✓ ragtag
+  ✓ surround
+  ✓ rake
+  ✓ endwise
+  ✓ haml
+  ✓ L9
   ✓ fuzzyfinder
-  ✓ gundo
+  ✓ clojure
   ✓ jade
-  ✓ jasmine
-  ✓ javacomplete
-  ✓ matchit
   ✓ nerdcommenter
   ✓ nerdtree
-  ✓ pathogen
-  ✓ powerline
-  ✓ ragtag
-  ✓ rails
-  ✓ rake
-  ✓ repeat
-  ✓ ruby
-  ✓ showmarks
-  ✓ slim
-  ✓ snipmate
-  ✓ snippets
-  ✓ surround
-  ✓ syntactic
-  ✓ tagbar
-  ✓ textobj-rubyblock
-  ✓ textobj-user
-  ✓ clojure
-  ✓ haml
-  ✓ javascript
-  ✓ task
+  ✓ syntastic
   ✓ zoom
+  ✓ powerline
+  ✓ autoclose
+  ✓ matchit
+  ✓ tagbar
+  ✓ textobj-user
+  ✓ textobj-rubyblock
+  ✓ ruby
+  ✓ gundo
+  ✓ css-color
+  ✓ task
+  ✓ javascript
+  ✓ jasmine
+  ✓ tlib
+  ✓ vim-addon-mw-utils
+  ✓ snippets
+  ✓ snipmate
+  ✓ slim
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - easymotion
   - tabular
