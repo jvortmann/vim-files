@@ -40,3 +40,5 @@ set showbreak=↪
 set fillchars=diff:⣿,vert:│
 "enable powerline
 let g:enable_powerline = 1
+"set clipboard without the new for "+
+set clipboard=unnamed
