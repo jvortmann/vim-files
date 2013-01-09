@@ -1,3 +1,6 @@
+" vim: ft=vundle
+" vim: syntax=vim
+
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
