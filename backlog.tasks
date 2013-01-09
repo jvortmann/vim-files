@@ -1,9 +1,7 @@
 TODO update Readme
 TODO made Readme markdown
 TODO clean shortcuts
-TODO replace fuzzy finder with ctrlp
-TODO remove L9
-TODO check search shortcuts
+TODO update slim template support
 
 Plugins:
   ✓ vundle
@@ -15,8 +13,7 @@ Plugins:
   ✓ rake
   ✓ endwise
   ✓ haml
-  ✓ L9
-  ✓ fuzzyfinder
+  ✓ ctrlp
   ✓ clojure
   ✓ jade
   ✓ nerdcommenter
