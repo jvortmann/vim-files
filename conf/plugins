@@ -60,5 +60,4 @@ let g:jasmine_use_own_colors = 0
 " set ctrlp to show on top of the screen
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
-set wildignore+=*/vendor/bundle/* " Linux/MacOSX
-set wildignore+=vendor\bundle\* " Windows
+let g:ctrlp_custom_ignore = 'vendor/bundle$'
