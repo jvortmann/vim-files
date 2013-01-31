@@ -137,3 +137,11 @@ nmap <silent> <CR> :noh<CR>
 " don't deselect when indenting in visual mode
 vnoremap > >gv
 vnoremap < <gv
+"disables F1 for help
+nnoremap <F1> <nop>
+"disables ex mode
+nnoremap Q <nop>
+"disables man page for word under de cursor
+nnoremap K <nop>
+" make Y yank to the end of line
+nnoremap Y y$

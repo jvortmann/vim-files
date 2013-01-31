@@ -44,14 +44,6 @@ let g:enable_powerline = 1
 set clipboard=unnamed
 "disables the showing of current mode on the command line
 set noshowmode
-"disables F1 for help
-nnoremap <F1> <nop>
-"disables ex mode
-nnoremap Q <nop>
-"disables man page for word under de cursor
-nnoremap K <nop>
 "set split to open in a more natural setup
 set splitbelow
 set splitright
-" make Y yank to the end of line
-nnoremap Y y$
