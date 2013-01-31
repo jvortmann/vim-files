@@ -53,3 +53,5 @@ nnoremap K <nop>
 "set split to open in a more natural setup
 set splitbelow
 set splitright
+" make Y yank to the end of line
+nnoremap Y y$
