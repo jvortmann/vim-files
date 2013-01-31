@@ -48,3 +48,5 @@ set noshowmode
 nnoremap <F1> <nop>
 "disables ex mode
 nnoremap Q <nop>
+"disables man page for word under de cursor
+nnoremap K <nop>
