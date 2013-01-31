@@ -44,3 +44,5 @@ let g:enable_powerline = 1
 set clipboard=unnamed
 "disables the showing of current mode on the command line
 set noshowmode
+"disables F1 for help
+nnoremap <F1> <nop>
