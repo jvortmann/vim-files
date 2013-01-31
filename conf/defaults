@@ -46,3 +46,5 @@ set clipboard=unnamed
 set noshowmode
 "disables F1 for help
 nnoremap <F1> <nop>
+"disables ex mode
+nnoremap Q <nop>
