@@ -50,3 +50,6 @@ nnoremap <F1> <nop>
 nnoremap Q <nop>
 "disables man page for word under de cursor
 nnoremap K <nop>
+"set split to open in a more natural setup
+set splitbelow
+set splitright
