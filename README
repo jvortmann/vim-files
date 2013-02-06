@@ -1,6 +1,7 @@
 A set of Vim configurations to use specially with Rails + Git
 
 -- to set up the .vimrc file, use this command to create a symbolic link
+- 'cd ~/.vim'
 - 'ln -s vimrc ~/.vimrc'
 - 'ln -s gvimrc ~/.gvimrc'
 
