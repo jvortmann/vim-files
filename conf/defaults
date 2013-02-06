@@ -47,3 +47,5 @@ set noshowmode
 "set split to open in a more natural setup
 set splitbelow
 set splitright
+" add gem.tags to the list of tag files to look for
+set tags+=gem.tags
