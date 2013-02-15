@@ -37,6 +37,7 @@ Plugins:
   ✓ snippets
   ✓ snipmate
   ✓ slim
+  ✓ vim-coffee-script
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - easymotion
   - tabular
@@ -55,7 +56,6 @@ Plugins:
   - Conque-Shell
   - AutoTag
   - preview
-  - coffee-script
   - haskel
   - hier
   - gsearch
