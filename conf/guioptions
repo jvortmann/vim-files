@@ -22,11 +22,21 @@ if (has("gui_running"))
 
   highlight SpellBad term=underline gui=undercurl guisp=Orange
 
-  " Different cursors for different modes.
-  set guicursor=n-c:block-Cursor-blinkon0
-  set guicursor+=v:block-vCursor-blinkon0
-  set guicursor+=i-ci:ver20-iCursor
-  set guicursor+=r-cr:hor20-rCursor
+  if g:use_custom_cursors
+    " Cursor color for diferent {{{
+    hi Cursor          guifg=#000000 guibg=#AAF412
+    hi iCursor         guifg=#000000 guibg=#66D9EF
+    hi vCursor         guifg=#000000 guibg=#FD971F
+    hi rCursor         guifg=#000000 guibg=#D80000
+    " }}}
+
+    " Different cursors for different modes.
+    set guicursor=n-c:block-Cursor-blinkon0
+    set guicursor+=v:block-vCursor-blinkon0
+    set guicursor+=i-ci:ver20-iCursor
+    set guicursor+=r-cr:hor20-rCursor
+  endif
+
   function! s:initialize_font()
     if exists("&guifont")
       if has("mac")

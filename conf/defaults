@@ -49,3 +49,5 @@ set splitbelow
 set splitright
 " add gem.tags to the list of tag files to look for
 set tags+=gem.tags
+" enable custom color for cursors besides coloscheme
+let g:use_custom_cursors = 1
