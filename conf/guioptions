@@ -1,5 +1,7 @@
 " vim: filetype=vim
 colorscheme wombat256
+" clears SignColumn color as it is set weirdly on colorscheme
+highlight clear SignColumn
 set number tabstop=2 sw=2 bs=2 mouse=a
 set ruler title cursorline
 " set the space from the current line when scrolling
