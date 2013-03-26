@@ -61,6 +61,6 @@ let g:jasmine_use_own_colors = 0
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](.git|.hg|.svn|vendor/bundle|tmp/cache|coverage)$',
+  \ 'dir':  '\v[\/](.git|.hg|.svn|vendor/bundle|tmp/cache|coverage|public/source_maps)$',
   \ 'file': '\v\.(exe|so|dll|gif|jpg|jpeg|png|svg|ico|woff|ttf|eot)$',
   \ }
