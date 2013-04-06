@@ -41,17 +41,20 @@
   The majority of shortcuts are made to use with Rails development. So far this is done by default, but the intent of this config if to be flexible and so there will be a way to define which shortcuts to create depending on what is being used.
 
   * AutoComplete
+
     ``
     <Control-Shift-Space>       : opens the autocomplete menu
     ``
 
   * NerdTree
+
     ``
     <F2>                        : open the NERDTree windows (drawer)
     ``
 
-  * Search/Open ***OUDATED***
-    ``
+  * Search/Open **OUDATED**
+   
+   ``
     <Alt/Option-Shift-f>        : search for a file (it is possible to filter the search)
     ``
     ``
@@ -77,6 +80,7 @@
     ``
 
   * Rails specific (you can press tab to auto-complete in most of them) **OUTDATED**
+    
     ``
     <Alt/Option-Shift-m>        : opens a model 
     ``
@@ -118,6 +122,7 @@
     ``
 
   * Git specific
+
     ``
     <F7>                        : blame
     ``
@@ -126,6 +131,7 @@
     ``
 
   * Navigation
+
     ``
     <Control-Tab>               : goes to the next tab
     ``
@@ -140,6 +146,7 @@
     ``
 
   * Windows
+
     ``
     <Space><Space>              : expand the current window
     ``
@@ -175,6 +182,7 @@
     ``
 
   * Dealing with lines
+
     ``
     <Alt/Option-Shift-Up>       : move the selected text or line up
     ``
@@ -189,11 +197,13 @@
     ``
 
   * Other
+
     ``
     <Alt/Option-a>              : select all
     ``
 
   * TagBar
+
     ``
     <Alt/Option-i>              : open the tagbar and focus it
     ``
@@ -202,11 +212,13 @@
     ``
 
   * gundo
+
     ``
     <Alt/Option-Shift-u>        : toggle gundo and focus it
     ``
 
   * Tasks
+
     ``
     <Alt/Option-Shift-Enter>    : toggle task (done/undone)
     ``
