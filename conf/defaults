@@ -51,3 +51,5 @@ set splitright
 set tags+=gem.tags
 " enable custom color for cursors besides coloscheme
 let g:use_custom_cursors = 1
+"set lazyredraw so macros run faster
+set lazyredraw
