@@ -38,6 +38,7 @@ Plugins:
   ✓ snipmate
   ✓ slim
   ✓ vim-coffee-script
+  - vim-airline
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - easymotion
   - tabular
