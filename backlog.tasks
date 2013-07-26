@@ -1,7 +1,6 @@
 TODO update Readme
-TODO made Readme markdown
 TODO clean shortcuts
-TODO active rails shortcuts only when plugin is active
+TODO activate rails shortcuts only when plugin is active
 
 Plugins:
   ✓ vundle
