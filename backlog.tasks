@@ -38,6 +38,7 @@ Plugins:
   ✓ slim
   ✓ vim-coffee-script
   - vim-airline
+  - yankring (https://github.com/vim-scripts/YankRing.vim)
   - terryma/vim-multiple-cursors
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - easymotion
