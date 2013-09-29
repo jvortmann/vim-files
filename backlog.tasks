@@ -45,6 +45,7 @@ Plugins:
   - easymotion
   - tabular
   - specky! (need only some snippets)
+  - markdown (https://github.com/plasticboy/vim-markdown)
   - jsbeautifier
   - jslint
   - zencoding
