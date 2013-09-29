@@ -37,6 +37,7 @@ Plugins:
   ✓ snipmate
   ✓ slim
   ✓ vim-coffee-script
+  ✓ vim-puppet
   - vim-airline
   - yankring (https://github.com/vim-scripts/YankRing.vim)
   - terryma/vim-multiple-cursors
