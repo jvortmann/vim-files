@@ -27,10 +27,10 @@ highlight SpellBad term=underline gui=undercurl guisp=Orange
 
 if g:use_custom_cursors
   " Cursor color for diferent {{{
-  hi Cursor          guifg=#000000 guibg=#AAF412
-  hi iCursor         guifg=#000000 guibg=#66D9EF
-  hi vCursor         guifg=#000000 guibg=#FD971F
-  hi rCursor         guifg=#000000 guibg=#D80000
+  hi Cursor   guifg=#303030 guibg=#afd787
+  hi iCursor  guifg=#444444 guibg=#87afd7
+  hi vCursor  guifg=#303030 guibg=#d7afd7
+  hi rCursor  guifg=#303030 guibg=#d78787
   " }}}
 
   " Different cursors for different modes.
