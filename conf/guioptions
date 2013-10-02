@@ -13,6 +13,8 @@ source ~/.vim/conf/statusline
 
 "Settings for GUI
 if (has("gui_running"))
+  "Sets a different colorscheme for GUI
+  colorscheme luna
   " Remove all the UI cruft
   set go-=T
   set go-=l
