@@ -10,7 +10,8 @@ set noguipty
 set wmnu
 "load the status line
 source ~/.vim/conf/statusline
-"Set a better font depending on system
+
+"Settings for GUI
 if (has("gui_running"))
   " Remove all the UI cruft
   set go-=T
@@ -36,6 +37,7 @@ if (has("gui_running"))
     set guicursor+=r-cr:hor20-rCursor
   endif
 
+  "Sets a better font depending on system
   function! s:initialize_font()
     if exists("&guifont")
       if has("mac")
