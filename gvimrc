@@ -13,11 +13,7 @@ endif
 set fullscreen
 set fuoptions=maxvert,maxhorz
 " Remove all the UI cruft
-set go-=T
-set go-=l
-set go-=L
-set go-=r
-set go-=R
+set go=egm
 
 " add marker for when changing something
 set cpo+=$
