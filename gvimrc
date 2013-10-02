@@ -1,5 +1,6 @@
 " vim: filetype=vim
 " active when using the gui
+colorscheme luna
 " set the initial window size
 set co=160
 set lines=50

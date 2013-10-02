@@ -1,5 +1,5 @@
 " vim: filetype=vim
-colorscheme luna
+colorscheme molokai
 " clears SignColumn color as it is set weirdly on colorscheme
 highlight clear SignColumn
 set number tabstop=2 sw=2 bs=2 mouse=a
