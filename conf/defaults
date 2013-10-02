@@ -38,8 +38,6 @@ au FocusLost * :wa
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:⌴
 set showbreak=↪
 set fillchars=diff:⣿,vert:│
-"enable powerline
-let g:enable_powerline = 1
 "set clipboard without the new for "+
 set clipboard=unnamed
 "disables the showing of current mode on the command line

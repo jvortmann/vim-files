@@ -45,15 +45,6 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 " disable the default zoom shortcuts
 let g:use_default_shortcuts_for_zoom = 0
 
-" setup powerline
-if g:enable_powerline
-  if has("mac")
-    let g:Powerline_symbols = 'fancy'
-  endif
-else
-  let g:Powerline_loaded = 0
-endif
-
 " use own color for the redgreen bar
 let g:jasmine_use_own_colors = 0
 
