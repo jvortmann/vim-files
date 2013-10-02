@@ -1,7 +1,7 @@
 " vim: filetype=vim
 "Settings for GUI
 "Sets a different colorscheme for GUI
-colorscheme luna
+colorscheme bubblegum
 " set the initial window size
 set co=160
 set lines=50
