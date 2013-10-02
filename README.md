@@ -33,7 +33,7 @@
   ```
 
 ### Extras
-## THE OLD FONT IS NOT WORKING ANYMORE, PLEASE UPDATE
+#### THE OLD FONT IS NOT WORKING ANYMORE, PLEASE UPDATE
   If you want to use the fancy status bar on the Mac (it is on by default on the Mac) you will also need to install the 'Sauce Code Powerline Light' font on the extra/fonts folder.
   It can be deactivated on the conf/defaults file.
 
