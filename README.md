@@ -33,8 +33,9 @@
   ```
 
 ### Extras
-  If you want to use the fancy status bar on the Mac (it is on by default on the Mac) you will also need to install the Menlo-Powerline font on the extra/ folder.
-  Font from: https://gist.github.com/1595572
+## THE OLD FONT IS NOT WORKING ANYMORE, PLEASE UPDATE
+  If you want to use the fancy status bar on the Mac (it is on by default on the Mac) you will also need to install the 'Sauce Code Powerline Light' font on the extra/fonts folder.
+  It can be deactivated on the conf/defaults file.
 
 ## Shortcuts (fairly outdated list, I will update them soon)
 
