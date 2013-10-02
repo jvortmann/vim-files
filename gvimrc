@@ -40,7 +40,11 @@ endif
 function! s:initialize_font()
   if exists("&guifont")
     if has("mac")
-      set guifont=Monaco:h14
+      if g:airline_powerline_fonts
+        set guifont=Sauce\ Code\ Powerline\ Light:h15
+      else
+        set guifont=Monaco:h15
+      endif
     elseif has("unix")
       if &guifont == ""
         set guifont=bitstream\ vera\ sans\ mono\ 12

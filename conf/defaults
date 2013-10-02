@@ -51,3 +51,5 @@ set tags+=gem.tags
 let g:use_custom_cursors = 1
 "set lazyredraw so macros run faster
 set lazyredraw
+" set airline to use powerline symbols from different font
+let g:airline_powerline_fonts=1
