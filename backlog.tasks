@@ -39,13 +39,13 @@ Plugins:
   ✓ vim-coffee-script
   ✓ vim-puppet
   ✓ vim-airline
+  ✓ terryma/vim-multiple-cursors
   - csscomb
   - indent-guides
   - editorconfig (editorconfig.org)
   - ruby-minitest
   - texttile
   - yankring (https://github.com/vim-scripts/YankRing.vim)
-  - terryma/vim-multiple-cursors
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - easymotion
   - tabular
