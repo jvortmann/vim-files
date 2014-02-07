@@ -40,17 +40,19 @@ Plugins:
   ✓ vim-puppet
   ✓ vim-airline
   ✓ terryma/vim-multiple-cursors
-  - csscomb
   - indent-guides
+  - yankring (https://github.com/vim-scripts/YankRing.vim)
+  - markdown (https://github.com/plasticboy/vim-markdown)
+  - nginx
   - editorconfig (editorconfig.org)
   - ruby-minitest
-  - texttile
-  - yankring (https://github.com/vim-scripts/YankRing.vim)
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
-  - easymotion
-  - tabular
   - specky! (need only some snippets)
-  - markdown (https://github.com/plasticboy/vim-markdown)
+  - gist
+  - texttile
+  - tabular
+  - csscomb
+  - easymotion
   - jsbeautifier
   - jslint
   - zencoding
@@ -68,7 +70,6 @@ Plugins:
   - haskel
   - hier
   - gsearch
-  - gist
   - simple-javascript-indenter
   - pair-tools
   - opener
@@ -77,7 +78,6 @@ Plugins:
   - html5
   - css
   - changed
-  - nginx
   - AutoComplPop
   - xml
 
