@@ -40,6 +40,7 @@ Plugins:
   ✓ vim-puppet
   ✓ vim-airline
   ✓ terryma/vim-multiple-cursors
+  ✓ unimpaired
   - indent-guides
   - yankring (https://github.com/vim-scripts/YankRing.vim)
   - markdown (https://github.com/plasticboy/vim-markdown)
