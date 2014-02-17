@@ -38,7 +38,7 @@ au FocusLost * :wa
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:⌴
 set showbreak=↪
 set fillchars=diff:⣿,vert:│
-"set clipboard without the new for "+
+"set clipboard without the need for "+
 set clipboard=unnamed
 "disables the showing of current mode on the command line
 set noshowmode
