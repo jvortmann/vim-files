@@ -41,6 +41,8 @@ Plugins:
   ✓ vim-airline
   ✓ terryma/vim-multiple-cursors
   ✓ unimpaired
+  - vim-projectile (https://github.com/tpope/vim-projectile)
+  - vim-dispatch (https://github.com/tpope/vim-dispatch)
   - indent-guides
   - yankring (https://github.com/vim-scripts/YankRing.vim)
   - markdown (https://github.com/plasticboy/vim-markdown)
