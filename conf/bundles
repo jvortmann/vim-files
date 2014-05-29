@@ -43,6 +43,7 @@ Bundle 'rodjek/vim-puppet'
 Bundle 'bling/vim-airline'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'svsudhir/textile.vim'
+Bundle 'groenewege/vim-less'
 
 " color schemes
 Bundle 'chriskempson/base16-vim'
