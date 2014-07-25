@@ -1,7 +1,7 @@
 "load the initial configuration
 source $HOME/.vim/conf/init
 "load the bundles
-source $HOME/.vim/conf/bundles
+source $HOME/.vim/conf/plugins
 "load the default options
 source $HOME/.vim/conf/defaults
 "load the autocmd options
