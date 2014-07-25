@@ -9,7 +9,7 @@ source $HOME/.vim/conf/autocmd
 "load the gui options
 source $HOME/.vim/conf/guioptions
 "load plugins configuration
-source $HOME/.vim/conf/plugins
+source $HOME/.vim/conf/plugins_settings
 "load shortcuts
 source $HOME/.vim/conf/shortcuts
 "load local  if they exist
