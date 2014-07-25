@@ -1,6 +1,7 @@
 TODO update Readme
 TODO clean shortcuts
 TODO activate rails shortcuts only when plugin is active
+TODO spike Neovundle
 
 Plugins:
   ✓ vundle
@@ -41,6 +42,9 @@ Plugins:
   ✓ vim-airline
   ✓ terryma/vim-multiple-cursors
   ✓ unimpaired
+  - vim-vroom (https://github.com/skalnik/vim-vroom) #run tests for Rspec, Cucumber and Minitest
+  - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
+  - specky! (need only some snippets)
   - vim-projectile (https://github.com/tpope/vim-projectile)
   - vim-dispatch (https://github.com/tpope/vim-dispatch)
   - indent-guides
@@ -49,15 +53,12 @@ Plugins:
   - nginx
   - editorconfig (editorconfig.org)
   - ruby-minitest
-  - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
-  - specky! (need only some snippets)
   - gist
   - texttile
   - tabular
   - csscomb
   - easymotion
   - jsbeautifier
-  - jslint
   - zencoding
   - minibufexpl
   - sinatra
