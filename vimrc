@@ -12,7 +12,7 @@ source $HOME/.vim/conf/guioptions
 source $HOME/.vim/conf/plugins_settings
 "load shortcuts
 source $HOME/.vim/conf/shortcuts
-"load local  if they exist
+"load local vimrc file if it exists
 if filereadable(expand("$HOME/.vimrc.local"))
   source $HOME/.vimrc.local
 endif
