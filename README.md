@@ -16,12 +16,6 @@
 
   We are now using Vundle to manage the plugins \o/.
 
-  The first time you clone this repo you will also need to clone the vundle plugin (from you home folder):
-
-  ```terminal
-  git clone https://github.com/gmarik/vundle.git .vim/bundle/vundle
-  ```
-
   Then you need to tell vundle to install the plugins:
   ```terminal
   vim +PluginInstall +qall
