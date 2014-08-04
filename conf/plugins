@@ -6,11 +6,11 @@ if !isdirectory(expand("~/.vim/bundle/Vundle.vim/.git"))
   !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 endif
 
-set rtp+=~/.vim/bundle/vundle/Vundle.vim
+set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " plugin manager
-Plugin 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
 " helper and highlight
 Plugin 'tpope/vim-rails'
@@ -69,5 +69,5 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'w0ng/vim-hybrid'
 Plugin 'chriskempson/vim-tomorrow-theme'
 
-# End Vundle processing
+" End Vundle processing
 call vundle#end()
