@@ -2,6 +2,10 @@
 " vim: syntax=vim
 
 " Initiate vundle
+if !isdirectory(expand("~/.vim/bundle/Vundle.vim/.git"))
+  !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+endif
+
 set rtp+=~/.vim/bundle/vundle/Vundle.vim
 call vundle#begin()
 
