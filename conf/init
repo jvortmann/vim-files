@@ -1,7 +1,3 @@
 " vim: filetype=vim
 set nocompatible
-" force reloading *after* pathogen loaded
 filetype off
-" initiate vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()

@@ -1,6 +1,10 @@
 " vim: ft=vundle
 " vim: syntax=vim
 
+" Initiate vundle
+set rtp+=~/.vim/bundle/vundle/Vundle.vim
+call vundle#begin()
+
 " plugin manager
 Plugin 'gmarik/vundle'
 
@@ -60,3 +64,6 @@ Plugin 'vim-scripts/Wombat'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'w0ng/vim-hybrid'
 Plugin 'chriskempson/vim-tomorrow-theme'
+
+# End Vundle processing
+call vundle#end()

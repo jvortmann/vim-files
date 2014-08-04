@@ -1,6 +1,6 @@
-"load the initial configuration
+"set the initial configuration
 source $HOME/.vim/conf/init
-"load the bundles
+"load the plugins
 source $HOME/.vim/conf/plugins
 "load the default options
 source $HOME/.vim/conf/defaults
