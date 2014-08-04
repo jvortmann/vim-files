@@ -24,12 +24,12 @@
 
   Then you need to tell vundle to install the plugins:
   ```terminal
-  vim +BundleInstall +qall
+  vim +PluginInstall +qall
   ```
   or from inside Vim:
 
   ```vim
-  :BundleInstall
+  :PluginInstall
   ```
 
 ### Extras
