@@ -57,6 +57,7 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'godlygeek/tabular'
 
 " color schemes
 Plugin 'chriskempson/base16-vim'
