@@ -41,13 +41,20 @@ Plugins:
   ✓ vim-puppet
   ✓ vim-airline
   ✓ terryma/vim-multiple-cursors
-  ✓ unimpaired
   ✓ tabular
+  ✓ unimpaired
+  - vim-plug (https://github.com/junegunn/vim-plug)
+  - ctrlp-cmatcher (https://github.com/JazzCore/ctrlp-cmatcher)
+  - ctrlp-tjump (https://github.com/vim-scripts/ctrlp-tjump)
+  - limelight (https://github.com/junegunn/limelight.vim)
+  - a_pair (http://www.vim.org/scripts/script.php?script_id=4991)
+  - vim-flavor (https://github.com/kana/vim-flavor)
   - vim-vroom (https://github.com/skalnik/vim-vroom) #run tests for Rspec, Cucumber and Minitest
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - specky! (need only some snippets)
   - vim-projectile (https://github.com/tpope/vim-projectile)
   - vim-dispatch (https://github.com/tpope/vim-dispatch)
+  - goyo (https://github.com/junegunn/goyo.vim)
   - indent-guides
   - yankring (https://github.com/vim-scripts/YankRing.vim)
   - markdown (https://github.com/plasticboy/vim-markdown)
@@ -55,7 +62,10 @@ Plugins:
   - nginx
   - editorconfig (editorconfig.org)
   - ruby-minitest
-  - gist
+  - gist (https://github.com/Keithbsmiley/gist.vim) (https://github.com/ajh17/vim-fist)
+  - notes (https://github.com/vim-scripts/notes.vim)
+  - rainbow parentheses (https://github.com/luochen1990/rainbow)
+  - glowshi-ft.vim (https://github.com/saihoooooooo/glowshi-ft.vim)
   - texttile
   - csscomb
   - easymotion
@@ -85,6 +95,11 @@ Plugins:
   - changed
   - AutoComplPop
   - xml
+
+Icons:
+  - http://iconverticons.com/icons/92d8febce1d7a304/
+  - http://i.imgur.com/C37yO9P.png
+  - http://lab.colepeters.com/cole/tcpvimicon/tree/master
 
 Color Scheme:
   ✓ jellybeans
