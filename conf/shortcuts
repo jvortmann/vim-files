@@ -49,7 +49,6 @@ noremap <M-S-g>          :Rgenerate<Space>
 noremap <leader>g        :Rgenerate<Space>
 noremap <M-S-p>          :Rpreview<CR>
 noremap <leader>p        :Rpreview<CR>
-noremap <silent><M-S-t>t :Rtags<CR>
 noremap <F3>             :A<CR>
 noremap <S-F3>           :AS<CR>
 noremap <leader>t        :A<CR>
