@@ -1,3 +1,8 @@
 " vim: filetype=vim
 " set marker delimiting changes
 set cpo+=$
+
+"load local force config file if it exists
+if filereadable(expand("$HOME/.vimrc.force"))
+  source $HOME/.vimrc.force
+endif
