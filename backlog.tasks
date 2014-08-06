@@ -50,6 +50,7 @@ Plugins:
   - indent-guides
   - yankring (https://github.com/vim-scripts/YankRing.vim)
   - markdown (https://github.com/plasticboy/vim-markdown)
+  - vim-signature (https://github.com/kshenoy/vim-signature)
   - nginx
   - editorconfig (editorconfig.org)
   - ruby-minitest
