@@ -16,3 +16,5 @@ source $HOME/.vim/conf/shortcuts
 if filereadable(expand("$HOME/.vimrc.local"))
   source $HOME/.vimrc.local
 endif
+"load extra customization (after variables set on vimrc.local)
+source $HOME/.vim/conf/extras

@@ -49,6 +49,8 @@ set splitright
 set tags+=gem.tags
 " enable custom color for cursors besides colorscheme
 let g:use_custom_cursors = 1
+" enable custom fonts
+let g:use_custom_fonts = 1
 "set lazyredraw so macros run faster
 set lazyredraw
 " set airline to use powerline symbols from different font
