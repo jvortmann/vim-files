@@ -11,13 +11,6 @@ let NERDTreeDirArrows=1
 " disabling the default mappings for the NERDCommenter
 let g:NERDCreateDefaultMappings = 0
 
-if !has("gui_running")
-   "showmarks only works when there is a gui
-  let g:loaded_showmarks = 0
-end
-" disable showing marks when startups
-let g:showmarks_enable = 0
-
 " set the options for syntatic to show marks and to open the error window
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list = 1
