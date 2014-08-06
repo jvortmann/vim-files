@@ -1,0 +1,3 @@
+" vim: filetype=vim
+" set marker delimiting changes
+set cpo+=$
