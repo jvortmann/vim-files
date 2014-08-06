@@ -1,9 +1,6 @@
 " vim: filetype=vim
 "Settings for GUI
 
-" set the initial window size
-set co=160
-set lines=50
 " enabling the use of the meta key (alt/option) on the Mac
 if has("mac")
   set macmeta
