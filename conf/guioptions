@@ -8,5 +8,7 @@ set scrolloff=3
 set noguipty
 " command-line completion shows a list of matches
 set wmnu
+" set spellcheck settings
+highlight SpellBad term=underline gui=undercurl guisp=Orange
 " load the status line
 source ~/.vim/conf/statusline

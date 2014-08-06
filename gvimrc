@@ -13,9 +13,6 @@ set go=egm
 " set marker delimiting changes
 set cpo+=$
 
-" Set spellcheck settings
-highlight SpellBad term=underline gui=undercurl guisp=Orange
-
 " load local gvimrc file if it exists
 if filereadable(expand("$HOME/.gvimrc.local"))
   source $HOME/.gvimrc.local
