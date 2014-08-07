@@ -97,9 +97,9 @@ Plugins:
   - xml
 
 Icons:
-  - http://iconverticons.com/icons/92d8febce1d7a304/
-  - http://i.imgur.com/C37yO9P.png
-  - http://lab.colepeters.com/cole/tcpvimicon/tree/master
+  ✓ http://iconverticons.com/icons/92d8febce1d7a304/
+  ✓ http://i.imgur.com/C37yO9P.png
+  ✓ http://lab.colepeters.com/cole/tcpvimicon/tree/master
 
 Color Scheme:
   ✓ jellybeans
