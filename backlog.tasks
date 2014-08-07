@@ -44,8 +44,10 @@ Plugins:
   ✓ tabular
   ✓ unimpaired
   - vim-plug (https://github.com/junegunn/vim-plug)
-  - ctrlp-cmatcher (https://github.com/JazzCore/ctrlp-cmatcher)
   - ctrlp-tjump (https://github.com/vim-scripts/ctrlp-tjump)
+  - neocomplete (https://github.com/Shougo/neocomplete.vim) [needs lua, re-install --with-lua] -> write this info on README
+  - neosnippets-snippets (https://github.com/Shougo/neosnippet-snippets)
+  - neosnippet (https://github.com/Shougo/neosnippet.vim)
   - limelight (https://github.com/junegunn/limelight.vim)
   - a_pair (http://www.vim.org/scripts/script.php?script_id=4991)
   - vim-flavor (https://github.com/kana/vim-flavor)
@@ -55,6 +57,7 @@ Plugins:
   - vim-projectile (https://github.com/tpope/vim-projectile)
   - vim-dispatch (https://github.com/tpope/vim-dispatch)
   - goyo (https://github.com/junegunn/goyo.vim)
+  - ctrlp-cmatcher (https://github.com/JazzCore/ctrlp-cmatcher)
   - indent-guides
   - yankring (https://github.com/vim-scripts/YankRing.vim)
   - markdown (https://github.com/plasticboy/vim-markdown)
@@ -66,6 +69,7 @@ Plugins:
   - notes (https://github.com/vim-scripts/notes.vim)
   - rainbow parentheses (https://github.com/luochen1990/rainbow)
   - glowshi-ft.vim (https://github.com/saihoooooooo/glowshi-ft.vim)
+  - AutoComplPop
   - texttile
   - csscomb
   - easymotion
@@ -93,7 +97,6 @@ Plugins:
   - html5
   - css
   - changed
-  - AutoComplPop
   - xml
 
 Icons:
