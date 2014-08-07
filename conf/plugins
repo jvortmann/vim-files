@@ -55,7 +55,6 @@ Plug 'honza/vim-snippets'
 Plug 'garbas/vim-snipmate'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular'
 
 " color schemes
