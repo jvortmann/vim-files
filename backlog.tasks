@@ -2,101 +2,105 @@ TODO update Readme
 TODO clean shortcuts
 TODO activate rails shortcuts only when plugin is active
 
-Plugins:
-  ✓ fugitive
-  ✓ rails
+Editing:
   ✓ repeat
   ✓ ragtag
   ✓ surround
-  ✓ rake
+  ✓ textobj-user
+  ✓ textobj-rubyblock
   ✓ endwise
-  ✓ haml
+  ✓ autoclose
+  ✓ tabular
+  ✓ unimpaired
+  - limelight (https://github.com/junegunn/limelight.vim)
+  - auto-pairs (http://vimawesome.com/plugin/auto-pairs)
+  - a_pair (http://www.vim.org/scripts/script.php?script_id=4991)
+  - commentary (http://vimawesome.com/plugin/commentary-vim)
+  - notes (https://github.com/vim-scripts/notes.vim)
+  - goyo (https://github.com/junegunn/goyo.vim)
+  - indent-guides
+  - pair-tools
+  - AutoTag
+  - preview
+
+Utilities:
+  ✓ vim-plug (https://github.com/junegunn/vim-plug)
   ✓ ctrlp
-  ✓ clojure
-  ✓ jade
   ✓ nerdcommenter
   ✓ nerdtree
   ✓ syntastic
   ✓ zoom
-  ✓ powerline
-  ✓ autoclose
-  ✓ matchit
   ✓ tagbar
-  ✓ textobj-user
-  ✓ textobj-rubyblock
-  ✓ ruby
   ✓ gundo
-  ✓ css-color
-  ✓ task
-  ✓ javascript
-  ✓ jasmine
+  ✓ fugitive
+  ✓ rake
   ✓ tlib
   ✓ vim-addon-mw-utils
   ✓ snippets
   ✓ snipmate
-  ✓ slim
-  ✓ vim-coffee-script
-  ✓ vim-puppet
   ✓ vim-airline
-  ✓ terryma/vim-multiple-cursors
-  ✓ tabular
-  ✓ unimpaired
-  ✓ vim-plug (https://github.com/junegunn/vim-plug)
-  - Thematic (http://vimawesome.com/plugin/vim-thematic)
-  - ctrlp-tjump (https://github.com/vim-scripts/ctrlp-tjump)
   - neocomplete (https://github.com/Shougo/neocomplete.vim) [needs lua, re-install --with-lua] -> write this info on README
   - neosnippets-snippets (https://github.com/Shougo/neosnippet-snippets)
   - neosnippet (https://github.com/Shougo/neosnippet.vim)
-  - limelight (https://github.com/junegunn/limelight.vim)
-  - a_pair (http://www.vim.org/scripts/script.php?script_id=4991)
   - vim-flavor (https://github.com/kana/vim-flavor)
+  - AutoComplPop
+  - minibufexpl
+  - rainbow parentheses (https://github.com/luochen1990/rainbow)
+  - glowshi-ft.vim (https://github.com/saihoooooooo/glowshi-ft.vim)
+  - editorconfig (editorconfig.org)
+  - gist (https://github.com/Keithbsmiley/gist.vim) (https://github.com/ajh17/vim-fist)
+  - vim-signature (https://github.com/kshenoy/vim-signature)
+  - yankring (https://github.com/vim-scripts/YankRing.vim)
+  - ctrlp-tjump (https://github.com/vim-scripts/ctrlp-tjump)
+  - ctrlp-cmatcher (https://github.com/JazzCore/ctrlp-cmatcher)
+  - vim-projectile (https://github.com/tpope/vim-projectile)
+  - vim-dispatch (https://github.com/tpope/vim-dispatch)
+  - neocomplcache
+  - gsearch
+  - changed
+  - Conque-Shell
+  - opener
+  - blockle
+
+Movement:
+  - easymotion
+  - zencoding
+  - hier
+
+Languages:
+  ✓ rails
+  ✓ haml
+  ✓ clojure
+  ✓ jade
+  ✓ ruby
+  ✓ css-color
+  ✓ task
+  ✓ javascript
+  ✓ jasmine
+  ✓ slim
+  ✓ vim-coffee-script
+  ✓ vim-puppet
+  - sinatra
   - vim-vroom (https://github.com/skalnik/vim-vroom) #run tests for Rspec, Cucumber and Minitest
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - specky! (need only some snippets)
-  - vim-projectile (https://github.com/tpope/vim-projectile)
-  - vim-dispatch (https://github.com/tpope/vim-dispatch)
-  - goyo (https://github.com/junegunn/goyo.vim)
-  - ctrlp-cmatcher (https://github.com/JazzCore/ctrlp-cmatcher)
-  - indent-guides
-  - yankring (https://github.com/vim-scripts/YankRing.vim)
   - markdown (https://github.com/plasticboy/vim-markdown)
-  - vim-signature (https://github.com/kshenoy/vim-signature)
+  - vim-json (http://vimawesome.com/plugin/json-vim)
   - nginx
-  - editorconfig (editorconfig.org)
   - ruby-minitest
-  - gist (https://github.com/Keithbsmiley/gist.vim) (https://github.com/ajh17/vim-fist)
-  - notes (https://github.com/vim-scripts/notes.vim)
-  - rainbow parentheses (https://github.com/luochen1990/rainbow)
-  - glowshi-ft.vim (https://github.com/saihoooooooo/glowshi-ft.vim)
-  - AutoComplPop
+  - scala (http://vimawesome.com/plugin/vim-scala)
+  - jsbeautifier
   - texttile
   - csscomb
-  - easymotion
-  - jsbeautifier
-  - zencoding
-  - minibufexpl
-  - sinatra
-  - ack
-  - scala
-  - jQuery
-  - gorilla
-  - slime
-  - slimv
-  - Conque-Shell
-  - AutoTag
-  - preview
-  - haskel
-  - hier
-  - gsearch
   - simple-javascript-indenter
-  - pair-tools
-  - opener
-  - blockle
-  - neocomplcache
   - html5
   - css
-  - changed
   - xml
+  - haskel
+  - slime
+  - ack
+  - gorilla
+  - slimv
 
 Icons:
   ✓ http://iconverticons.com/icons/92d8febce1d7a304/
@@ -104,6 +108,7 @@ Icons:
   ✓ http://lab.colepeters.com/cole/tcpvimicon/tree/master
 
 Color Scheme:
+  - Thematic (http://vimawesome.com/plugin/vim-thematic)
   ✓ jellybeans
   ✓ badwolf
   ✓ molokai
