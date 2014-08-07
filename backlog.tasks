@@ -42,6 +42,7 @@ Plugins:
   ✓ tabular
   ✓ unimpaired
   ✓ vim-plug (https://github.com/junegunn/vim-plug)
+  - Thematic (http://vimawesome.com/plugin/vim-thematic)
   - ctrlp-tjump (https://github.com/vim-scripts/ctrlp-tjump)
   - neocomplete (https://github.com/Shougo/neocomplete.vim) [needs lua, re-install --with-lua] -> write this info on README
   - neosnippets-snippets (https://github.com/Shougo/neosnippet-snippets)
