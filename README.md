@@ -12,19 +12,16 @@
   ln -s .vim/gvimrc .gvimrc (for gui configuration)
   ```
 
-### Setup Vundle
+### Setup Vim-Plug
+  We are now using Vim-Plug (https://github.com/junegunn/vim-plug) to manage the plugins \o/.
 
-  We are now using Vundle to manage the plugins \o/.
-
-  Then you need to tell vundle to install the plugins:
-  ```terminal
-  vim +PluginInstall +qall
-  ```
-  or from inside Vim:
+  Then you need to tell vim-plug to install the plugins (from inside Vim):
 
   ```vim
-  :PluginInstall
+  :PlugInstall
   ```
+
+  Close and open vim and you're good to go.
 
 ### Extras
 #### THE OLD FONT IS NOT WORKING ANYMORE, PLEASE UPDATE

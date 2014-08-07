@@ -1,10 +1,8 @@
 TODO update Readme
 TODO clean shortcuts
 TODO activate rails shortcuts only when plugin is active
-TODO spike Neovundle
 
 Plugins:
-  ✓ vundle
   ✓ fugitive
   ✓ rails
   ✓ repeat
@@ -43,7 +41,7 @@ Plugins:
   ✓ terryma/vim-multiple-cursors
   ✓ tabular
   ✓ unimpaired
-  - vim-plug (https://github.com/junegunn/vim-plug)
+  ✓ vim-plug (https://github.com/junegunn/vim-plug)
   - ctrlp-tjump (https://github.com/vim-scripts/ctrlp-tjump)
   - neocomplete (https://github.com/Shougo/neocomplete.vim) [needs lua, re-install --with-lua] -> write this info on README
   - neosnippets-snippets (https://github.com/Shougo/neosnippet-snippets)

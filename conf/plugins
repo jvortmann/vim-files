@@ -1,74 +1,73 @@
-" vim: ft=vundle
 " vim: syntax=vim
 
-" Initiate vundle
-if !isdirectory(expand("~/.vim/bundle/Vundle.vim/.git"))
-  !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" Initiate plug
+if !filereadable(expand("~/.vim/autoload/plug.vim"))
+  silent !echo "Setting up vim-plug."
+  silent !mkdir -p ~/.vim/autoload
+  silent !echo "Create .vim/autoload"
+  silent !curl -fLso ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim
+  silent !echo "Curl plug.vim into autoload"
 endif
 
-set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" plugin manager
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/bundle')
 
 " helper and highlight
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rake'
-Plugin 'thoughtbot/vim-rspec'
-Plugin 'Keithbsmiley/rspec.vim'
-Plugin 'vim-scripts/VimClojure'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'ngmy/vim-rubocop'
-Plugin 'pangloss/vim-javascript'
-Plugin 'claco/jasmine.vim'
-Plugin 'vim-scripts/jade.vim'
-Plugin 'tpope/vim-haml'
-Plugin 'slim-template/vim-slim'
-Plugin 'othree/html5.vim'
-Plugin 'svsudhir/textile.vim'
-Plugin 'groenewege/vim-less'
-Plugin 'ap/vim-css-color'
-Plugin 'rodjek/vim-puppet'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rake'
+Plug 'thoughtbot/vim-rspec'
+Plug 'Keithbsmiley/rspec.vim'
+Plug 'vim-scripts/VimClojure'
+Plug 'kchmck/vim-coffee-script'
+Plug 'vim-ruby/vim-ruby'
+Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'ngmy/vim-rubocop'
+Plug 'pangloss/vim-javascript'
+Plug 'claco/jasmine.vim'
+Plug 'vim-scripts/jade.vim'
+Plug 'tpope/vim-haml'
+Plug 'slim-template/vim-slim'
+Plug 'othree/html5.vim'
+Plug 'svsudhir/textile.vim'
+Plug 'groenewege/vim-less'
+Plug 'ap/vim-css-color'
+Plug 'rodjek/vim-puppet'
 
 " improvement
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-ragtag'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-endwise'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'jvortmann/zoom.vim'
-Plugin 'Townk/vim-autoclose'
-Plugin 'majutsushi/tagbar'
-Plugin 'kana/vim-textobj-user'
-Plugin 'sjl/gundo.vim'
-Plugin 'samsonw/vim-task'
-Plugin 'tomtom/tlib_vim'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'honza/vim-snippets'
-Plugin 'garbas/vim-snipmate'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bling/vim-airline'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'godlygeek/tabular'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'jvortmann/zoom.vim'
+Plug 'Townk/vim-autoclose'
+Plug 'majutsushi/tagbar'
+Plug 'kana/vim-textobj-user'
+Plug 'sjl/gundo.vim'
+Plug 'samsonw/vim-task'
+Plug 'tomtom/tlib_vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'honza/vim-snippets'
+Plug 'garbas/vim-snipmate'
+Plug 'airblade/vim-gitgutter'
+Plug 'bling/vim-airline'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'godlygeek/tabular'
 
 " color schemes
-Plugin 'chriskempson/base16-vim'
-Plugin 'baskerville/bubblegum'
-Plugin 'tomasr/molokai'
-Plugin 'Pychimp/vim-luna'
-Plugin 'vim-scripts/wombat256.vim'
-Plugin 'vim-scripts/Wombat'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'w0ng/vim-hybrid'
-Plugin 'chriskempson/vim-tomorrow-theme'
+Plug 'chriskempson/base16-vim'
+Plug 'baskerville/bubblegum'
+Plug 'tomasr/molokai'
+Plug 'Pychimp/vim-luna'
+Plug 'vim-scripts/wombat256.vim'
+Plug 'vim-scripts/Wombat'
+Plug 'altercation/vim-colors-solarized'
+Plug 'w0ng/vim-hybrid'
+Plug 'chriskempson/vim-tomorrow-theme'
 
-" End Vundle processing
-call vundle#end()
+" End Plug processing
+call plug#end()
