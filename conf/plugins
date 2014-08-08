@@ -40,12 +40,12 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
-Plug 'scrooloose/nerdcommenter', { 'on':  'NERDCommenterToggle' }
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'jvortmann/zoom.vim'
 Plug 'Townk/vim-autoclose'
-Plug 'majutsushi/tagbar', { 'on':  'TagbarToogle' }
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToogle' }
 Plug 'kana/vim-textobj-user'
 Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'samsonw/vim-task'
