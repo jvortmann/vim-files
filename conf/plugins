@@ -35,7 +35,7 @@ Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 
 " improvement
-Plug 'kien/ctrlp.vim', { 'on': 'CtrlP' }
+Plug 'kien/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPBuffer'] }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'
