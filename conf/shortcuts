@@ -115,9 +115,9 @@ noremap <M-a> ggVG
 " toggle tagbar
 noremap <silent> <M-i> :TagbarOpenAutoClose<CR>
 noremap <silent> <leader>ii :TagbarOpenAutoClose<CR>
-noremap <silent> <M-S-i> :TagbarToggle<CR>
-noremap <silent> <leader>i :TagbarToggle<CR>
-noremap <silent> <leader>i<space> :TagbarToggle<CR>
+noremap <silent> <M-S-i> :Tagbar<CR>
+noremap <silent> <leader>i :Tagbar<CR>
+noremap <silent> <leader>i<space> :Tagbar<CR>
 
 " adding a shortcut to toggle comment
 map <M-/> <Plug>NERDCommenterToggle

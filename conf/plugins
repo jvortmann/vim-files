@@ -46,7 +46,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'jvortmann/zoom.vim'
 Plug 'Townk/vim-autoclose'
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToogle' }
+Plug 'majutsushi/tagbar', { 'on': ['Tagbar', 'TagbarOpenAutoClose'] }
 Plug 'kana/vim-textobj-user'
 Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'samsonw/vim-task'
