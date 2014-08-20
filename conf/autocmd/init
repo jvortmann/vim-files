@@ -1,0 +1,4 @@
+" vim: ft=vim
+for autocmdfile in split(globpath("~/.vim/conf/autocmd", "*.autocmd"), '\n')
+  execute('source '.autocmdfile)
+endfor
