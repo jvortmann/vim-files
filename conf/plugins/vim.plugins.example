@@ -1,0 +1,33 @@
+" vim: syntax=vim
+
+" helper and highlight
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rake'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
+
+" improvement
+Plug 'kien/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPBuffer'] }
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Townk/vim-autoclose'
+Plug 'kana/vim-textobj-user'
+Plug 'tomtom/tlib_vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'honza/vim-snippets'
+Plug 'garbas/vim-snipmate'
+Plug 'bling/vim-airline'
+
+" color schemes
+Plug 'chriskempson/base16-vim'
+Plug 'baskerville/bubblegum'
+Plug 'tomasr/molokai'
+Plug 'vim-scripts/wombat256.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'chriskempson/vim-tomorrow-theme'
