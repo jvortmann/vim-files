@@ -1,0 +1,3 @@
+" vim: ft=vim
+" map the F2 key to open a side panel with the folder tree
+noremap <silent> <F2> :NERDTreeToggle<Return>

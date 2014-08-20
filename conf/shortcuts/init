@@ -1,9 +1,7 @@
-" vim: filetype=vim
+" vim: ft=vim
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 " set mapping to autocomplete
 inoremap <expr> <C-Space> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" map the F2 key to open a side panel with the folder tree
-noremap <silent> <F2> :NERDTreeToggle<Return>
 " set Alt-Shift-f f to search for files
 noremap <silent><M-S-f>     :CtrlP<CR>
 noremap <silent><leader>f   :CtrlP<CR>
