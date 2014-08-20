@@ -5,17 +5,6 @@ inoremap <expr> <C-Space> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pu
 " roll down and roll up
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
-" set mapping expand the window
-noremap <expr> <silent> <Space><Space> ":vertical res<CR>:res<CR>"
-noremap <Space>= <C-w>=
-noremap <Space>_ <C-w>_
-noremap <Space><Bar> <C-w><Bar>
-noremap <Space>o <C-w>o
-" set mapping to navigate between open split windows
-nnoremap <C-h> <C-w><Left>
-nnoremap <C-j> <C-w><Down>
-nnoremap <C-k> <C-w><Up>
-nnoremap <C-l> <C-w><Right>
 " set mapping to navigate in insert mode
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
