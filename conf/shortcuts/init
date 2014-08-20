@@ -2,11 +2,6 @@
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 " set mapping to autocomplete
 inoremap <expr> <C-Space> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" set mapping to move between tabs
-noremap <C-S-Right> gt
-nmap <C-Tab> gt
-noremap <C-S-Left> gT
-nmap <C-S-Tab> gT
 " roll down and roll up
 noremap <C-Down> <C-d>
 noremap <C-Up> <C-u>
