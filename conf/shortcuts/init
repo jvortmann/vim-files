@@ -54,10 +54,6 @@ noremap <silent> <M-S-i> :Tagbar<CR>
 noremap <silent> <leader>i :Tagbar<CR>
 noremap <silent> <leader>i<space> :Tagbar<CR>
 
-" adding a shortcut to toggle comment
-map <M-/> <Plug>NERDCommenterToggle
-map <leader>/ <Plug>NERDCommenterToggle
-
 " adding a map to open the gundo
 map <silent> <M-S-u> :GundoToggle<CR>
 map <silent> <leader>u :GundoToggle<CR>
