@@ -31,13 +31,6 @@ noremap <M-S-d> Y`]p
 noremap <leader>d Y`]p
 " shortcut to select all
 noremap <M-a> ggVG
-" toggle tagbar
-noremap <silent> <M-i> :TagbarOpenAutoClose<CR>
-noremap <silent> <leader>ii :TagbarOpenAutoClose<CR>
-noremap <silent> <M-S-i> :Tagbar<CR>
-noremap <silent> <leader>i :Tagbar<CR>
-noremap <silent> <leader>i<space> :Tagbar<CR>
-
 "toggle task status
 inoremap <silent> <M-S-CR> <ESC>:call Toggle_task_status()<CR>i
 noremap <silent> <M-S-CR> :call Toggle_task_status()<CR>

@@ -1,0 +1,7 @@
+" vim: ft=vim
+" toggle tagbar
+noremap <silent> <M-i> :TagbarOpenAutoClose<CR>
+noremap <silent> <leader>ii :TagbarOpenAutoClose<CR>
+noremap <silent> <M-S-i> :Tagbar<CR>
+noremap <silent> <leader>i :Tagbar<CR>
+noremap <silent> <leader>i<space> :Tagbar<CR>
