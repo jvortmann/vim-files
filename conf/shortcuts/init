@@ -2,22 +2,6 @@
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 " set mapping to autocomplete
 inoremap <expr> <C-Space> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" set mapping to Rails/Rake plugins
-noremap <F3>             :A<CR>
-noremap <S-F3>           :AS<CR>
-noremap <leader>t        :A<CR>
-noremap <leader>t<space> :A<CR>
-noremap <leader>ts       :AS<CR>
-noremap <leader>tv       :AV<CR>
-noremap <F4>             :R<CR>
-noremap <S-F4>           :RS<CR>
-noremap <leader>r        :R<CR>
-noremap <leader>r<space> :R<CR>
-noremap <leader>rs       :RS<CR>
-noremap <leader>rv       :RV<CR>
-" set mapping to run rake tests
-noremap <F5> :make<CR>
-noremap <F6> :make %<CR>
 " set mapping to Fugitive plugin
 noremap <F7> :Gblame<CR>
 noremap <silent> <S-F7> :Gdiff<CR>
