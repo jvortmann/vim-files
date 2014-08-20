@@ -1,16 +1,5 @@
 " vim: syntax=vim
 
-" Initiate plug
-if !filereadable(expand("~/.vim/autoload/plug.vim"))
-  silent !echo "Setting up vim-plug."
-  silent !mkdir -p ~/.vim/autoload
-  silent !echo "Create .vim/autoload"
-  silent !curl -fLso ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim
-  silent !echo "Curl plug.vim into autoload"
-endif
-
-call plug#begin('~/.vim/bundle')
-
 " helper and highlight
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-fugitive'
@@ -68,6 +57,3 @@ Plug 'vim-scripts/Wombat'
 Plug 'altercation/vim-colors-solarized'
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/vim-tomorrow-theme'
-
-" End Plug processing
-call plug#end()
