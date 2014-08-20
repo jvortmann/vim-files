@@ -14,41 +14,6 @@ noremap <silent><leader>wc  :CtrlPBufTag<CR>
 noremap <silent><M-S-t>a    :CtrlPBufTagAll<CR>
 noremap <silent><leader>wa  :CtrlPBufTagAll<CR>
 " set mapping to Rails/Rake plugins
-noremap <M-S-m>          :Rmodel<Space>
-noremap <leader>m        :Rmodel<Space>
-noremap <leader>m<space> :Rmodel<Space>
-noremap <leader>ms       :RSmodel<Space>
-noremap <leader>mv       :RVmodel<Space>
-noremap <M-S-c>          :Rcontroller<Space>
-noremap <leader>c        :Rcontroller<Space>
-noremap <leader>c<space> :Rcontroller<Space>
-noremap <leader>cs       :RScontroller<Space>
-noremap <leader>cv       :RVcontroller<Space>
-noremap <M-S-v>          :Rview<Space>
-noremap <leader>v        :Rview<Space>
-noremap <leader>v<space> :Rview<Space>
-noremap <leader>vs       :RSview<Space>
-noremap <leader>vv       :RVview<Space>
-noremap <M-S-s>          :Rstylesheet<Space>
-noremap <leader>s        :Rstylesheet<Space>
-noremap <leader>s<space> :Rstylesheet<Space>
-noremap <leader>ss       :RSstylesheet<Space>
-noremap <leader>sv       :RVstylesheet<Space>
-noremap <leader>j        :Rjavascript<Space>
-noremap <leader>j<space> :Rjavascript<Space>
-noremap <leader>js       :RSjavascript<Space>
-noremap <leader>jv       :RVjavascript<Space>
-noremap <M-S-l>          :Rstylesheet<Space>
-noremap <leader>l        :Rlayout<Space>
-noremap <leader>l<space> :Rlayout<Space>
-noremap <leader>ls       :RSlayout<Space>
-noremap <leader>lv       :RVlayout<Space>
-noremap <M-S-e>          :Rextract<Space>
-noremap <leader>e        :Rextract<Space>
-noremap <M-S-g>          :Rgenerate<Space>
-noremap <leader>g        :Rgenerate<Space>
-noremap <M-S-p>          :Rpreview<CR>
-noremap <leader>p        :Rpreview<CR>
 noremap <F3>             :A<CR>
 noremap <S-F3>           :AS<CR>
 noremap <leader>t        :A<CR>
@@ -148,3 +113,7 @@ nnoremap Q <nop>
 nnoremap K <nop>
 " make Y yank to the end of line
 nnoremap Y y$
+
+for shortcut in split(globpath("~/.vim/conf/shortcuts", "*.shortcut"), '\n')
+  execute('source '.shortcut)
+endfor
