@@ -1,0 +1,3 @@
+" vim: ft=vim
+" disabling the default mappings for the NERDCommenter
+let g:NERDCreateDefaultMappings = 0
