@@ -12,13 +12,13 @@ Editing:
   ✓ autoclose
   ✓ tabular
   ✓ unimpaired
+  - indent-guides (https://github.com/nathanaelkane/vim-indent-guides)
   - limelight (https://github.com/junegunn/limelight.vim)
   - auto-pairs (http://vimawesome.com/plugin/auto-pairs)
   - a_pair (http://www.vim.org/scripts/script.php?script_id=4991)
   - commentary (http://vimawesome.com/plugin/commentary-vim)
   - notes (https://github.com/vim-scripts/notes.vim)
   - goyo (https://github.com/junegunn/goyo.vim)
-  - indent-guides
   - pair-tools
   - AutoTag
   - preview
