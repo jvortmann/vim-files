@@ -1,3 +1,8 @@
+" vim: ft=vim
+for setting in split(globpath("~/.vim/conf/plugins/settings", "*.settings"), '\n')
+  execute('source '.setting)
+endfor
+
 " vim: filetype=vim
 "activate the global shortcuts for ragtag
 let g:ragtag_global_maps = 1
