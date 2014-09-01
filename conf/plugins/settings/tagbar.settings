@@ -1,0 +1,3 @@
+" vim: ft=vim
+" configuring tagbar
+let g:tagbar_width = 60
