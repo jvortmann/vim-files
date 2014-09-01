@@ -20,3 +20,6 @@ else
 endif
 
 call plug#end()
+
+" source plugin settings
+source $HOME/.vim/conf/plugins/settings/init

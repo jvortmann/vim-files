@@ -8,8 +8,6 @@ source $HOME/.vim/conf/defaults
 source $HOME/.vim/conf/autocmd/init
 "load the gui options
 source $HOME/.vim/conf/guioptions
-"load plugins configuration
-source $HOME/.vim/conf/plugins/settings
 "load shortcuts
 source $HOME/.vim/conf/shortcuts/init
 "load local vimrc file if it exists
