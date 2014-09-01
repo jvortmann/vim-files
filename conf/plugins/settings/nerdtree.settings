@@ -1,0 +1,3 @@
+" vim: ft=vim
+"make the nerd tree use a new look
+let NERDTreeDirArrows=1
