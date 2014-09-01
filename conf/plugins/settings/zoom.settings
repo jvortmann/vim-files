@@ -1,0 +1,3 @@
+" vim: ft=vim
+" disable the default zoom shortcuts
+let g:use_default_shortcuts_for_zoom = 0

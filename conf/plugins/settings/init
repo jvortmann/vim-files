@@ -9,9 +9,6 @@ if has("autocmd")
   autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInfo
 endif
 
-" disable the default zoom shortcuts
-let g:use_default_shortcuts_for_zoom = 0
-
 " use own color for the redgreen bar
 let g:jasmine_use_own_colors = 0
 
