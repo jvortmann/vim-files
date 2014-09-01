@@ -1,4 +1,4 @@
 " vim: ft=vim
-for shortcut in split(globpath("~/.vim/conf/shortcuts", "*.shortcut"), '\n')
+for shortcut in split(globpath("~/.vim/conf/shortcuts", "*.shortcuts"), '\n')
   execute('source '.shortcut)
 endfor
