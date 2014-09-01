@@ -1,0 +1,3 @@
+" vim: ft=vim
+" use own color for the redgreen bar
+let g:jasmine_use_own_colors = 0
