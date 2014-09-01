@@ -9,10 +9,6 @@ if has("autocmd")
   autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInfo
 endif
 
-"set the clojure options
-let vimclojure#HighlightBuiltins=1
-let vimclojure#ParenRainbow=1
-
 " make css color not change the update time to crazy 100ms
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 
