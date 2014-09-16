@@ -12,6 +12,7 @@ Editing:
   ✓ autoclose
   ✓ tabular
   ✓ unimpaired
+  ✓ targets (https://github.com/wellle/targets.vim)
   - easy-align (https://github.com/junegunn/vim-easy-align)
   - indent-guides (https://github.com/nathanaelkane/vim-indent-guides)
   - limelight (https://github.com/junegunn/limelight.vim)
