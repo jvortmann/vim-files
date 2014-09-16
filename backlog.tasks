@@ -12,6 +12,7 @@ Editing:
   ✓ autoclose
   ✓ tabular
   ✓ unimpaired
+  - easy-align (https://github.com/junegunn/vim-easy-align)
   - indent-guides (https://github.com/nathanaelkane/vim-indent-guides)
   - limelight (https://github.com/junegunn/limelight.vim)
   - auto-pairs (http://vimawesome.com/plugin/auto-pairs)
@@ -108,7 +109,9 @@ Icons:
   ✓ http://lab.colepeters.com/cole/tcpvimicon/tree/master
 
 Color Scheme:
-  - Thematic (http://vimawesome.com/plugin/vim-thematic)
   ✓ jellybeans
   ✓ badwolf
   ✓ molokai
+  ✓ Bubblegum
+  - seoul256 (https://github.com/junegunn/seoul256.vim)
+  - Thematic (http://vimawesome.com/plugin/vim-thematic)
