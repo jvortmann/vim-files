@@ -113,5 +113,5 @@ Color Scheme:
   ✓ badwolf
   ✓ molokai
   ✓ Bubblegum
-  - seoul256 (https://github.com/junegunn/seoul256.vim)
+  ✓ seoul256 (https://github.com/junegunn/seoul256.vim)
   - Thematic (http://vimawesome.com/plugin/vim-thematic)
