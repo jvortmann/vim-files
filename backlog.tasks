@@ -41,6 +41,7 @@ Utilities:
   ✓ snippets
   ✓ snipmate
   ✓ vim-airline
+  ✓ gist (https://github.com/mattn/gist-vim) nope: (https://github.com/Keithbsmiley/gist.vim) (https://github.com/ajh17/vim-fist)
   - neocomplete (https://github.com/Shougo/neocomplete.vim) [needs lua, re-install --with-lua] -> write this info on README
   - neosnippets-snippets (https://github.com/Shougo/neosnippet-snippets)
   - neosnippet (https://github.com/Shougo/neosnippet.vim)
@@ -50,7 +51,6 @@ Utilities:
   - rainbow parentheses (https://github.com/luochen1990/rainbow)
   - glowshi-ft.vim (https://github.com/saihoooooooo/glowshi-ft.vim)
   - editorconfig (editorconfig.org)
-  - gist (https://github.com/Keithbsmiley/gist.vim) (https://github.com/ajh17/vim-fist)
   - vim-signature (https://github.com/kshenoy/vim-signature)
   - yankring (https://github.com/vim-scripts/YankRing.vim)
   - ctrlp-tjump (https://github.com/vim-scripts/ctrlp-tjump)

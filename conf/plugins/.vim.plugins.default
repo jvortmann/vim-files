@@ -47,6 +47,8 @@ Plug 'garbas/vim-snipmate'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'godlygeek/tabular'
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim'
 
 " color schemes
 Plug 'chriskempson/base16-vim'
