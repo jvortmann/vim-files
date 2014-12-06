@@ -1,5 +1,8 @@
 " vim: syntax=vim
 
+"sessions
+Plug 'mhinz/vim-startify'
+
 " helper and highlight
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-fugitive'

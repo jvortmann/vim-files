@@ -1,0 +1,3 @@
+" vim: ft=vim
+" set the mapping to open Startify
+noremap <leader>s :Startify<CR>

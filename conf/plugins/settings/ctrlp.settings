@@ -6,3 +6,4 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](.git|.hg|.svn|vendor/bundle|tmp/cache|coverage|public/source_maps)$',
   \ 'file': '\v(\.(exe|so|dll|gif|jpg|jpeg|png|svg|ico|woff|ttf|eot)|tags)$',
   \ }
+let g:ctrlp_reuse_window = 'netrw\|startify'
