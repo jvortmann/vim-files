@@ -15,11 +15,6 @@ noremap <leader>v        :Rview<Space>
 noremap <leader>v<space> :Rview<Space>
 noremap <leader>vs       :RSview<Space>
 noremap <leader>vv       :RVview<Space>
-noremap <M-S-s>          :Rstylesheet<Space>
-noremap <leader>s        :Rstylesheet<Space>
-noremap <leader>s<space> :Rstylesheet<Space>
-noremap <leader>ss       :RSstylesheet<Space>
-noremap <leader>sv       :RVstylesheet<Space>
 noremap <leader>j        :Rjavascript<Space>
 noremap <leader>j<space> :Rjavascript<Space>
 noremap <leader>js       :RSjavascript<Space>
