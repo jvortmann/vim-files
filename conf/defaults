@@ -17,7 +17,7 @@ set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
 "set auto indent and smart indent
 set autoindent smartindent
 "enable syntax highligh
-syntax on
+syntax enable
 "allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 "set the history to display more itens
