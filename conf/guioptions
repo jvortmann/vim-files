@@ -1,7 +1,7 @@
 " vim: filetype=vim
 set background=dark
 colorscheme bubblegum
-set number tabstop=2 sw=2 bs=2 mouse=a
+set number tabstop=2 mouse=a
 set ruler title cursorline
 " set the space from the current line when scrolling
 set scrolloff=3
