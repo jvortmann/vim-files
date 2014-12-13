@@ -1,4 +1,3 @@
 " vim: ft=vim
 set nocompatible
 filetype off
-set modeline modelines=5
