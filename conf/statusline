@@ -20,4 +20,3 @@ set statusline+=%h\ \           "help file flag
 set statusline+=[%l,%c]         "cursor line,column
 set statusline+=\ \|%L\ lines\| "total lines
 set statusline+=\ %P            "percent through file
-set laststatus=2
