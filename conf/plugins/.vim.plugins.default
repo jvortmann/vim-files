@@ -28,6 +28,7 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 
 " improvement
 Plug 'kien/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPBuffer'] }
+Plug 'rking/ag.vim', { 'on': ['Ag'] }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'
