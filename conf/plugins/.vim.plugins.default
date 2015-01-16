@@ -19,7 +19,7 @@ Plug 'claco/jasmine.vim', { 'for': ['javascript', 'jasmine', 'jasmine-javascript
 Plug 'vim-scripts/jade.vim', { 'for': ['javascript', 'jade'] }
 Plug 'tpope/vim-haml', { 'for': 'haml' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
-Plug 'othree/html5.vim', { 'for': 'html' }
+Plug 'othree/html5.vim'
 Plug 'svsudhir/textile.vim', { 'for': 'textile' }
 Plug 'groenewege/vim-less'
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss', 'less'] }
