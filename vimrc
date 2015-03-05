@@ -19,5 +19,5 @@ endif
 " load extra customization (after variables set on vimrc.local)
 source $HOME/.vim/conf/extras
 " then loads after/plugin/force_configs.vim
-" and then your local ~/.vimrc.force for configs 
+" and then your local ~/.vimrc.force for configs
 " that needs to be setup last
