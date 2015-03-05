@@ -25,6 +25,7 @@ Plug 'groenewege/vim-less'
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss', 'less'] }
 Plug 'rodjek/vim-puppet', { 'for': 'puppet' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
+Plug 'ekalinin/Dockerfile.vim'
 
 " improvement
 Plug 'kien/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPBuffer'] }
