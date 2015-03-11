@@ -1,7 +1,10 @@
 " vim: syntax=vim
 
-"sessions
+" sessions
 Plug 'mhinz/vim-startify'
+
+" languages
+Plug 'fatih/vim-go' " Go
 
 " helper and highlight
 Plug 'tpope/vim-rails'
