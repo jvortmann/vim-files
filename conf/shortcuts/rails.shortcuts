@@ -28,6 +28,3 @@ noremap <M-S-e>          :Rextract<Space>
 noremap <leader>e        :Rextract<Space>
 noremap <M-S-g>          :Rgenerate<Space>
 noremap <leader>g        :Rgenerate<Space>
-noremap <M-S-p>          :Rpreview<CR>
-noremap <leader>p        :Rpreview<CR>
-
