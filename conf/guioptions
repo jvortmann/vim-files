@@ -1,6 +1,6 @@
 " vim: filetype=vim
 set background=dark
-colorscheme codeschool
+colorscheme base16-eighties
 
 set number tabstop=2 mouse=a
 set ruler title cursorline
