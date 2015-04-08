@@ -73,3 +73,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'junegunn/seoul256.vim'
+Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+Plug '29decibel/codeschool-vim-theme'
+Plug 'nanotech/jellybeans.vim'
+Plug 'jonathanfilip/vim-lucius'
