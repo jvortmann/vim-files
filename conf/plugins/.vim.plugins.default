@@ -78,3 +78,6 @@ Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plug '29decibel/codeschool-vim-theme'
 Plug 'nanotech/jellybeans.vim'
 Plug 'jonathanfilip/vim-lucius'
+Plug 'atweiden/vim-colors-behelit'
+Plug 'mtglsk/mushroom'
+Plug 'ajh17/Spacegray.vim'
