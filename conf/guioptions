@@ -1,6 +1,6 @@
 " vim: filetype=vim
 set background=dark
-colorscheme behelit
+colorscheme solarized
 
 set number tabstop=2 mouse=a
 set ruler title cursorline
