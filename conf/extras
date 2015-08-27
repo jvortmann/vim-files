@@ -41,3 +41,8 @@ if g:use_custom_fonts
     autocmd GUIEnter *  call s:initialize_font()
   augroup END
 endif
+
+"load local extra config file if it exists
+if filereadable(expand("$HOME/.vim.extras"))
+  source $HOME/.vim.extras
+endif
