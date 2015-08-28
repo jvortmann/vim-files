@@ -6,8 +6,6 @@ set number tabstop=2 mouse=a
 set ruler title cursorline
 " set the space from the current line when scrolling
 set scrolloff=3
-" set the colors when using terminal commands
-set noguipty
 " command-line completion shows a list of matches
 set wmnu
 " set spellcheck settings
