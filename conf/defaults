@@ -51,10 +51,6 @@ set splitright
 set tags+=gem.tags
 "set lazyredraw so macros run faster
 set lazyredraw
-" enable custom color for cursors besides colorscheme
-let g:use_custom_cursors = 0
-" enable custom fonts
-let g:use_custom_fonts = 1
 " load the status line
 source ~/.vim/conf/statusline
 " make status bar always be shown

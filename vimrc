@@ -16,8 +16,6 @@ source $HOME/.vim/conf/shortcuts/init
 if filereadable(expand("$HOME/.vimrc.local"))
   source $HOME/.vimrc.local
 endif
-" load extra customization (after variables set on vimrc.local)
-source $HOME/.vim/conf/extras
 " then loads after/plugin/force_configs.vim
 " and then your local ~/.vimrc.force for configs
 " that needs to be setup last
