@@ -1,0 +1,5 @@
+" vim: ft=vim
+" set ag as default engine for Ack search
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif

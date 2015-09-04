@@ -38,6 +38,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'scrooloose/syntastic'
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Github gist
+Plug 'mileszs/ack.vim'
 
 " improvement
 Plug 'kien/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPBuffer'] }
