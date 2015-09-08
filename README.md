@@ -1,38 +1,18 @@
 # A practical Vim configuration
 
- ** Warning ** All GUI setup are now deprecated. It should all be on the gvimrc but won't be maintained as we are now favouring Neovim.
+ ** Warning ** All GUI setup are now deprecated. It should all be on the gvimrc but won't be maintained as we are now favouring [NeoVim](neovim.io).
 
 ## Configuration
 
-### Setup basic configs
+  Clone the repo and run the following to set it up:
 
-  To set up the config, do the following (on your home directory):
-
-  ```terminal
-  ln -s 'path_to_where_you_cloned_the_repo' .vim/
-  ln -s .vim/vimrc .vimrc
-  ln -s .vim/gvimrc .gvimrc (for gui configuration)
+  ```sh
+  cd path_to_where_you_cloned_the_repo
+  ./setup.sh
   ```
 
-### Setup Vim-Plug
-  We are now using Vim-Plug (https://github.com/junegunn/vim-plug) to manage the plugins \o/.
-
-  Then you need to tell vim-plug to install the plugins (from inside Vim):
-
-  ```vim
-  :PlugInstall
-  ```
-
-  Close and open vim and you're good to go.
-
-### Extras
-#### THE OLD FONT IS NOT WORKING ANYMORE, PLEASE UPDATE
-  If you want to use the fancy status bar on the Mac (it is on by default on the Mac) you will also need to install the 'Sauce Code Powerline Light' font on the extra/fonts folder.
-  It can be deactivated on the conf/defaults file.
-
-## Shortcuts (fairly outdated list, I will update them soon)
-
-  The majority of shortcuts are made to use with Rails development. So far this is done by default, but the intent of this config if to be flexible and so there will be a way to define which shortcuts to create depending on what is being used.
+## Shortcuts
+  Most of the shortcuts with Alt are getting Leader '\' versions. Some of them will continue to work on NeoVim, but not on terminal version of Vim. The idea is to remove almost all of the Alt versions gradually.
 
   * AutoComplete
 
