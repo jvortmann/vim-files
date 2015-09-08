@@ -1,5 +1,9 @@
 TODO update Readme
 TODO clear shortcuts
+TODO make default plugin list visible
+TODO use plugin to show all shortcuts (cvortmann)
+TODO setup folder 'vim.local' to read all settings / shortcuts / autocmd / etc from user
+TODO remove rarely used plugins
 TODO activate rails shortcuts only when plugin is active
 
 Editing:
