@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo "Installing Plugins"
-vim -c "PlugInstall | qa"
+vim -c "PlugInstall | qa" && vim
