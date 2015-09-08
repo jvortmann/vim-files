@@ -1,10 +1,12 @@
 #!/bin/bash
 
-echo "Setting symlinks for default configurations"
+echo "Symlink default configurations"
 ln -sfhv $(pwd) ~/.vim
 ln -sfhv ~/.vim/vimrc ~/.vimrc
 ln -sfhv ~/.vim/gvimrc ~/.gvimrc
+echo
 
-echo "Setting symlinks for NVim"
+echo "Symlink NVim configuration"
 ln -sfhv ~/.vim ~/.nvim
 ln -sfhv ~/.nvim/vimrc ~/.nvimrc
+echo
