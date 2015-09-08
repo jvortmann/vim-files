@@ -11,7 +11,7 @@
   ./setup.sh
   ```
 
-## Shortcuts
+## Shortcuts (outdated)
   Most of the shortcuts with Alt are getting Leader '\' versions. Some of them will continue to work on NeoVim, but not on terminal version of Vim. The idea is to remove almost all of the Alt versions gradually.
 
   * AutoComplete
