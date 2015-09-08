@@ -57,3 +57,5 @@ source ~/.vim/conf/statusline
 set laststatus=2
 " enable modeline for 3 lines (reading configs on top/bottom of file)
 set modeline modelines=3
+" set fish as the default shell
+set shell=/usr/local/bin/fish
