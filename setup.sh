@@ -2,4 +2,8 @@
 
 ./symlink.sh
 echo "Installing Plugins"
-vim -c "PlugInstall | qa" && vim
+echo
+
+vim -c "PlugInstall | qa" && \
+  echo "Press anything to continue" && read && \
+  vim
