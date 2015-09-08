@@ -55,5 +55,5 @@ set lazyredraw
 source ~/.vim/conf/statusline
 " make status bar always be shown
 set laststatus=2
-" enable modeline for 5 lines (reading configs on top/bottom of file)
-set modeline modelines=5
+" enable modeline for 3 lines (reading configs on top/bottom of file)
+set modeline modelines=3
