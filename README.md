@@ -1,6 +1,6 @@
 # A practical Vim configuration
 
- ** Warning ** All GUI setup are now deprecated. It should all be on the gvimrc but won't be maintained as we are now favouring [NeoVim](neovim.io).
+ **Warning** All GUI setup are now deprecated. It should all be on the gvimrc but won't be maintained as we are now favouring [NeoVim](neovim.io).
 
 ## Configuration
 
