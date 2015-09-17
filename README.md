@@ -74,16 +74,6 @@
 
     `<Shift-F7>                  ` - diff
 
-  * Navigation
-
-    `<Control-Tab>               ` - goes to the next tab
-
-    `<Control-Shift-Tab>         ` - goes to the previous tab
-
-    `<Control-Down>              ` - scrolls down
-
-    `<Control-Up>                ` - scrolls up
-
   * Windows
 
     `<Space><Space>              ` - expand the current window

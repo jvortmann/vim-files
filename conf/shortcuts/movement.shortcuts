@@ -1,7 +1,4 @@
 " vim: ft=vim
-" roll down and roll up
-noremap <C-Down> <C-d>
-noremap <C-Up> <C-u>
 " set mapping to not jump when using Shift Up/Down
 noremap <S-Up> <Up>
 noremap <S-Down> <Down>
