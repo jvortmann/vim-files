@@ -38,7 +38,7 @@ Utilities:
   ✓ syntastic
   ✓ zoom
   ✓ tagbar
-  ✓ gundo
+  ✓ gundo (sjl/gundo.vim)
   ✓ fugitive
   ✓ rake
   ✓ tlib

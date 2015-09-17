@@ -1,4 +1,0 @@
-" vim: ft=vim
-" adding a map to open the gundo
-map <silent> <M-S-u> :GundoToggle<CR>
-map <silent> <leader>u :GundoToggle<CR>

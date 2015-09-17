@@ -128,10 +128,6 @@
 
     `<Alt/Option-Shift-i>        ` - toggle the tagbar
 
-  * gundo
-
-    `<Alt/Option-Shift-u>        ` - toggle gundo and focus it
-
   * Tasks
 
     `<Alt/Option-Shift-Enter>    ` - toggle task (done/undone)
