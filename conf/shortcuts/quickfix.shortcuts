@@ -1,0 +1,12 @@
+" vim: ft=vim
+noremap <Leader><Leader>o :bo copen<CR>
+noremap <Leader><Leader>c :bo cclose<CR>
+noremap <Leader><Leader>t :bo cw<CR>
+noremap <Leader><Leader>n :cnext<CR>
+noremap <Leader><Leader>p :cprev<CR>
+
+let g:qfenter_vopen_map = ['<C-v>', 'v']
+let g:qfenter_hopen_map = ['<C-CR>', '<C-s>', '<C-x>', 's']
+
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+autocmd BufReadPost quickfix nnoremap <buffer> h <Left>
