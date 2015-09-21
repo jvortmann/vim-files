@@ -39,6 +39,7 @@ Plug 'scrooloose/syntastic'
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Github gist
 Plug 'mileszs/ack.vim'
+Plug 'tpope/vim-dispatch'
 
 " improvement
 Plug 'kien/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPBuffer'] }
