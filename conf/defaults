@@ -34,8 +34,6 @@ set completeopt=longest,menuone,preview
 set wak=no
 "disable swap files
 set noswf
-" saving when losing focus
-au FocusLost * :wa
 " change the invisible chars
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:⌴
 set showbreak=↪
