@@ -7,7 +7,7 @@ Plug 'mhinz/vim-startify'
 Plug 'fatih/vim-go' " Go
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'kchmck/vim-coffee-script', { 'for': ['javascript', 'coffeescript'] }
+Plug 'kchmck/vim-coffee-script', { 'for': ['javascript', 'coffee', 'coffeescript'] }
 Plug 'vim-scripts/VimClojure', { 'for': 'clojure' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'samsonw/vim-task'
