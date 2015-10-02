@@ -2,6 +2,7 @@
 
 " sessions
 Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-obsession'
 
 " languages
 Plug 'fatih/vim-go' " Go
