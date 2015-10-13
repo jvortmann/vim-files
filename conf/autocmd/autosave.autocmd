@@ -1,6 +1,0 @@
-" vim: ft=vim
-" saving when losing focus
-"augroup autosave
-  "autocmd BufLeave * if (&buftype=="") && (expand("%:r") > "") && (&readonly==0)|:w|endif
-"augroup END
-set autowriteall
