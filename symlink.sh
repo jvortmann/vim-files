@@ -7,6 +7,6 @@ ln -sfhv ~/.vim/gvimrc ~/.gvimrc
 echo
 
 echo "Symlink NVim configuration"
-ln -sfhv ~/.vim ~/.nvim
-ln -sfhv ~/.nvim/vimrc ~/.nvimrc
+ln -sfhv ~/.vim ~/.config/nvim
+ln -sfhv ~/.vim/vimrc ~/.config/nvim/init.vim
 echo
