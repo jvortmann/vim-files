@@ -8,7 +8,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'samsonw/vim-task'
 
 " template files and views
-Plug 'ekalinin/Dockerfile.vim'
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss', 'less'] }
 
 " frameworks
