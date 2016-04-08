@@ -9,9 +9,6 @@ set autowriteall
 set autoread
 "set the buffer to become hidden instead of preventing the user from changing to another buffer
 set hidden
-"set proper encoding for files
-set encoding=utf-8
-set fileencoding=utf-8
 " consistent indenting options
 set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
 "set auto indent and smart indent
