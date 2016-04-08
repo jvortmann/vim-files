@@ -14,7 +14,7 @@ if filereadable(expand("~/.vim.plugins")) || filereadable(expand(".vim.plugins")
   if filereadable(expand("~/.vim.plugins")) | source $HOME/.vim.plugins | endif
   if filereadable(expand(".vim.plugins")) | source .vim.plugins | endif
 else
-  source $HOME/.vim/conf/plugins/.vim.plugins.default
+  source $HOME/.vim/conf/plugins/vim.plugins.default
 endif
 
 call plug#end()
