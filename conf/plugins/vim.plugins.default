@@ -1,8 +1,5 @@
 " vim: syntax=vim
 
-" sessions
-Plug 'mhinz/vim-startify'
-
 " languages
 Plug 'sheerun/vim-polyglot'
 Plug 'samsonw/vim-task'
