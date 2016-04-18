@@ -22,6 +22,7 @@ Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Github gist
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-dispatch'
+Plug 'tmux-plugins/vim-tmux'
 
 " improvement
 Plug 'kien/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPBuffer'] }
