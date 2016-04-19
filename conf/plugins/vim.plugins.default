@@ -26,7 +26,7 @@ Plug 'tmux-plugins/vim-tmux'
 
 " improvement
 Plug 'kien/ctrlp.vim', { 'on': ['CtrlP', 'CtrlPBuffer'] }
-Plug 'rking/ag.vim', { 'on': ['Ag'] }
+Plug 'rking/ag.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'
