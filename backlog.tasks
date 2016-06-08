@@ -47,6 +47,7 @@ Utilities:
   ✓ snipmate
   ✓ vim-airline
   ✓ gist (https://github.com/mattn/gist-vim) nope: (https://github.com/Keithbsmiley/gist.vim) (https://github.com/ajh17/vim-fist)
+  - investigate (https://github.com/keith/investigate.vim)
   - ruby-monster (https://github.com/osyo-manga/vim-monster)
   - vim ruby refactoring (https://github.com/ecomba/vim-ruby-refactoring)
   - vim-merginal (https://github.com/idanarye/vim-merginal)
@@ -100,6 +101,7 @@ Languages:
   - vimmakegreen (https://github.com/reinh/vim-makegreen.git)
   - specky! (need only some snippets)
   - markdown (https://github.com/plasticboy/vim-markdown)
+  - markdown preview (https://github.com/nelstrom/vim-markdown-preview)
   - vim-json (http://vimawesome.com/plugin/json-vim)
   - nginx
   - ruby-minitest
