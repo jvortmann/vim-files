@@ -1,5 +1,7 @@
 " vim: filetype=vim
 set background=dark
+
+let g:solarized_termtrans=1
 colorscheme solarized
 
 set number tabstop=2 mouse=a
