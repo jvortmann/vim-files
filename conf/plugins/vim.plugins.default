@@ -27,7 +27,6 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 
 " improvement
 Plug 'kien/ctrlp.vim'
-Plug 'rking/ag.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'
