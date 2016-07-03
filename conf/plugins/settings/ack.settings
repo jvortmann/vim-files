@@ -1,5 +1,7 @@
 " vim: ft=vim
-" set ag as default engine for Ack search
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+" set smart-grep and ag as default engines for Ack
+if executable('smart-grep')
+  let g:ackprg = 'smart-grep'
+elseif executable('ag')
+  let g:ackprg = 'ag --vimgrep --smart-case'
 endif
