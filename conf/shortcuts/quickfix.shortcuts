@@ -5,6 +5,12 @@ noremap <Leader><Leader>t :bo cw<CR>
 noremap <Leader><Leader>n :cnext<CR>
 noremap <Leader><Leader>p :cprev<CR>
 
+noremap <Leader>qo :bo copen<CR>
+noremap <Leader>qc :bo cclose<CR>
+noremap <Leader>qt :bo cw<CR>
+noremap <Leader>qn :cnext<CR>
+noremap <Leader>qp :cprev<CR>
+
 let g:qfenter_vopen_map = ['<C-v>', 'v']
 let g:qfenter_hopen_map = ['<C-CR>', '<C-s>', '<C-x>', 's']
 
