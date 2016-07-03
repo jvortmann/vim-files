@@ -17,7 +17,7 @@ Plug 'tpope/vim-fugitive' " Git
 Plug 'tpope/vim-rake'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
-Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Github gist
 Plug 'mileszs/ack.vim'
