@@ -10,3 +10,6 @@ let g:ack_mappings = {
       \ "h": "",
       \ "s": "<C-W><CR><C-W>K",
       \ "v": "<C-W><CR><C-W>H<C-W>b<C-W>J<C-W>t" }
+
+" highlight the search term
+let g:ackhighlight = 1
