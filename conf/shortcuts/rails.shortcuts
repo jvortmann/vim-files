@@ -20,10 +20,6 @@ noremap <leader>j<space> :Rjavascript<Space>
 noremap <leader>js       :RSjavascript<Space>
 noremap <leader>jv       :RVjavascript<Space>
 noremap <M-S-l>          :Rstylesheet<Space>
-noremap <leader>l        :Rlayout<Space>
-noremap <leader>l<space> :Rlayout<Space>
-noremap <leader>ls       :RSlayout<Space>
-noremap <leader>lv       :RVlayout<Space>
 noremap <M-S-e>          :Rextract<Space>
 noremap <leader>e        :Rextract<Space>
 noremap <M-S-g>          :Rgenerate<Space>
