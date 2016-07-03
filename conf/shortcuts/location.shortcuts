@@ -1,0 +1,6 @@
+" vim: ft=vim
+noremap <Leader>lo :bo lopen<CR>
+noremap <Leader>lc :bo lclose<CR>
+noremap <Leader>lt :bo lw<CR>
+noremap <Leader>ln :lnext<CR>
+noremap <Leader>lp :lprev<CR>
