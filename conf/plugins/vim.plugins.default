@@ -15,7 +15,6 @@ Plug 'markcornick/vim-bats'
 " tools
 Plug 'tpope/vim-fugitive' " Git
 Plug 'tpope/vim-rake'
-Plug 'tpope/vim-cucumber'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'neomake/neomake'
