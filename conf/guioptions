@@ -2,7 +2,10 @@
 set background=dark
 
 let g:solarized_termtrans=1
-colorscheme solarized
+
+if filereadable(expand("$HOME/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
+  colorscheme solarized
+endif
 
 set number tabstop=2 mouse=a
 set ruler title cursorline
