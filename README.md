@@ -5,8 +5,8 @@
 ## Configuration
 
   Clone the repo and run the following to set it up:
-  **ATTENTION**
-  This deletes any previous configuration.
+
+  **ATTENTION: This deletes any previous configuration.**
 
   ```sh
   cd path_to_where_you_cloned_the_repo
