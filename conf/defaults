@@ -33,7 +33,7 @@ set wak=no
 set noswf
 " change the invisible chars
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:⌴
-set showbreak=↪
+let &showbreak = '↪  '
 set fillchars=diff:⣿,vert:│
 "set clipboard without the need for "+
 set clipboard=unnamed
