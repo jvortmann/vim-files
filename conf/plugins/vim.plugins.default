@@ -24,6 +24,7 @@ Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-dispatch'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'editorconfig/editorconfig-vim'
 
 " improvement
 Plug 'kien/ctrlp.vim'
