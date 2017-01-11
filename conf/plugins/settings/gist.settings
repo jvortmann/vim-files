@@ -3,5 +3,3 @@
 let g:gist_post_private = 1
 " show private gists on show
 let g:gist_show_privates = 1
-" open browser after creating gist
-let g:gist_open_browser_after_post = 1
