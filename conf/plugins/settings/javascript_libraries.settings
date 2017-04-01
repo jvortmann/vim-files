@@ -1,0 +1,2 @@
+" vim: ft=vim
+let g:used_javascript_libs = 'underscore,backbone,react,jasmine,chai,vue,d3'

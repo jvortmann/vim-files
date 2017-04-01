@@ -2,6 +2,9 @@
 
 " languages
 Plug 'sheerun/vim-polyglot'
+Plug 'carlitux/deoplete-ternjs'
+Plug 'ternjs/tern_for_vim'
+Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'samsonw/vim-task'
 
 " template files and views
