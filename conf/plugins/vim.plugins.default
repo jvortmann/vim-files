@@ -6,6 +6,7 @@ Plug 'carlitux/deoplete-ternjs'
 Plug 'ternjs/tern_for_vim'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'samsonw/vim-task'
+Plug 'fishbullet/deoplete-ruby'
 
 " template files and views
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss', 'less'] }
