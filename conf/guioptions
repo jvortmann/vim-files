@@ -18,9 +18,3 @@ highlight SpellBad term=underline gui=undercurl guisp=Orange
 
 " enable set cursor style
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
-"normal - block
-let &t_EI .= "\<Esc>[3 q"
-" insert mode - bar
-let &t_SI .= "\<Esc>[5 q"
-"replace mode - underline
-let &t_SR .= "\<Esc>[4 q"
