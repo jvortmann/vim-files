@@ -5,3 +5,5 @@ let g:neomake_message_sign = {'text': '>', 'texthl': 'DiffAdd'}
 let g:neomake_info_sign = {'text': 'i', 'texthl': 'DiffText'}
 
 let g:neomake_javascript_enabled_makers = ['jshint', 'eslint']
+
+autocmd! BufWritePost * Neomake
