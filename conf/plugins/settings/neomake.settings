@@ -4,6 +4,6 @@ let g:neomake_warning_sign = {'text': '!', 'texthl': 'DiffChange'}
 let g:neomake_message_sign = {'text': '>', 'texthl': 'DiffAdd'}
 let g:neomake_info_sign = {'text': 'i', 'texthl': 'DiffText'}
 
-let g:neomake_javascript_enabled_makers = ['jshint']
+let g:neomake_highlight_lines = 1
 
 autocmd! BufWritePost * Neomake
