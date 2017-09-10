@@ -7,3 +7,9 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v(\.(exe|so|dll|gif|jpg|jpeg|png|svg|ico|woff|ttf|eot)|tags)$',
   \ }
 let g:ctrlp_reuse_window = 'netrw\|startify'
+let g:ctrlp_user_command = {
+  \ 'types': {
+    \ 1: ['.git', 'cd %s && git ls-files -co --exclude-standard'],
+    \ },
+  \ 'fallback': 'rg %s -l --nocolor -g ""'
+  \ }
