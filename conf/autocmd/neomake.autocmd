@@ -1,7 +1,0 @@
-" vim: ft=vim
-augroup LANGUAGE_CHECKERS
-  autocmd!
-
-  " run Neomake for Ruby Scala, Javascript and CoffeeScript files
-  autocmd BufReadPost,BufWritePost,FileReadPost,FileWritePost *.{rb,scala,js,coffee} :Neomake
-augroup END

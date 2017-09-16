@@ -6,4 +6,5 @@ let g:neomake_info_sign = {'text': 'i', 'texthl': 'DiffText'}
 
 let g:neomake_javascript_enabled_makers = ['eslint']
 
-autocmd! BufWritePost * Neomake
+" configure neomake to run on write
+call neomake#configure#automake('w')
