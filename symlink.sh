@@ -4,15 +4,15 @@ echo; echo ">> Removing existing configs"
 rm -r ~/.vim
 
 echo; echo ">> Symlink default configurations"
-ln -sfhv $(pwd) ~/.vim
-ln -sfhv ~/.vim/vimrc ~/.vimrc
-ln -sfhv ~/.vim/gvimrc ~/.gvimrc
+ln -sfnv "$(pwd)" ~/.vim
+ln -sfnv ~/.vim/vimrc ~/.vimrc
+ln -sfnv ~/.vim/gvimrc ~/.gvimrc
 
 echo; echo ">> Creating ~/.config"
 mkdir -p ~/.config
 
 echo; echo ">> Symlink NVim configuration"
-ln -sfhv $(pwd) ~/.config/nvim
-ln -sfhv ~/.config/nvim/vimrc ~/.config/nvim/init.vim
+ln -sfnv "$(pwd)" ~/.config/nvim
+ln -sfnv ~/.config/nvim/vimrc ~/.config/nvim/init.vim
 
 echo
