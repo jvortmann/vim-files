@@ -5,4 +5,4 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 
 let g:airline#extensions#branch#format = 2
-let g:airline#extensions#branch#displayed_head_limit = 10
+let g:airline#extensions#branch#displayed_head_limit = 20
