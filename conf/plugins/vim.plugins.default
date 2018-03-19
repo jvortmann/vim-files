@@ -23,7 +23,7 @@ Plug 'tpope/vim-rake'
 Plug 'tpope/vim-cucumber'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Github gist

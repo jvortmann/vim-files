@@ -1,0 +1,19 @@
+" vim: ft=vim
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = '!'
+let g:ale_sign_info = 'i'
+let g:ale_sign_style_error = 'sx'
+let g:ale_sign_style_warning = 's!'
+
+" enable airline support for lint messages
+let g:airline#extensions#ale#enabled = 1
+
+" disable lint on text change
+let g:ale_lint_on_text_changed = 'never'
+
+highlight link ALEErrorSign DiffDelete
+highlight link ALEWarningSign DiffChange
+highlight link ALEInfoSign DiffText
+
+highlight link ALEWarning SpellLocal
+highlight link ALEInfo SpellRare
