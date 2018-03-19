@@ -1,0 +1,5 @@
+" vim: ft=vim
+"
+if executable('rg')
+  let g:gitgutter_grep = "rg"
+endif
