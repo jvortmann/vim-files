@@ -19,6 +19,7 @@ Plug 'markcornick/vim-bats'
 
 " tools
 Plug 'tpope/vim-fugitive' " Git
+Plug 'tpope/vim-rhubarb' " GitHub
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-cucumber'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
