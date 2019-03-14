@@ -2,8 +2,8 @@
 set termguicolors
 set background=dark
 
-if filereadable(expand("$HOME/.vim/bundle/vim-solarized8/colors/solarized8_dark.vim"))
-  colorscheme solarized8_dark
+if filereadable(expand("$HOME/.vim/bundle/vim-solarized8/colors/solarized8.vim"))
+  colorscheme solarized8
 endif
 
 set number tabstop=2 mouse=a
