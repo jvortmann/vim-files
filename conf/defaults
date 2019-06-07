@@ -44,8 +44,10 @@ set splitbelow
 set splitright
 " add gem.tags to the list of tag files to look for
 set tags+=gem.tags
-"set lazyredraw so macros run faster
+"set lazyredraw so macros run faster and speed vim up
 set lazyredraw
+set ttyfast
+set synmaxcol=128
 " load the status line
 source ~/.vim/conf/statusline
 " make status bar always be shown
