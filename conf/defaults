@@ -1,7 +1,7 @@
 " vim: filetype=vim
 filetype indent plugin on
 " define shell to avoid problems
-set shell=bash
+set shell=zsh
 set ignorecase smartcase gdefault showmatch hlsearch incsearch
 "enable auto write
 set autowriteall
