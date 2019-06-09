@@ -2,7 +2,7 @@
 filetype indent plugin on
 " define shell to avoid problems
 set shell=zsh
-set ignorecase smartcase gdefault showmatch hlsearch incsearch
+set ignorecase smartcase gdefault showmatch hlsearch incsearch inccommand=nosplit
 "enable auto write
 set autowriteall
 "automatically reload the files if they were modified outside vim
