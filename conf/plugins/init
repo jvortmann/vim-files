@@ -1,4 +1,4 @@
-" vim: syntax=vim
+" vim: ft=vim
 
 " Initiate plug
 if !filereadable(expand("~/.vim/autoload/plug.vim"))
