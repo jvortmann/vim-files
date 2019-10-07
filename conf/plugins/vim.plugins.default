@@ -20,7 +20,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['jsx', 'javascript'] } 
 Plug 'pangloss/vim-javascript', { 'for': ['jsx', 'javascript', 'coffescript'] } " javascript
 Plug 'carlitux/deoplete-ternjs', { 'for': ['jsx', 'javascript', 'coffescript'] } " javascript autocomplete
 Plug 'ternjs/tern_for_vim', { 'for': ['jsx', 'javascript', 'coffescript'] } " javascript autocomplete
-Plug 'mxw/vim-jsx', { 'for': ['jsx', 'javascript', 'coffescript'] } " jsx
+Plug 'maxmellon/vim-jsx-pretty', { 'for': ['jsx', 'javascript', 'coffescript'] } " jsx
 Plug 'prabirshrestha/async.vim' " language server protocol
 Plug 'prabirshrestha/vim-lsp' " language server protocol
 Plug 'tbastos/vim-lua', { 'for': 'lua' } " lua
