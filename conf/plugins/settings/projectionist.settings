@@ -6,62 +6,52 @@ autocmd FileType *
   \ endif
 
 let g:projectionist_heuristics = {
-      \  "bin/spring" : {
-      \    "spec/*_spec.rb" : {
-      \      "runner" : "bin/spring rspec"
+      \  "bin/spring": {
+      \    "spec/*_spec.rb": {
+      \      "runner": "bin/spring rspec"
       \    },
       \  },
       \  "!bin/spring&Gemfile" : {
       \    "spec/*_spec.rb" : {
-      \      "runner" : "bundle exec rspec"
+      \      "runner": "bundle exec rspec"
       \    },
       \  },
-      \  "config/application.rb" : {
-      \    "app/*.rb" : {
+      \  "config/application.rb": {
+      \    "app/*.rb": {
       \      "alternate": "spec/{}_spec.rb",
       \      "type": "app"
       \    },
-      \    "spec/*_spec.rb" : {
+      \    "spec/*_spec.rb": {
       \      "alternate": "app/{}.rb",
-      \      "type" : "spec",
+      \      "type": "spec",
       \    },
-      \    "lib/*.rb" : {
+      \    "lib/*.rb": {
       \      "alternate": "spec/lib/{}_spec.rb",
-      \      "type" : "lib"
+      \      "type": "lib"
       \    },
-      \    "spec/lib/*_spec.rb" : {
+      \    "spec/lib/*_spec.rb": {
       \      "alternate": "lib/{}.rb",
-      \      "type" : "spec",
+      \      "type": "spec",
       \    },
       \  },
-      \  "*.gemspec" : {
+      \  "*.gemspec|.ruby-version": {
       \    "lib/*.rb" : {
       \      "alternate": "spec/{}_spec.rb",
-      \      "type" : "lib"
+      \      "type": "lib"
       \    },
-      \    "spec/*_spec.rb" : {
+      \    "spec/*_spec.rb": {
       \      "alternate": "lib/{}.rb",
-      \      "type" : "spec",
+      \      "type": "spec",
       \    }
       \  },
-      \  ".ruby-version" : {
-      \    "lib/*.rb" : {
-      \      "alternate": "spec/{}_spec.rb",
-      \      "type" : "lib"
+      \  "mix.exs|mix.lock|.tool-versions": {
+      \    "lib/*.ex": {
+      \      "alternate": ["test/{}_test.ex", "test/{}_test.exs"],
+      \      "type": "lib"
       \    },
-      \    "spec/*_spec.rb" : {
-      \      "alternate": "lib/{}.rb",
-      \      "type" : "spec",
-      \    }
-      \  },
-      \  ".mix.exs" : {
-      \    "lib/*.rb" : {
-      \      "alternate": "test/{}_test.rb",
-      \      "type" : "lib"
-      \    },
-      \    "test/*_test.rb" : {
-      \      "alternate": "lib/{}.rb",
-      \      "type" : "spec",
+      \    "test/*_test.exs": {
+      \      "alternate": ["lib/{}.ex", "lib/{}.exs"],
+      \      "type": "spec",
       \    }
       \  },
       \}
