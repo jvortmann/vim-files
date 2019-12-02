@@ -27,14 +27,14 @@ Plug 'tbastos/vim-lua', { 'for': 'lua' } " lua
 Plug 'aliev/vim-python', { 'for': 'python' } " python
 Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' } " python
 Plug 'wlangstroth/vim-racket', { 'for': 'racket' } " racket
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' } " ruby
-Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' } " ruby autocomplete
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' } " [SLOW] ruby
+Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' } " [SLOW] ruby autocomplete
 Plug 'tpope/vim-bundler', { 'for': 'ruby' } " ruby bundler
 Plug 'tpope/vim-cucumber', { 'for': 'ruby' } " ruby cucumber
 Plug 'tpope/vim-rails', { 'for': 'ruby' } " ruby rails
 Plug 'tpope/vim-rake', { 'for': 'ruby' } " ruby rake
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' } " ruby rubocop
-Plug 'keith/rspec.vim', { 'for': 'ruby' } " ruby rspec
+Plug 'keith/rspec.vim', { 'for': 'ruby' } " [SLOW] ruby rspec
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } " ruby textobj
 Plug 'rust-lang/rust.vim', { 'for': 'rust' } " rust
 Plug 'samsonw/vim-task' " tasks
@@ -50,8 +50,8 @@ Plug 'lambdalisue/vim-unified-diff' " diff
 Plug 'tpope/vim-git' " git
 Plug 'tpope/vim-fugitive' " git
 Plug 'tpope/vim-rhubarb' " github
-Plug 'dense-analysis/ale' " check syntax fix files
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " autocomplete
+Plug 'dense-analysis/ale' " [SLOW] check syntax fix files
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " [SLOW] autocomplete
 Plug 'mattn/webapi-vim' " gist dependency
 Plug 'mattn/gist-vim' " github gist
 Plug 'mileszs/ack.vim' " search
