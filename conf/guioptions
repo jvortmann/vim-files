@@ -14,6 +14,3 @@ set scrolloff=3
 set wmnu
 " set spellcheck settings
 highlight SpellBad term=underline gui=undercurl guisp=Orange
-
-" enable set cursor style
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
