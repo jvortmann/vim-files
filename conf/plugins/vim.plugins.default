@@ -79,7 +79,6 @@ Plug 'kana/vim-textobj-user' " textobj
 Plug 'wellle/targets.vim' " textobj
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'jvortmann/zoom.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'majutsushi/tagbar', { 'on': ['Tagbar', 'TagbarOpenAutoClose'] }
 Plug 'Shougo/neosnippet'
