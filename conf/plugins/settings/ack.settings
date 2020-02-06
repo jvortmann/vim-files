@@ -1,7 +1,7 @@
 " vim: ft=vim
 " set smart-grep and ag as default engines for Ack
 if executable('rg')
-  let g:ackprg = "rg --hidden --vimgrep -g '!.git'"
+  let g:ackprg = "rg --hidden --vimgrep -g '!.git' -g '!/vendor'"
 endif
 
 let g:ack_mappings = {
