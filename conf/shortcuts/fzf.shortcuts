@@ -3,20 +3,22 @@
 
 " leader mappings
 Shortcut Find files
-      \ noremap          <Leader>ff        :Files<CR>
-Shortcut Find files
-      \ noremap <silent><leader>f   :Files<CR>
+      \ noremap <silent> <leader>ff  :Files<CR>
 Shortcut Find lines in current buffer
-      \ noremap <silent><leader>fl  :BLines<CR>
+      \ noremap <silent> <leader>fl  :BLines<CR>
 Shortcut Find lines in open buffers
-      \ noremap <silent><leader>fla :Lines<CR>
+      \ noremap <silent> <leader>fla :Lines<CR>
 Shortcut Find marks
-      \ noremap <silent><leader>fm  :Marks<CR>
+      \ noremap <silent> <leader>fm  :Marks<CR>
 Shortcut Find open buffers
-      \ noremap <silent><leader>fo  :Buffers<CR>
+      \ noremap <silent> <leader>fo  :Buffers<CR>
 Shortcut Find tags on current buffer
-      \ noremap <silent><leader>ft  :BTags<CR>
+      \ noremap <silent> <leader>ft  :BTags<CR>
 Shortcut Find tags
-      \ noremap <silent><leader>fta :Tags<CR>
+      \ noremap <silent> <leader>fta :Tags<CR>
 Shortcut Find files history
-      \ noremap <silent><leader>fh  :History<CR>
+      \ noremap <silent> <leader>fh  :History<CR>
+Shortcut Find files (fallback)
+      \ noremap <silent> <leader>f   :Files<CR>
+Shortcut Find open buffers (fallback)
+      \ noremap <silent> <leader>o   :Buffers<CR>
