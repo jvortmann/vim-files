@@ -68,7 +68,6 @@ Plug 'itchyny/vim-qfedit' " quickfix
 Plug '/usr/local/opt/fzf' " search
 Plug 'junegunn/fzf.vim' " search
 Plug 'sunaku/vim-shortcut' " search shortcuts
-Plug 'kien/ctrlp.vim' " search
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'

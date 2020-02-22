@@ -1,0 +1,13 @@
+" vim: ft=vim
+" search files, open buffers, tags on a file and all tags
+
+" leader mappings
+noremap <silent><leader>f   :Files<CR>
+noremap <silent><leader>ff  :Files<CR>
+noremap <silent><leader>fl  :BLines<CR>
+noremap <silent><leader>fla :Lines<CR>
+noremap <silent><leader>fm  :Marks<CR>
+noremap <silent><leader>fo  :Buffers<CR>
+noremap <silent><leader>ft  :BTags<CR>
+noremap <silent><leader>fta :Tags<CR>
+noremap <silent><leader>fh  :History<CR>

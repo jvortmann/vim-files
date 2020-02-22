@@ -1,0 +1,10 @@
+" vim: ft=vim
+
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Replace the default dictionary completion with fzf-based fuzzy completion
+inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
