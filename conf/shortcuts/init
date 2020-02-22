@@ -1,4 +1,10 @@
 " vim: ft=vim
+Shortcut show shortcut menu and run chosen shortcut
+      \ noremap <silent> <Leader><Leader> :Shortcuts<Return>
+
+Shortcut fallback to shortcut menu on partial entry
+      \ noremap <silent> <Leader> :Shortcuts<Return>
+
 for shortcut in split(globpath("~/.vim/conf/shortcuts", "*.shortcuts"), '\n')
   execute('source '.shortcut)
 endfor

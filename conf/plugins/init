@@ -19,5 +19,8 @@ endif
 
 call plug#end()
 
+" Required to call Shortcut command during initialization
+runtime plugin/shortcut.vim
+
 " source plugin settings
 source $HOME/.vim/conf/plugins/settings/init
