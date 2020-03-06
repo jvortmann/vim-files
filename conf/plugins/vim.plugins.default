@@ -23,6 +23,7 @@ Plug 'ternjs/tern_for_vim', { 'for': ['jsx', 'javascript', 'coffescript'] } " ja
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['jsx', 'javascript', 'coffescript'] } " jsx
 Plug 'prabirshrestha/async.vim' " language server protocol
 Plug 'prabirshrestha/vim-lsp' " language server protocol
+Plug 'mattn/vim-lsp-settings' " language server protocol
 Plug 'tbastos/vim-lua', { 'for': 'lua' } " lua
 Plug 'aliev/vim-python', { 'for': 'python' } " python
 Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' } " python
