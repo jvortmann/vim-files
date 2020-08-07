@@ -54,4 +54,26 @@ let g:projectionist_heuristics = {
       \      "type": "spec",
       \    }
       \  },
+      \  ".tool-versions": {
+      \    "*.go": {
+      \      "alternate": ["{}_test.go"],
+      \      "type": "src"
+      \    },
+      \    "src/*.go": {
+      \      "alternate": ["test/{}_test.go"],
+      \      "type": "src"
+      \    },
+      \    "lib/*.go": {
+      \      "alternate": ["test/{}_test.go"],
+      \      "type": "lib"
+      \    },
+      \    "*_test.go": {
+      \      "alternate": ["{}.go"],
+      \      "type": "spec",
+      \    },
+      \    "test/*_test.go": {
+      \      "alternate": ["src/{}.go", "lib/{}.go"],
+      \      "type": "spec",
+      \    },
+      \  },
       \}
