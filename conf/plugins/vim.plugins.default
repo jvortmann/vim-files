@@ -21,45 +21,49 @@ Plug 'pangloss/vim-javascript', { 'for': ['jsx', 'javascript', 'coffescript'] } 
 Plug 'carlitux/deoplete-ternjs', { 'for': ['jsx', 'javascript', 'coffescript'] } " javascript autocomplete
 Plug 'ternjs/tern_for_vim', { 'for': ['jsx', 'javascript', 'coffescript'] } " javascript autocomplete
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['jsx', 'javascript', 'coffescript'] } " jsx
-Plug 'prabirshrestha/async.vim' " language server protocol
-Plug 'prabirshrestha/vim-lsp' " language server protocol
-Plug 'mattn/vim-lsp-settings' " language server protocol
 Plug 'tbastos/vim-lua', { 'for': 'lua' } " lua
 Plug 'aliev/vim-python', { 'for': 'python' } " python
 Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' } " python
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' } " [SLOW] ruby
-Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' } " [SLOW] ruby autocomplete
-Plug 'tpope/vim-bundler', { 'for': 'ruby' } " ruby bundler
-Plug 'tpope/vim-cucumber', { 'for': 'ruby' } " ruby cucumber
-Plug 'tpope/vim-rails', { 'for': 'ruby' } " ruby rails
-Plug 'tpope/vim-rake', { 'for': 'ruby' } " ruby rake
-Plug 'ngmy/vim-rubocop', { 'for': 'ruby' } " ruby rubocop
-Plug 'keith/rspec.vim', { 'for': 'ruby' } " [SLOW] ruby rspec
-Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } " ruby textobj
 Plug 'rust-lang/rust.vim', { 'for': 'rust' } " rust
-Plug 'janko/vim-test' " test runner
 Plug 'cespare/vim-toml', { 'for': 'toml' } " toml
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' } " typescript
 Plug 'stephpy/vim-yaml', { 'for': 'yaml' } " yaml
+Plug 'janko/vim-test' " test runner
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' } " [SLOW] ruby
+Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' } " [SLOW] ruby autocomplete
+Plug 'tpope/vim-rails', { 'for': 'ruby' } " ruby rails
+Plug 'tpope/vim-rake', { 'for': 'ruby' } " ruby rake
+Plug 'tpope/vim-bundler', { 'for': 'ruby' } " ruby bundler
+Plug 'ngmy/vim-rubocop', { 'for': 'ruby' } " ruby rubocop
+Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } " ruby textobj
 
 " tools
-Plug 'romainl/vim-devdocs' " devdocs
-Plug 'tpope/vim-git' " git
-Plug 'tpope/vim-fugitive' " git
-Plug 'tpope/vim-rhubarb' " github
-Plug 'dense-analysis/ale' " [SLOW] check syntax fix files
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " [SLOW] autocomplete
-Plug 'mattn/webapi-vim' " gist dependency
-Plug 'mattn/gist-vim' " github gist
-Plug 'mileszs/ack.vim' " search
-Plug 'tpope/vim-dispatch' " dispatch
-Plug 'radenling/vim-dispatch-neovim' " dispatch
-Plug 'tmux-plugins/vim-tmux' " tmux
-Plug 'tmux-plugins/vim-tmux-focus-events' " tmux
+Plug 'dense-analysis/ale' " [SLOW] check syntax fix files
 Plug 'editorconfig/editorconfig-vim' " editorconfig
-Plug 'tpope/vim-projectionist' " projectionist
 Plug 'itchyny/vim-qfedit' " quickfix
 Plug 'junegunn/vim-peekaboo' " preview registers content for @ and \"
+Plug 'mattn/gist-vim' " github gist
+Plug 'mattn/webapi-vim' " gist dependency
+Plug 'mileszs/ack.vim' " search
+Plug 'radenling/vim-dispatch-neovim' " dispatch
+Plug 'romainl/vim-devdocs' " devdocs
+Plug 'tmux-plugins/vim-tmux' " tmux
+Plug 'tmux-plugins/vim-tmux-focus-events' " tmux
+Plug 'tpope/vim-dispatch' " dispatch
+Plug 'tpope/vim-fugitive' " git
+Plug 'tpope/vim-git' " git
+Plug 'tpope/vim-projectionist' " projectionist
+Plug 'tpope/vim-rhubarb' " github
+
+" slow
+"
+" languages and frameworks
+"Plug 'prabirshrestha/async.vim' " language server protocol
+"Plug 'prabirshrestha/vim-lsp' " language server protocol
+"Plug 'mattn/vim-lsp-settings' " language server protocol
+"Plug 'keith/rspec.vim', { 'for': 'ruby' } " [SLOW] ruby rspec
+"Plug 'tpope/vim-cucumber', { 'for': 'ruby' } " ruby cucumber
 
 " improvement
 Plug '/usr/local/opt/fzf' " search
