@@ -64,6 +64,7 @@ Plug 'editorconfig/editorconfig-vim' " editorconfig
 Plug 'beloglazov/vim-online-thesaurus' " theasaurus
 Plug 'tpope/vim-projectionist' " projectionist
 Plug 'itchyny/vim-qfedit' " quickfix
+Plug 'junegunn/vim-peekaboo' " preview registers content for @ and \"
 
 " improvement
 Plug '/usr/local/opt/fzf' " search
