@@ -29,11 +29,11 @@ Plug 'cespare/vim-toml', { 'for': 'toml' } " toml
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' } " typescript
 Plug 'stephpy/vim-yaml', { 'for': 'yaml' } " yaml
 Plug 'janko/vim-test' " test runner
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' } " [SLOW] ruby
+"Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' } " [SLOW] ruby
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' } " [SLOW] ruby autocomplete
-Plug 'tpope/vim-rails', { 'for': 'ruby' } " ruby rails
+"Plug 'tpope/vim-rails', { 'for': 'ruby' } " ruby rails
 Plug 'tpope/vim-rake', { 'for': 'ruby' } " ruby rake
-Plug 'tpope/vim-bundler', { 'for': 'ruby' } " ruby bundler
+"Plug 'tpope/vim-bundler', { 'for': 'ruby' } " ruby bundler
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' } " ruby rubocop
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } " ruby textobj
 
