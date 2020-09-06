@@ -8,6 +8,8 @@ colorscheme dracula
 
 set number tabstop=2 mouse=a
 set ruler title cursorline
+set synmaxcol=128
+syntax sync minlines=256
 " set the space from the current line when scrolling
 set scrolloff=3
 " command-line completion shows a list of matches
