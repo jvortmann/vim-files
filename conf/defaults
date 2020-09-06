@@ -52,7 +52,7 @@ source ~/.vim/conf/statusline
 set laststatus=2
 " enable modeline for 3 lines (reading configs on top/bottom of file)
 set modeline modelines=3
-" reduce update time to just 100ms
+" reduce update time to just 200ms
 set updatetime=200
 " set no fix height or width
 set nowinfixheight nowinfixwidth
