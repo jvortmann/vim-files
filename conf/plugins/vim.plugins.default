@@ -27,7 +27,6 @@ Plug 'mattn/vim-lsp-settings' " language server protocol
 Plug 'tbastos/vim-lua', { 'for': 'lua' } " lua
 Plug 'aliev/vim-python', { 'for': 'python' } " python
 Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' } " python
-Plug 'wlangstroth/vim-racket', { 'for': 'racket' } " racket
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' } " [SLOW] ruby
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' } " [SLOW] ruby autocomplete
 Plug 'tpope/vim-bundler', { 'for': 'ruby' } " ruby bundler
@@ -38,7 +37,6 @@ Plug 'ngmy/vim-rubocop', { 'for': 'ruby' } " ruby rubocop
 Plug 'keith/rspec.vim', { 'for': 'ruby' } " [SLOW] ruby rspec
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } " ruby textobj
 Plug 'rust-lang/rust.vim', { 'for': 'rust' } " rust
-Plug 'samsonw/vim-task' " tasks
 Plug 'janko/vim-test' " test runner
 Plug 'cespare/vim-toml', { 'for': 'toml' } " toml
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' } " typescript
@@ -46,8 +44,6 @@ Plug 'stephpy/vim-yaml', { 'for': 'yaml' } " yaml
 
 " tools
 Plug 'romainl/vim-devdocs' " devdocs
-Plug 'lambdalisue/vim-improve-diff' " diff
-Plug 'lambdalisue/vim-unified-diff' " diff
 Plug 'tpope/vim-git' " git
 Plug 'tpope/vim-fugitive' " git
 Plug 'tpope/vim-rhubarb' " github
@@ -61,7 +57,6 @@ Plug 'radenling/vim-dispatch-neovim' " dispatch
 Plug 'tmux-plugins/vim-tmux' " tmux
 Plug 'tmux-plugins/vim-tmux-focus-events' " tmux
 Plug 'editorconfig/editorconfig-vim' " editorconfig
-Plug 'beloglazov/vim-online-thesaurus' " theasaurus
 Plug 'tpope/vim-projectionist' " projectionist
 Plug 'itchyny/vim-qfedit' " quickfix
 Plug 'junegunn/vim-peekaboo' " preview registers content for @ and \"
