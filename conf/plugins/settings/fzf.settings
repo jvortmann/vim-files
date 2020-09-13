@@ -9,5 +9,7 @@ let g:fzf_action = {
 " Replace the default dictionary completion with fzf-based fuzzy completion
 inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
 
+let g:fzf_preview_window = 'right:50%'
+
 "command! -bang -nargs=? -complete=dir Files
     "\ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
