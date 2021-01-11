@@ -33,6 +33,7 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' } " [SLOW] ruby
 Plug 'keith/rspec.vim', { 'for': 'ruby' } " [SLOW] ruby rspec
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' } " [SLOW] ruby autocomplete
 "Plug 'tpope/vim-rails', { 'for': 'ruby' } " ruby rails
+Plug 'slim-template/vim-slim' " slim template
 Plug 'tpope/vim-rake', { 'for': 'ruby' } " ruby rake
 "Plug 'tpope/vim-bundler', { 'for': 'ruby' } " ruby bundler
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' } " ruby rubocop
