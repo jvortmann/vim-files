@@ -1,4 +1,4 @@
 " vim: ft=vim
 " set mapping to Fugitive plugin
-noremap <F7> :Gblame<CR>
-noremap <silent> <S-F7> :Gdiff<CR>
+noremap <F7> :Git blame<CR>
+noremap <silent> <S-F7> :Gvdiffsplit!<CR>
