@@ -34,7 +34,7 @@ let g:projectionist_heuristics = {
       \      "type": "spec",
       \    },
       \  },
-      \  "*.gemspec|.ruby-version": {
+      \  "*.gemspec|.ruby-version|.tool-versions": {
       \    "lib/*.rb" : {
       \      "alternate": "spec/{}_spec.rb",
       \      "type": "lib"
