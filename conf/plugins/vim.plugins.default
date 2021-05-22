@@ -14,7 +14,7 @@ Plug 'slashmili/alchemist.vim', { 'for': 'elixir' } " elixir
 Plug 'avdgaag/vim-phoenix', { 'for': 'elixir' } " elixir phoenix
 Plug 'andyl/vim-textobj-elixir', { 'for': 'elixir' } " elixir textobj
 Plug 'elmcast/elm-vim', { 'for': 'elm' } " elm
-Plug 'fatih/vim-go', { 'for': 'go' } " go
+"Plug 'fatih/vim-go', { 'for': 'go' } " go
 Plug 'othree/html5.vim', { 'for': 'html' }  " html
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['jsx', 'javascript'] } " javascript
 Plug 'pangloss/vim-javascript', { 'for': ['jsx', 'javascript', 'coffescript'] } " javascript
