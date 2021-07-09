@@ -1,6 +1,7 @@
 " vim: ft=vim
 
 " languages and frameworks
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'markcornick/vim-bats', { 'for': 'bats' } " bats
 Plug 'juanibiapina/bats.vim', { 'for': 'bats' } " bats
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' } " clojure
