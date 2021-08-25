@@ -18,18 +18,26 @@ let g:projectionist_heuristics = {
       \  },
       \  "config/application.rb": {
       \    "app/*.rb": {
-      \      "alternate": "spec/{}_spec.rb",
+      \      "alternate": ["spec/{}_spec.rb", "test/{}_test.rb"],
       \      "type": "app"
       \    },
       \    "spec/*_spec.rb": {
       \      "alternate": "app/{}.rb",
       \      "type": "spec",
       \    },
+      \    "test/*_test.rb": {
+      \      "alternate": "app/{}.rb",
+      \      "type": "spec",
+      \    },
       \    "lib/*.rb": {
-      \      "alternate": "spec/lib/{}_spec.rb",
+      \      "alternate": ["spec/lib/{}_spec.rb", "test/lib/{}_test.rb"],
       \      "type": "lib"
       \    },
       \    "spec/lib/*_spec.rb": {
+      \      "alternate": "lib/{}.rb",
+      \      "type": "spec",
+      \    },
+      \    "test/lib/*_test.rb": {
       \      "alternate": "lib/{}.rb",
       \      "type": "spec",
       \    },
