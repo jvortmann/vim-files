@@ -2,8 +2,7 @@
 
 " languages and frameworks
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'markcornick/vim-bats', { 'for': 'bats' } " bats
-Plug 'juanibiapina/bats.vim', { 'for': 'bats' } " bats
+Plug 'aliou/bats.vim', { 'for': 'bats' } " bats
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' } " clojure
 Plug 'kchmck/vim-coffee-script', { 'for': ['jsx', 'javascript', 'coffescript'] }  " coffeescript
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss', 'less'] } " css
