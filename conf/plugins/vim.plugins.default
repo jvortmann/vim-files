@@ -51,6 +51,7 @@ Plug 'mileszs/ack.vim' " search
 Plug 'radenling/vim-dispatch-neovim' " dispatch
 Plug 'romainl/vim-devdocs' " devdocs
 Plug 'tmux-plugins/vim-tmux' " tmux
+Plug 'christoomey/vim-tmux-navigator' " navigate seamsly between tmux and vim splits
 Plug 'tpope/vim-dispatch' " dispatch
 Plug 'tpope/vim-fugitive' " git
 Plug 'tpope/vim-git' " git
