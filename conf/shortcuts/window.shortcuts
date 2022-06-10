@@ -7,9 +7,3 @@ noremap <Space>_ <C-w>_
 noremap <Space><Bar> <C-w><Bar>
 noremap <Space>o <C-w>o
 noremap <Space>r <C-w>r
-
-" set mapping to navigate between open split windows
-nnoremap <C-h> <C-w><Left>
-nnoremap <C-j> <C-w><Down>
-nnoremap <C-k> <C-w><Up>
-nnoremap <C-l> <C-w><Right>
