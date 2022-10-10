@@ -21,6 +21,10 @@ let g:projectionist_heuristics = {
       \      "alternate": ["spec/{}_spec.rb", "test/{}_test.rb"],
       \      "type": "app"
       \    },
+      \    "app/controllers/api/*_controller.rb": {
+      \      "alternate": ["spec/requests/api/{}_spec.rb", "spec/requests/api/{}_controller_spec.rb", "test/{}_test.rb"],
+      \      "type": "app"
+      \    },
       \    "spec/*_spec.rb": {
       \      "alternate": "app/{}.rb",
       \      "type": "spec",
@@ -35,6 +39,10 @@ let g:projectionist_heuristics = {
       \    },
       \    "spec/lib/*_spec.rb": {
       \      "alternate": "lib/{}.rb",
+      \      "type": "spec",
+      \    },
+      \    "spec/requests/*_spec.rb": {
+      \      "alternate": ["app/controllers/{}.rb", "app/controllers/{}_controller.rb"],
       \      "type": "spec",
       \    },
       \    "test/lib/*_test.rb": {
