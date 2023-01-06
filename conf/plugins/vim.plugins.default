@@ -4,43 +4,18 @@
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'aliou/bats.vim', { 'for': 'bats' } " bats
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' } " clojure
-Plug 'kchmck/vim-coffee-script', { 'for': ['jsx', 'javascript', 'coffescript'] }  " coffeescript
-Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss', 'less'] } " css
-Plug 'cakebaker/scss-syntax.vim', { 'for': ['css', 'sass', 'scss', 'less'] } " css
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss', 'less'] } " css
-Plug 'ekalinin/Dockerfile.vim', { 'for': 'docker' } " docker
-Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' } " elixir
 Plug 'slashmili/alchemist.vim', { 'for': 'elixir' } " elixir
 Plug 'avdgaag/vim-phoenix', { 'for': 'elixir' } " elixir phoenix
 Plug 'andyl/vim-textobj-elixir', { 'for': 'elixir' } " elixir textobj
-Plug 'elmcast/elm-vim', { 'for': 'elm' } " elm
-"Plug 'fatih/vim-go', { 'for': 'go' } " go
-Plug 'othree/html5.vim', { 'for': 'html' }  " html
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['jsx', 'javascript'] } " javascript
-Plug 'pangloss/vim-javascript', { 'for': ['jsx', 'javascript', 'coffescript'] } " javascript
-Plug 'carlitux/deoplete-ternjs', { 'for': ['jsx', 'javascript', 'coffescript'] } " javascript autocomplete
-Plug 'ternjs/tern_for_vim', { 'for': ['jsx', 'javascript', 'coffescript'] } " javascript autocomplete
-Plug 'maxmellon/vim-jsx-pretty', { 'for': ['jsx', 'javascript', 'coffescript'] } " jsx
-Plug 'tbastos/vim-lua', { 'for': 'lua' } " lua
-Plug 'aliev/vim-python', { 'for': 'python' } " python
-Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' } " python
-Plug 'rust-lang/rust.vim', { 'for': 'rust' } " rust
-Plug 'cespare/vim-toml', { 'for': 'toml' } " toml
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' } " typescript
-Plug 'stephpy/vim-yaml', { 'for': 'yaml' } " yaml
 Plug 'janko/vim-test' " test runner
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' } " [SLOW] ruby
 Plug 'keith/rspec.vim', { 'for': 'ruby' } " [SLOW] ruby rspec
-Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' } " [SLOW] ruby autocomplete
-"Plug 'tpope/vim-rails', { 'for': 'ruby' } " ruby rails
 Plug 'slim-template/vim-slim' " slim template
 Plug 'tpope/vim-rake', { 'for': 'ruby' } " ruby rake
-"Plug 'tpope/vim-bundler', { 'for': 'ruby' } " ruby bundler
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' } " ruby rubocop
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } " ruby textobj
 
 " tools
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " [SLOW] autocomplete
 Plug 'dense-analysis/ale' " [SLOW] check syntax fix files
 Plug 'editorconfig/editorconfig-vim' " editorconfig
 Plug 'itchyny/vim-qfedit' " quickfix
@@ -56,15 +31,6 @@ Plug 'tpope/vim-dispatch' " dispatch
 Plug 'tpope/vim-fugitive' " git
 Plug 'tpope/vim-git' " git
 Plug 'tpope/vim-projectionist' " projectionist
-Plug 'tpope/vim-rhubarb' " github
-
-" slow
-"
-" languages and frameworks
-"Plug 'prabirshrestha/async.vim' " language server protocol
-"Plug 'prabirshrestha/vim-lsp' " language server protocol
-"Plug 'mattn/vim-lsp-settings' " language server protocol
-"Plug 'tpope/vim-cucumber', { 'for': 'ruby' } " ruby cucumber
 
 " improvement
 Plug '/usr/local/opt/fzf' " search

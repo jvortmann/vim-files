@@ -1,7 +1,0 @@
-" vim: ft=vim
-" Use deoplete.
-let g:deoplete#enable_at_startup = 0
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#max_menu_width = 0
-
-call deoplete#custom#source('_', 'min_pattern_length', 1)
