@@ -62,3 +62,4 @@ Plug 'baskerville/bubblegum'
 Plug 'tomasr/molokai'
 Plug 'lifepillar/vim-solarized8'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
