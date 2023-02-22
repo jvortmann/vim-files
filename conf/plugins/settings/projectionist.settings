@@ -50,6 +50,12 @@ let g:projectionist_heuristics = {
       \      "type": "spec",
       \    },
       \  },
+      \  "Gemfile": {
+      \    "Gemfile" : {
+      \      "alternate": "Gemfile.lock",
+      \      "type": "source"
+      \    },
+      \  },
       \  "*.gemspec|.ruby-version|.tool-versions": {
       \    "lib/*.rb" : {
       \      "alternate": "spec/{}_spec.rb",
