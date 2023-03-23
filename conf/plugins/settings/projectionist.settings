@@ -1,9 +1,9 @@
 " vim: ft=vim
 
-autocmd FileType *
-  \ if &buftype ==# 'quickfix' |
-  \   call ProjectionistDetect(getcwd()) |
-  \ endif
+"autocmd FileType *
+"  \ if &buftype ==# 'quickfix' |
+"  \   call ProjectionistDetect(getcwd()) |
+"  \ endif
 
 let g:projectionist_heuristics = {
       \  "bin/spring": {
