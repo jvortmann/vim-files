@@ -17,7 +17,6 @@ Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } " ruby textobj
 
 " tools
 Plug 'dense-analysis/ale' " [SLOW] check syntax fix files
-Plug 'editorconfig/editorconfig-vim' " editorconfig
 Plug 'itchyny/vim-qfedit' " quickfix
 Plug 'junegunn/vim-peekaboo' " preview registers content for @ and \"
 Plug 'mattn/gist-vim' " github gist
