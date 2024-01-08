@@ -2,4 +2,4 @@
 /bundle/**
 /session/**
 init.vim
-spell/*
+spell/*.spl
