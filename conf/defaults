@@ -27,6 +27,8 @@ set foldnestmax=10      "deepest fold level
 set nofoldenable        "dont fold by default
 "improve the autocomplete menu
 set completeopt=longest,menuone
+"add spell to autocomplete
+set complete+=kspell
 "disable going to the menu when pressing alt
 set wak=no
 "disable swap files
