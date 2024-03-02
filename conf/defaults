@@ -18,7 +18,7 @@ syntax enable
 "allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 "set the history to display more itens
-set history=100
+set history=200
 "set the undo to have a thousand entries
 set undolevels=1000
 "folding settings
