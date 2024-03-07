@@ -18,3 +18,5 @@ requeue
 karabiner
 untracked
 tmux
+Sidekiq
+sidekiq
