@@ -16,6 +16,11 @@ Plug 'ngmy/vim-rubocop', { 'for': 'ruby' } " ruby rubocop
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } " ruby textobj
 
 " tools
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install --frozen-lockfile --production',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'ruby', 'markdown', 'yaml', 'html']
+  \}
+
 Plug 'dense-analysis/ale' " [SLOW] check syntax fix files
 Plug 'itchyny/vim-qfedit' " quickfix
 Plug 'junegunn/vim-peekaboo' " preview registers content for @ and \"
