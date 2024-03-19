@@ -20,3 +20,8 @@ untracked
 tmux
 Sidekiq
 sidekiq
+backoff
+workspace
+rebase
+params
+param
