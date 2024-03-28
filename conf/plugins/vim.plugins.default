@@ -37,8 +37,8 @@ Plug 'tpope/vim-git' " git
 Plug 'tpope/vim-projectionist' " projectionist
 
 " improvement
-Plug '/usr/local/opt/fzf' " search
-Plug 'junegunn/fzf.vim' " search
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'sunaku/vim-shortcut' " search shortcuts
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
