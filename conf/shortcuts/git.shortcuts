@@ -1,4 +1,4 @@
 " vim: ft=vim
 " set mapping to Fugitive plugin
-noremap <F7> :Git blame<CR>
+noremap <expr> <F7> filereadable(".git-blame-ignore-revs") ? ':Git blame --ignore-revs-file .git-blame-ignore-revs<CR>' : ':Git blame<CR>'
 noremap <silent> <S-F7> :Gvdiffsplit!<CR>
