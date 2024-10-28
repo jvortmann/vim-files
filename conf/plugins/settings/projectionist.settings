@@ -53,6 +53,10 @@ let g:projectionist_heuristics = {
       \      "alternate": "test/jobs/{}_test.rb",
       \      "type": "lib",
       \    },
+      \    "test/jobs/*_test.rb": {
+      \      "alternate": "lib/jobs/{}.rb",
+      \      "type": "spec",
+      \    },
       \  },
       \  "Gemfile": {
       \    "Gemfile" : {
