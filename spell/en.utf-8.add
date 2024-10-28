@@ -72,3 +72,5 @@ duckdb
 icp
 Backfill
 backfill
+parsers
+vimdoc
