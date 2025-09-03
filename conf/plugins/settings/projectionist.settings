@@ -67,6 +67,10 @@ let g:projectionist_heuristics = {
       \      "alternate": "Gemfile",
       \      "type": "source"
       \    },
+      \    "spec/*_spec.rb": {
+      \      "alternate": "lib/{}.rb",
+      \      "type": "spec",
+      \    }
       \  },
       \  "*.gemspec|.ruby-version|.tool-versions": {
       \    "lib/*.rb" : {
