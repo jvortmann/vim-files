@@ -1,1 +1,1 @@
-setlocal spell spelllang=en_us colorcolumn=72
+setlocal spell spelllang=en_us,en_gb colorcolumn=51,73
