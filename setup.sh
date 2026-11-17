@@ -4,6 +4,6 @@
 echo "Installing Plugins"
 echo
 
-vim -c "PlugInstall | qa" && \
+nvim -c "PlugInstall | qa" && \
   echo "Press anything to continue" && read && \
-  vim
+  nvim

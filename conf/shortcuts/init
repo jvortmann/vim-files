@@ -1,7 +1,0 @@
-" vim: ft=vim
-Shortcut Show shortcut menu and run chosen shortcut
-      \ noremap <silent> <leader>h :Shortcuts<Return>
-
-for shortcut in split(globpath("~/.vim/conf/shortcuts", "*.shortcuts"), '\n')
-  execute('source '.shortcut)
-endfor
