@@ -54,6 +54,9 @@ vim.opt.completeopt = {'longest', 'menuone'}
 -- Add spell to autocomplete
 vim.opt.complete:append('kspell')
 
+-- Set spellfile explicitly to ensure zg writes to the config directory
+vim.opt.spellfile = vim.fn.stdpath('config') .. '/spell/en.utf-8.add'
+
 -- Disable going to the menu when pressing alt
 vim.opt.winaltkeys = 'no'
 
