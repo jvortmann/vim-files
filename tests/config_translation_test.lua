@@ -21,4 +21,14 @@ check(
   'expected undercurl, sp ' .. orange .. ' and a colorscheme fg, got ' .. vim.inspect(spell_bad)
 )
 
+local spell_cap = vim.api.nvim_get_hl(0, { name = 'SpellCap', link = false })
+check(
+  'SpellCap keeps the colorscheme colors and draws a dotted underline, not an undercurl',
+  spell_cap.underdotted == true and spell_cap.undercurl == nil
+    and spell_cap.fg ~= nil and spell_cap.sp == spell_cap.fg
+    and spell_cap.cterm ~= nil and spell_cap.cterm.underline == true,
+  'expected underdotted, no undercurl, the colorscheme fg as sp and a cterm underline, got '
+    .. vim.inspect(spell_cap)
+)
+
 report.finish()

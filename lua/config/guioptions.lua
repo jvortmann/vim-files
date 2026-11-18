@@ -27,3 +27,4 @@ vim.opt.wildmenu = true
 
 -- Set spellcheck settings
 vim.cmd('highlight SpellBad term=underline gui=undercurl guisp=Orange')
+vim.cmd('highlight SpellCap term=underline gui=underdotted')
