@@ -1,4 +1,4 @@
--- Run: nvim --headless -c 'luafile tests/languages_settings_test.lua' </dev/null
+-- Run: nvim --headless -c 'luafile tests/treesitter_test.lua' </dev/null
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
@@ -31,11 +31,5 @@ check(
   'got ' .. vim.inspect(vim.bo[ruby_buf].indentexpr)
 )
 vim.fn.delete(ruby_file)
-
-check(
-  'the vim-css-color updatetime setting is set at startup',
-  vim.g.cssColorVimDoNotMessMyUpdatetime == 1,
-  'got ' .. vim.inspect(vim.g.cssColorVimDoNotMessMyUpdatetime)
-)
 
 report.finish()
