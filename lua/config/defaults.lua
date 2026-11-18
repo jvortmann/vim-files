@@ -16,6 +16,9 @@ vim.opt.inccommand = 'nosplit'
 -- Enable auto write
 vim.opt.autowriteall = true
 
+-- Keep the end of file as it is: a write does not add a missing final newline
+vim.opt.fixendofline = false
+
 -- Automatically reload files if they were modified outside vim
 vim.opt.autoread = true
 
