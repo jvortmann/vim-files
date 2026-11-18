@@ -1,4 +1,0 @@
-" vim: ft=vim
-" adding a shortcut to toggle comment
-map <M-/> <Plug>NERDCommenterToggle
-map <leader>/ <Plug>NERDCommenterToggle

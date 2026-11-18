@@ -1,0 +1,6 @@
+" vim: ft=vim
+" Toggle a comment. nmap and xmap, because gc and gcc are maps.
+nmap <M-/> gcc
+xmap <M-/> gc
+nmap <leader>/ gcc
+xmap <leader>/ gc

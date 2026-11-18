@@ -13,7 +13,7 @@ local expected_plugins = {
   'tpope/vim-projectionist', 'junegunn/fzf', 'junegunn/fzf.vim', 'sunaku/vim-shortcut',
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'tpope/vim-surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
-  'scrooloose/nerdcommenter', 'scrooloose/nerdtree', 'Townk/vim-autoclose', 'majutsushi/tagbar',
+  'scrooloose/nerdtree', 'Townk/vim-autoclose', 'majutsushi/tagbar',
   'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'airblade/vim-gitgutter', 'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'chriskempson/base16-vim',
   'baskerville/bubblegum', 'tomasr/molokai', 'lifepillar/vim-solarized8', 'dracula/vim', 'catppuccin/nvim',
@@ -45,11 +45,6 @@ check(
   'expected ' .. #expected .. ' plugins, got ' .. vim.inspect(managed)
 )
 
-check(
-  'nerdcommenter keeps its default mappings off, as its settings say',
-  vim.fn.maparg('<leader>cc', 'n') == '',
-  'got ' .. vim.inspect(vim.fn.maparg('<leader>cc', 'n'))
-)
 check('ack.vim defines Ack with the rg command of its settings', vim.fn.exists(':Ack') == 2, 'Ack is missing')
 check(
   'ragtag adds its global insert mappings, as its settings say',
