@@ -28,7 +28,6 @@
   "vim-fetch": { "branch": "master", "commit": "b88bc5c4a8652b73bcdb577e0c90700a5064fd00" },
   "vim-fireplace": { "branch": "master", "commit": "5e66509599de92550762cf2681338fc4cd1e71cf" },
   "vim-fugitive": { "branch": "master", "commit": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0" },
-  "vim-git": { "branch": "master", "commit": "485e38f29494e46a9998100e707c755d114155f1" },
   "vim-gitgutter": { "branch": "main", "commit": "90b75207bd9b55d8ac4af15f72b4e935462014d0" },
   "vim-peekaboo": { "branch": "master", "commit": "2a8a3187ba6b15201b2563a3f0331fcdf49da36c" },
   "vim-phoenix": { "branch": "master", "commit": "ad7b38db0903a969085bd5b39d4314a41f4c1345" },
@@ -45,7 +44,6 @@
   "vim-textobj-elixir": { "branch": "master", "commit": "b3d0fb1f19a918449eba856dc096c9f3231e871c" },
   "vim-textobj-rubyblock": { "branch": "master", "commit": "2b882e2cc2599078f75e6e88cd268192bf7b27bf" },
   "vim-textobj-user": { "branch": "master", "commit": "41a675ddbeefd6a93664a4dc52f302fe3086a933" },
-  "vim-tmux": { "branch": "master", "commit": "cfe76281efc29890548cf9eedd42ad51c7a1faf0" },
   "vim-tmux-navigator": { "branch": "master", "commit": "fb217852efb294a50a10507fc8d53709696b6e23" },
   "vim-unimpaired": { "branch": "master", "commit": "db65482581a28e4ccf355be297f1864a4e66985c" }
 }

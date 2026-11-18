@@ -8,8 +8,8 @@ local expected_plugins = {
   'slashmili/alchemist.vim', 'avdgaag/vim-phoenix', 'andyl/vim-textobj-elixir',
   'keith/rspec.vim', 'slim-template/vim-slim', 'tpope/vim-rake',
   'nelstrom/vim-textobj-rubyblock', 'prettier/vim-prettier', 'dense-analysis/ale', 'itchyny/vim-qfedit',
-  'junegunn/vim-peekaboo', 'mileszs/ack.vim', 'tmux-plugins/vim-tmux',
-  'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive', 'tpope/vim-git',
+  'junegunn/vim-peekaboo', 'mileszs/ack.vim',
+  'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
   'tpope/vim-projectionist', 'junegunn/fzf', 'junegunn/fzf.vim', 'sunaku/vim-shortcut',
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'tpope/vim-surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
@@ -183,5 +183,25 @@ check(
 
 open('notes.md')
 check('after/ftplugin of the config runs for markdown', vim.wo.spell, 'spell is off in a markdown buffer')
+
+vim.fn.mkdir(project .. '/.git/rebase-merge', 'p')
+for name, filetype in vim.spairs({
+  ['.git/COMMIT_EDITMSG'] = 'gitcommit',
+  ['.git/rebase-merge/git-rebase-todo'] = 'gitrebase',
+  ['.gitconfig'] = 'gitconfig',
+  ['.tmux.conf'] = 'tmux',
+}) do
+  open(name)
+  local got = vim.bo.filetype .. '/' .. tostring(vim.b.current_syntax)
+  check(name .. ' gets the ' .. filetype .. ' filetype and syntax', got == filetype .. '/' .. filetype, 'got ' .. got)
+end
+
+open('.git/COMMIT_EDITMSG')
+local commit_settings = vim.bo.spelllang .. ' ' .. vim.wo.colorcolumn .. ' ' .. tostring(vim.wo.spell)
+check(
+  'after/ftplugin of the config runs for gitcommit',
+  commit_settings == 'en_us,en_gb 51,73 true',
+  'got ' .. commit_settings
+)
 
 report.finish()
