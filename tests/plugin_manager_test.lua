@@ -4,9 +4,7 @@ local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
 
 local expected_plugins = {
-  'nvim-treesitter/nvim-treesitter', 'aliou/bats.vim', 'tpope/vim-fireplace', 'ap/vim-css-color',
-  'slashmili/alchemist.vim', 'avdgaag/vim-phoenix', 'andyl/vim-textobj-elixir',
-  'keith/rspec.vim', 'slim-template/vim-slim', 'tpope/vim-rake',
+  'nvim-treesitter/nvim-treesitter', 'ap/vim-css-color', 'keith/rspec.vim',
   'nelstrom/vim-textobj-rubyblock', 'prettier/vim-prettier', 'dense-analysis/ale', 'itchyny/vim-qfedit',
   'junegunn/vim-peekaboo', 'mileszs/ack.vim',
   'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
@@ -103,14 +101,8 @@ for _, case in ipairs(command_plugins) do
 end
 
 local filetype_plugins = {
-  ['bats.vim'] = { 'bats' },
-  ['vim-fireplace'] = { 'clojure' },
   ['vim-css-color'] = { 'css', 'sass', 'scss', 'less' },
-  ['alchemist.vim'] = { 'elixir' },
-  ['vim-phoenix'] = { 'elixir' },
-  ['vim-textobj-elixir'] = { 'elixir' },
   ['rspec.vim'] = { 'ruby' },
-  ['vim-rake'] = { 'ruby' },
   ['vim-textobj-rubyblock'] = { 'ruby' },
   ['vim-prettier'] = { 'javascript', 'typescript', 'css', 'less', 'scss', 'json', 'ruby', 'markdown', 'yaml', 'html' },
 }
@@ -198,5 +190,21 @@ check(
   commit_settings == 'en_us,en_gb 51,73 true',
   'got ' .. commit_settings
 )
+
+for name, filetype in vim.spairs({
+  ['app.ex'] = 'elixir',
+  ['core.clj'] = 'clojure',
+  ['page.slim'] = '',
+  ['suite.bats'] = 'sh',
+}) do
+  vim.v.errmsg = ''
+  open(name)
+  local got = vim.inspect(vim.bo.filetype) .. ' ' .. vim.inspect(vim.v.errmsg)
+  check(
+    name .. ' opens with ' .. (filetype == '' and 'no filetype' or 'the runtime filetype ' .. filetype) .. ' and no error',
+    got == vim.inspect(filetype) .. ' ""',
+    'got ' .. got
+  )
+end
 
 report.finish()

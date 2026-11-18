@@ -1,0 +1,12 @@
+" vim: ft=vim
+
+" set mapping to alternate files (projectionist)
+noremap <F3>             :A<CR>
+noremap <S-F3>           :AS<CR>
+noremap <leader>t        :A<CR>
+noremap <leader>t<space> :A<CR>
+noremap <leader>ts       :AS<CR>
+noremap <leader>tv       :AV<CR>
+" set mapping to run 'makeprg' (:make)
+noremap <F5> :make<CR>
+noremap <F6> :make %<CR>
