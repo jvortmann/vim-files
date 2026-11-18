@@ -1,4 +1,3 @@
--- color schemes
 return {
   { 'chriskempson/base16-vim', lazy = true },
   { 'baskerville/bubblegum', lazy = true },
