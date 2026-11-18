@@ -1,5 +1,0 @@
-" vim: ft=vim
-" set gist to be private by default
-let g:gist_post_private = 1
-" show private gists on show
-let g:gist_show_privates = 1
