@@ -4,7 +4,6 @@ local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
 
 local known_errors = {
-  ['a plain start'] = 'E216: No such group or event: filetypedetect *',
   ['opening a file'] = 'E31: No such mapping',
 }
 
@@ -20,6 +19,10 @@ local function leaves_no_error(scenario)
   check(scenario .. ' leaves no new error', got == known, detail)
 end
 
+-- lazy.nvim reports a failed plugin load in a scheduled callback. Callbacks run in order, so wait for a later one.
+local pending_ran = false
+vim.schedule(function() pending_ran = true end)
+vim.wait(1000, function() return pending_ran end)
 leaves_no_error('a plain start')
 
 vim.v.errmsg = ''

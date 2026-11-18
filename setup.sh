@@ -4,6 +4,6 @@
 echo "Installing Plugins"
 echo
 
-nvim -c "PlugInstall | qa" && \
+nvim --headless "+Lazy! restore" +qa && \
   echo "Press anything to continue" && read && \
   nvim

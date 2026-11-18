@@ -1,40 +1,26 @@
--- Plugin initialization
--- This will be completely rewritten in Step 2 to use lazy.nvim
--- For now, keeping the vim-plug approach converted to Lua
-
--- Install vim-plug if not present
-local plug_install_path = vim.fn.expand('~/.vim/autoload/plug.vim')
-if vim.fn.filereadable(plug_install_path) == 0 then
-  print('Setting up vim-plug.')
-  vim.fn.system({
-    'curl', '-fLo', plug_install_path, '--create-dirs',
-    'https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+-- Install lazy.nvim if not present
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.uv.fs_stat(lazypath) then
+  local out = vim.fn.system({
+    'git', 'clone', '--filter=blob:none', '--branch=stable',
+    'https://github.com/folke/lazy.nvim.git', lazypath,
   })
-  print('Curl plug.vim into autoload')
-end
-
--- Initialize vim-plug
-vim.call('plug#begin', '~/.vim/bundle')
-
--- Source home and local plugins, otherwise fallback to default
-local home_plugins = vim.fn.expand('~/.vim.plugins')
-local local_plugins = '.vim.plugins'
-
-if vim.fn.filereadable(home_plugins) == 1 or vim.fn.filereadable(local_plugins) == 1 then
-  if vim.fn.filereadable(home_plugins) == 1 then
-    vim.cmd('source ' .. home_plugins)
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({ { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' }, { out, 'WarningMsg' } }, true, {})
+    return
   end
-  if vim.fn.filereadable(local_plugins) == 1 then
-    vim.cmd('source ' .. local_plugins)
-  end
-else
-  vim.cmd('source ~/.vim/conf/plugins/vim.plugins.default')
 end
+vim.opt.rtp:prepend(lazypath)
 
-vim.call('plug#end')
-
--- Required to call Shortcut command during initialization
-vim.cmd('runtime plugin/shortcut.vim')
-
--- Source plugin settings
-require('config.plugins.settings.init')
+require('lazy').setup({
+  spec = {
+    -- Some plugins read their settings only when their plugin files load.
+    -- lazy.nvim runs every init at startup, before it loads any plugin, so the settings go there.
+    { 'folke/lazy.nvim', init = function() require('config.plugins.settings.init') end },
+    { import = 'plugins' },
+  },
+  checker = { enabled = false },
+  change_detection = { notify = false },
+  rocks = { enabled = false },
+  performance = { rtp = { reset = false } },
+})
