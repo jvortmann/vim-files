@@ -2,10 +2,7 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
-
-local function equals(name, got, expected)
-  check(name, vim.deep_equal(got, expected), 'expected ' .. vim.inspect(expected) .. ', got ' .. vim.inspect(got))
-end
+local equals = report.equals
 
 if vim.fn.executable('rg') == 1 then
   equals('Ack searches with rg', vim.g.ackprg, "rg --hidden --vimgrep -g '!.git' -g '!/vendor'")

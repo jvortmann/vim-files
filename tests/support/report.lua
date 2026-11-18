@@ -11,6 +11,10 @@ function report.check(name, ok, detail)
   end
 end
 
+function report.equals(name, got, expected)
+  report.check(name, vim.deep_equal(got, expected), 'expected ' .. vim.inspect(expected) .. ', got ' .. vim.inspect(got))
+end
+
 function report.finish()
   io.stdout:write('\n')
   if #failures > 0 then

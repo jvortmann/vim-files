@@ -1,3 +1,0 @@
-" vim: ft=vim
-"make auto close not to flush the keys
-let g:AutoClosePreservDotReg = 0

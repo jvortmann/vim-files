@@ -1,3 +1,0 @@
-" vim: ft=vim
-"activate the global shortcuts for ragtag
-let g:ragtag_global_maps = 1
