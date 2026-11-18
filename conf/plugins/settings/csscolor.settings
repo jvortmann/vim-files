@@ -1,3 +1,0 @@
-" vim: ft=vim
-" make css color not change the update time to crazy 100ms
-let g:cssColorVimDoNotMessMyUpdatetime = 1
