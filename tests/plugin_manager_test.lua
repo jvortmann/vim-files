@@ -5,18 +5,17 @@ local check = report.check
 
 local expected_plugins = {
   'nvim-treesitter/nvim-treesitter', 'aliou/bats.vim', 'tpope/vim-fireplace', 'ap/vim-css-color',
-  'slashmili/alchemist.vim', 'avdgaag/vim-phoenix', 'andyl/vim-textobj-elixir', 'janko/vim-test',
-  'keith/rspec.vim', 'slim-template/vim-slim', 'tpope/vim-rake', 'ngmy/vim-rubocop',
+  'slashmili/alchemist.vim', 'avdgaag/vim-phoenix', 'andyl/vim-textobj-elixir',
+  'keith/rspec.vim', 'slim-template/vim-slim', 'tpope/vim-rake',
   'nelstrom/vim-textobj-rubyblock', 'prettier/vim-prettier', 'dense-analysis/ale', 'itchyny/vim-qfedit',
-  'junegunn/vim-peekaboo', 'mattn/gist-vim', 'mattn/webapi-vim', 'mileszs/ack.vim',
-  'radenling/vim-dispatch-neovim', 'romainl/vim-devdocs', 'tmux-plugins/vim-tmux',
-  'christoomey/vim-tmux-navigator', 'tpope/vim-dispatch', 'tpope/vim-fugitive', 'tpope/vim-git',
+  'junegunn/vim-peekaboo', 'mileszs/ack.vim', 'tmux-plugins/vim-tmux',
+  'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive', 'tpope/vim-git',
   'tpope/vim-projectionist', 'junegunn/fzf', 'junegunn/fzf.vim', 'sunaku/vim-shortcut',
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'tpope/vim-surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
   'scrooloose/nerdcommenter', 'scrooloose/nerdtree', 'Townk/vim-autoclose', 'majutsushi/tagbar',
   'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'airblade/vim-gitgutter', 'vim-airline/vim-airline',
-  'vim-airline/vim-airline-themes', 'godlygeek/tabular', 'yssl/QFEnter', 'chriskempson/base16-vim',
+  'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'chriskempson/base16-vim',
   'baskerville/bubblegum', 'tomasr/molokai', 'lifepillar/vim-solarized8', 'dracula/vim', 'catppuccin/nvim',
 }
 
@@ -117,7 +116,6 @@ local filetype_plugins = {
   ['vim-textobj-elixir'] = { 'elixir' },
   ['rspec.vim'] = { 'ruby' },
   ['vim-rake'] = { 'ruby' },
-  ['vim-rubocop'] = { 'ruby' },
   ['vim-textobj-rubyblock'] = { 'ruby' },
   ['vim-prettier'] = { 'javascript', 'typescript', 'css', 'less', 'scss', 'json', 'ruby', 'markdown', 'yaml', 'html' },
 }
