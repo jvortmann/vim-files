@@ -5,6 +5,14 @@
 "  \   call ProjectionistDetect(getcwd()) |
 "  \ endif
 
+let g:projectionist_transformations = get(g:, 'projectionist_transformations', {})
+
+function! g:projectionist_transformations.nontest(input, o) abort
+  return a:input =~# '\.\%(test\|spec\)$' ? "\030" : a:input
+endfunction
+
+let s:shared_markers = '.tool-versions|mise.toml|package.json'
+
 let g:projectionist_heuristics = {
       \  "bin/spring": {
       \    "spec/*_spec.rb": {
@@ -92,7 +100,7 @@ let g:projectionist_heuristics = {
       \      "type": "spec",
       \    }
       \  },
-      \  ".tool-versions": {
+      \  s:shared_markers : {
       \    "*.go": {
       \      "alternate": ["{}_test.go"],
       \      "type": "src"
@@ -115,3 +123,30 @@ let g:projectionist_heuristics = {
       \    },
       \  },
       \}
+
+function! s:add_test_alternates(projections, ext) abort
+  let mirrored = []
+  for folder in ['tests', 'test', 'spec', 'specs']
+    for suffix in ['test', 'spec']
+      call add(mirrored, folder . '/{nontest}.' . suffix . '.' . a:ext)
+      let a:projections[folder . '/*.' . suffix . '.' . a:ext] = {
+            \ 'alternate': ['src/{}.' . a:ext, '{}.' . a:ext],
+            \ 'type': 'spec'}
+    endfor
+  endfor
+  for suffix in ['test', 'spec']
+    let a:projections['*.' . suffix . '.' . a:ext] = {
+          \ 'alternate': ['{}.' . a:ext],
+          \ 'type': 'spec'}
+  endfor
+  let a:projections['src/*.' . a:ext] = {
+        \ 'alternate': mirrored,
+        \ 'type': 'src'}
+  let a:projections['*.' . a:ext] = {
+        \ 'alternate': ['{nontest}.test.' . a:ext, '{nontest}.spec.' . a:ext] + mirrored,
+        \ 'type': 'src'}
+endfunction
+
+for s:ext in ['ts', 'tsx', 'js', 'jsx']
+  call s:add_test_alternates(g:projectionist_heuristics[s:shared_markers], s:ext)
+endfor
