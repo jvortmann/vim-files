@@ -1,4 +1,0 @@
-" vim: ft=vim
-"set the clojure options
-let vimclojure#HighlightBuiltins=1
-let vimclojure#ParenRainbow=1
