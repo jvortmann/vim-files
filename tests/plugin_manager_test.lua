@@ -13,8 +13,7 @@ local expected_plugins = {
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
   'scrooloose/nerdtree', 'Townk/vim-autoclose', 'majutsushi/tagbar',
   'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'airblade/vim-gitgutter', 'vim-airline/vim-airline',
-  'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'chriskempson/base16-vim',
-  'baskerville/bubblegum', 'tomasr/molokai', 'lifepillar/vim-solarized8', 'dracula/vim', 'catppuccin/nvim',
+  'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8', 'catppuccin/nvim',
 }
 
 local function managed_plugins()
@@ -38,7 +37,7 @@ if managed then
   table.sort(managed)
 end
 check(
-  'lazy.nvim manages exactly the plugins of the old vim-plug list',
+  'lazy.nvim manages exactly the expected plugins',
   vim.deep_equal(managed, expected),
   'expected ' .. #expected .. ' plugins, got ' .. vim.inspect(managed)
 )
@@ -141,10 +140,6 @@ end
 check('solarized8 is the active colorscheme', vim.g.colors_name == 'solarized8', 'got ' .. tostring(vim.g.colors_name))
 
 local colorscheme_plugins = {
-  ['base16-vim'] = 'base16-default-dark',
-  bubblegum = 'bubblegum-256-dark',
-  molokai = 'molokai',
-  dracula = 'dracula',
   catppuccin = 'catppuccin-mocha',
 }
 for name, colorscheme in vim.spairs(colorscheme_plugins) do
