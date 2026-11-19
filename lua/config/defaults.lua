@@ -97,9 +97,6 @@ vim.opt.tags:append('gem.tags')
 -- Set lazyredraw so macros run faster and speed vim up
 vim.opt.lazyredraw = true
 
--- Load the status line
-require('config.statusline')
-
 -- Make status bar always be shown
 vim.opt.laststatus = 2
 
