@@ -4,7 +4,7 @@ local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
 
 local expected_plugins = {
-  'nvim-treesitter/nvim-treesitter', 'ap/vim-css-color', 'keith/rspec.vim',
+  'nvim-treesitter/nvim-treesitter', 'brenoprata10/nvim-highlight-colors', 'keith/rspec.vim',
   'nelstrom/vim-textobj-rubyblock', 'prettier/vim-prettier', 'dense-analysis/ale', 'itchyny/vim-qfedit',
   'junegunn/vim-peekaboo', 'mileszs/ack.vim',
   'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
@@ -104,7 +104,7 @@ local pairs_after_insert = in_child('doautocmd InsertEnter', 'tostring(_G.MiniPa
 check('mini.pairs loads on InsertEnter', pairs_after_insert == 'true', 'MiniPairs after InsertEnter: ' .. pairs_after_insert)
 
 local filetype_plugins = {
-  ['vim-css-color'] = { 'css', 'sass', 'scss', 'less' },
+  ['nvim-highlight-colors'] = { 'css', 'sass', 'scss', 'less' },
   ['rspec.vim'] = { 'ruby' },
   ['vim-textobj-rubyblock'] = { 'ruby' },
   ['vim-prettier'] = { 'javascript', 'typescript', 'css', 'less', 'scss', 'json', 'ruby', 'markdown', 'yaml', 'html' },
