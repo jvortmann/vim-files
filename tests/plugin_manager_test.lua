@@ -11,7 +11,7 @@ local expected_plugins = {
   'tpope/vim-projectionist', 'junegunn/fzf', 'junegunn/fzf.vim', 'sunaku/vim-shortcut',
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'tpope/vim-surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
-  'scrooloose/nerdtree', 'Townk/vim-autoclose', 'majutsushi/tagbar',
+  'scrooloose/nerdtree', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
   'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'airblade/vim-gitgutter', 'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8',
 }
@@ -98,6 +98,10 @@ for _, case in ipairs(command_plugins) do
     check(case.plugin .. ' loads on ' .. trigger, got == '2', ':' .. case.defines .. ' after ' .. trigger .. ', got ' .. got)
   end
 end
+
+check('mini.pairs is not loaded at startup', _G.MiniPairs == nil, 'MiniPairs exists at startup')
+local pairs_after_insert = in_child('doautocmd InsertEnter', 'tostring(_G.MiniPairs ~= nil)')
+check('mini.pairs loads on InsertEnter', pairs_after_insert == 'true', 'MiniPairs after InsertEnter: ' .. pairs_after_insert)
 
 local filetype_plugins = {
   ['vim-css-color'] = { 'css', 'sass', 'scss', 'less' },
