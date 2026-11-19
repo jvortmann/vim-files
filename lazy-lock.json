@@ -2,7 +2,6 @@
   "QFEnter": { "branch": "master", "commit": "2fc2669681b33c8e675a0789e6b3e9e3b5b08417" },
   "ack.vim": { "branch": "master", "commit": "36e40f9ec91bdbf6f1adf408522a73a6925c3042" },
   "ale": { "branch": "master", "commit": "422c0e8ef42e2315a5b58dc281fccc59b816c37a" },
-  "catppuccin": { "branch": "main", "commit": "edefef779ab08ce1a4a404713e3012b0d202bd35" },
   "fzf": { "branch": "master", "commit": "4499615fe9c06c0651aa5650e5d0d0a5face99a8" },
   "fzf.vim": { "branch": "master", "commit": "fe5f1fd45418c1a4d905f44a59357008058cc789" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },

@@ -13,7 +13,7 @@ local expected_plugins = {
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
   'scrooloose/nerdtree', 'Townk/vim-autoclose', 'majutsushi/tagbar',
   'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'airblade/vim-gitgutter', 'vim-airline/vim-airline',
-  'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8', 'catppuccin/nvim',
+  'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8',
 }
 
 local function managed_plugins()
@@ -139,14 +139,16 @@ end
 
 check('solarized8 is the active colorscheme', vim.g.colors_name == 'solarized8', 'got ' .. tostring(vim.g.colors_name))
 
-local colorscheme_plugins = {
-  catppuccin = 'catppuccin-mocha',
-}
-for name, colorscheme in vim.spairs(colorscheme_plugins) do
-  check(name .. ' is not loaded at startup', not vim.tbl_contains(rtp, plugin_dir(name)), plugin_dir(name) .. ' is on runtimepath')
-  local got = in_child('colorscheme ' .. colorscheme, 'vim.g.colors_name')
-  check('colorscheme ' .. colorscheme .. ' loads ' .. name, got == colorscheme, 'got ' .. got)
-end
+local catppuccin_file = in_child(
+  'colorscheme catppuccin',
+  '(function() for _, s in ipairs(vim.fn.getscriptinfo()) do if s.name:find("/colors/catppuccin", 1, true) then return s.name end end return "none" end)()'
+)
+local builtin_catppuccin = vim.fn.resolve(vim.env.VIMRUNTIME .. '/colors/catppuccin.vim')
+check(
+  'colorscheme catppuccin loads the built-in file of the runtime',
+  vim.fn.resolve(catppuccin_file) == builtin_catppuccin,
+  'expected ' .. builtin_catppuccin .. ', got ' .. catppuccin_file
+)
 
 local project = vim.fn.tempname()
 vim.fn.mkdir(project, 'p')
