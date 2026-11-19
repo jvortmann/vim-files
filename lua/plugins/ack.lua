@@ -2,7 +2,7 @@ return {
   { -- search
     'mileszs/ack.vim',
     init = function()
-      -- set smart-grep and ag as default engines for Ack
+      -- Ack searches with rg when rg is installed
       if vim.fn.executable('rg') == 1 then
         vim.g.ackprg = "rg --hidden --vimgrep -g '!.git' -g '!/vendor'"
       end

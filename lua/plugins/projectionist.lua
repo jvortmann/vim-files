@@ -2,11 +2,6 @@ return {
   { -- projectionist
     'tpope/vim-projectionist',
     init = function()
-      -- autocmd FileType *
-      --   \ if &buftype ==# 'quickfix' |
-      --   \   call ProjectionistDetect(getcwd()) |
-      --   \ endif
-
       local transformations = vim.g.projectionist_transformations or {}
       transformations.nontest = function(input)
         if input:match('%.test$') or input:match('%.spec$') then
