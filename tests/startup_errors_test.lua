@@ -2,10 +2,9 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
+local run_scheduled = dofile(tests_dir .. '/support/scheduled.lua')
 
-local known_errors = {
-  ['opening a file'] = 'E31: No such mapping',
-}
+local known_errors = {}
 
 local function leaves_no_error(scenario)
   local got = vim.v.errmsg
@@ -19,10 +18,8 @@ local function leaves_no_error(scenario)
   check(scenario .. ' leaves no new error', got == known, detail)
 end
 
--- lazy.nvim reports a failed plugin load in a scheduled callback. Callbacks run in order, so wait for a later one.
-local pending_ran = false
-vim.schedule(function() pending_ran = true end)
-vim.wait(1000, function() return pending_ran end)
+-- lazy.nvim reports a failed plugin load in a scheduled callback.
+run_scheduled()
 leaves_no_error('a plain start')
 
 vim.v.errmsg = ''

@@ -5,7 +5,7 @@ local check = report.check
 
 local expected_plugins = {
   'nvim-treesitter/nvim-treesitter', 'brenoprata10/nvim-highlight-colors', 'keith/rspec.vim',
-  'nelstrom/vim-textobj-rubyblock', 'prettier/vim-prettier', 'dense-analysis/ale', 'itchyny/vim-qfedit',
+  'nelstrom/vim-textobj-rubyblock', 'stevearc/conform.nvim', 'dense-analysis/ale', 'itchyny/vim-qfedit',
   'junegunn/vim-peekaboo', 'mileszs/ack.vim',
   'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
   'tpope/vim-projectionist', 'junegunn/fzf', 'junegunn/fzf.vim', 'sunaku/vim-shortcut',
@@ -77,7 +77,7 @@ local function plugin_dir(name)
   end
 end
 
-for name, built in pairs({ ['vim-prettier'] = 'node_modules/.bin/prettier', fzf = 'bin/fzf' }) do
+for name, built in pairs({ fzf = 'bin/fzf' }) do
   local path = plugin_dir(name) .. '/' .. built
   check('the build of ' .. name .. ' made ' .. built, vim.fn.executable(path) == 1, path .. ' is missing')
 end
@@ -103,11 +103,14 @@ check('mini.pairs is not loaded at startup', _G.MiniPairs == nil, 'MiniPairs exi
 local pairs_after_insert = in_child('doautocmd InsertEnter', 'tostring(_G.MiniPairs ~= nil)')
 check('mini.pairs loads on InsertEnter', pairs_after_insert == 'true', 'MiniPairs after InsertEnter: ' .. pairs_after_insert)
 
+check('conform is not loaded at startup', package.loaded.conform == nil, 'conform is loaded at startup')
+local conform_after_write = in_child('doautocmd BufWritePre', 'tostring(package.loaded.conform ~= nil)')
+check('conform loads on BufWritePre', conform_after_write == 'true', 'conform after BufWritePre: ' .. conform_after_write)
+
 local filetype_plugins = {
   ['nvim-highlight-colors'] = { 'css', 'sass', 'scss', 'less' },
   ['rspec.vim'] = { 'ruby' },
   ['vim-textobj-rubyblock'] = { 'ruby' },
-  ['vim-prettier'] = { 'javascript', 'typescript', 'css', 'less', 'scss', 'json', 'ruby', 'markdown', 'yaml', 'html' },
 }
 
 local function loaded_filetype_plugins(dirs)
