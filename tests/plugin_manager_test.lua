@@ -107,15 +107,14 @@ check('conform is not loaded at startup', package.loaded.conform == nil, 'confor
 local conform_after_write = in_child('doautocmd BufWritePre', 'tostring(package.loaded.conform ~= nil)')
 check('conform loads on BufWritePre', conform_after_write == 'true', 'conform after BufWritePre: ' .. conform_after_write)
 
-local filetype_plugins = {
-  ['nvim-highlight-colors'] = { 'css', 'sass', 'scss', 'less' },
-  ['rspec.vim'] = { 'ruby' },
-  ['vim-textobj-rubyblock'] = { 'ruby' },
+local file_plugins = {
+  ['nvim-highlight-colors'] = { 'style.css', 'style.sass', 'style.scss', 'style.less' },
+  ['rspec.vim'] = { 'order_spec.rb', 'order_shared_examples.rb', 'order_shared_context.rb' },
 }
 
-local function loaded_filetype_plugins(dirs)
+local function loaded_file_plugins(dirs)
   local loaded = {}
-  for name in pairs(filetype_plugins) do
+  for name in pairs(file_plugins) do
     if vim.tbl_contains(dirs, plugin_dir(name)) then
       table.insert(loaded, name)
     end
@@ -124,24 +123,53 @@ local function loaded_filetype_plugins(dirs)
   return loaded
 end
 
-local at_startup = loaded_filetype_plugins(rtp)
-check('no filetype plugin is loaded at startup', #at_startup == 0, 'loaded ' .. vim.inspect(at_startup))
+local at_startup = loaded_file_plugins(rtp)
+check('no plugin that loads for a file is loaded at startup', #at_startup == 0, 'loaded ' .. vim.inspect(at_startup))
 
-local filetypes = {}
-for name, types in pairs(filetype_plugins) do
-  for _, filetype in ipairs(types) do
-    filetypes[filetype] = filetypes[filetype] or {}
-    table.insert(filetypes[filetype], name)
+local existing_files = vim.fn.tempname()
+vim.fn.mkdir(existing_files, 'p')
+for name, files in vim.spairs(file_plugins) do
+  for _, file in ipairs(files) do
+    vim.fn.writefile({ 'x' }, existing_files .. '/' .. file)
+    for kind, path in vim.spairs({
+      ['an existing'] = existing_files .. '/' .. file,
+      ['a new'] = vim.fn.tempname() .. '/' .. file,
+    }) do
+      local loaded = loaded_file_plugins(vim.split(in_child('edit ' .. vim.fn.fnameescape(path), 'vim.o.runtimepath'), ','))
+      check('opening ' .. kind .. ' ' .. file .. ' loads ' .. name, vim.deep_equal(loaded, { name }), 'loaded ' .. vim.inspect(loaded))
+    end
   end
 end
-for filetype, expected_names in vim.spairs(filetypes) do
-  table.sort(expected_names)
-  local loaded = loaded_filetype_plugins(vim.split(in_child('setfiletype ' .. filetype, 'vim.o.runtimepath'), ','))
-  check(
-    'the ' .. filetype .. ' filetype loads ' .. table.concat(expected_names, ', '),
-    vim.deep_equal(loaded, expected_names),
-    'loaded ' .. vim.inspect(loaded)
-  )
+
+local events_project = vim.fn.tempname()
+for name, lines in pairs({ Gemfile = {}, ['package.json'] = { '{}' } }) do
+  vim.fn.mkdir(events_project, 'p')
+  vim.fn.writefile(lines, events_project .. '/' .. name)
+end
+local count_events = table.concat({
+  '_G.counts = { FileType = 0, ProjectionistDetect = 0 }',
+  "vim.api.nvim_create_autocmd('FileType', { callback = function() counts.FileType = counts.FileType + 1 end })",
+  "vim.api.nvim_create_autocmd('User', { pattern = 'ProjectionistDetect', callback = function()",
+  '  counts.ProjectionistDetect = counts.ProjectionistDetect + 1',
+  'end })',
+}, '\n')
+for name, expected in vim.spairs({
+  ['app/order.rb'] = '1 FileType, 1 ProjectionistDetect',
+  -- rspec.vim sets the filetype ruby first, then rspec.ruby.
+  ['spec/order_spec.rb'] = '2 FileType, 2 ProjectionistDetect',
+  ['app/style.css'] = '1 FileType, 1 ProjectionistDetect',
+  ['notes.md'] = '1 FileType, 1 ProjectionistDetect',
+}) do
+  local path = events_project .. '/' .. name
+  vim.fn.mkdir(vim.fs.dirname(path), 'p')
+  vim.fn.writefile({ 'x' }, path)
+  local got = child_stdout({
+    '+lua ' .. count_events,
+    '+silent edit ' .. vim.fn.fnameescape(path),
+    '+lua io.stdout:write(counts.FileType .. " FileType, " .. counts.ProjectionistDetect .. " ProjectionistDetect")',
+    '+qa!',
+  })
+  check('opening ' .. name .. ' as the first buffer fires ' .. expected, got == expected, 'got ' .. got)
 end
 
 check('solarized8 is the active colorscheme', vim.g.colors_name == 'solarized8', 'got ' .. tostring(vim.g.colors_name))

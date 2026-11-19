@@ -1,3 +1,3 @@
 return {
-  { 'nelstrom/vim-textobj-rubyblock', ft = 'ruby' }, -- ruby textobj
+  { 'nelstrom/vim-textobj-rubyblock', dependencies = { 'kana/vim-textobj-user' } }, -- ruby textobj
 }

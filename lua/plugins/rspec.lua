@@ -1,7 +1,9 @@
 return {
   { -- [SLOW] ruby rspec
     'keith/rspec.vim',
-    ft = 'ruby',
+    event = {
+      { event = { 'BufReadPre', 'BufNewFile' }, pattern = { '*_spec.rb', '*_shared_examples.rb', '*_shared_context.rb' } },
+    },
     -- lazy.nvim sources ftdetect but not after/ftdetect, where rspec.vim keeps its detection.
     -- An init runs at startup, so the detection works before the plugin loads.
     init = function(plugin)
