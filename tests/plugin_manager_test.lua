@@ -9,7 +9,7 @@ local expected_plugins = {
   'junegunn/vim-peekaboo', 'mileszs/ack.vim',
   'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
   'tpope/vim-projectionist', 'junegunn/fzf', 'junegunn/fzf.vim', 'sunaku/vim-shortcut',
-  'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'tpope/vim-surround',
+  'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'nvim-mini/mini.surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
   'scrooloose/nerdtree', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
   'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'airblade/vim-gitgutter', 'vim-airline/vim-airline',
