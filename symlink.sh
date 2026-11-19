@@ -5,7 +5,6 @@ rm -r ~/.vim
 
 echo; echo ">> Symlink default configurations"
 ln -sfnv "$(pwd)" ~/.vim
-ln -sfnv ~/.vim/gvimrc ~/.gvimrc
 
 echo; echo ">> Creating ~/.config"
 mkdir -p ~/.config

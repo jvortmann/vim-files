@@ -1,7 +1,5 @@
 -- GUI and visual options
 vim.opt.termguicolors = true
-vim.g.t_8f = '\27[38;2;%lu;%lu;%lum'
-vim.g.t_8b = '\27[48;2;%lu;%lu;%lum'
 
 vim.opt.background = 'dark'
 -- Try to set colorscheme, fallback gracefully if not available
