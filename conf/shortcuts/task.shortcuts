@@ -1,4 +1,0 @@
-" vim: ft=vim
-"toggle task status
-inoremap <silent> <M-S-CR> <ESC>:call Toggle_task_status()<CR>i
-noremap <silent> <M-S-CR> :call Toggle_task_status()<CR>
