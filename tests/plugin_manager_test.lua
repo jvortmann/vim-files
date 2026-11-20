@@ -8,7 +8,7 @@ local expected_plugins = {
   'nelstrom/vim-textobj-rubyblock', 'stevearc/conform.nvim', 'dense-analysis/ale', 'itchyny/vim-qfedit',
   'junegunn/vim-peekaboo', 'mileszs/ack.vim',
   'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
-  'tpope/vim-projectionist', 'junegunn/fzf', 'junegunn/fzf.vim', 'sunaku/vim-shortcut',
+  'tpope/vim-projectionist', 'junegunn/fzf', 'junegunn/fzf.vim', 'folke/which-key.nvim',
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'nvim-mini/mini.surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
   'scrooloose/nerdtree', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',

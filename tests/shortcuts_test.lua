@@ -10,10 +10,9 @@ vim.fn.writefile({}, root .. '/Gemfile')
 vim.fn.system({ 'git', 'init', '-q', root })
 vim.cmd('silent edit ' .. vim.fn.fnameescape(root .. '/lib/order.rb'))
 
--- A map that the Shortcut command defines has the script of vim-shortcut as its source.
 local shortcut_scripts = {}
 for _, info in ipairs(vim.fn.getscriptinfo()) do
-  if info.name:find('/conf/shortcuts/', 1, true) or info.name:find('/vim-shortcut/plugin/', 1, true) then
+  if info.name:find('/conf/shortcuts/', 1, true) then
     shortcut_scripts[info.sid] = true
   end
 end
