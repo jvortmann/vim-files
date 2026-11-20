@@ -1,6 +1,18 @@
+local nvo = { 'n', 'x', 's', 'o' }
+
 return {
   { -- projectionist
     'tpope/vim-projectionist',
+    -- Keys alone would make the plugin lazy. It must load at startup, to detect the first buffer.
+    lazy = false,
+    keys = {
+      { '<F3>', ':A<CR>', mode = nvo, desc = 'Open the alternate file' },
+      { '<S-F3>', ':AS<CR>', mode = nvo, desc = 'Open the alternate file in a horizontal split' },
+      { '<leader>t', ':A<CR>', mode = nvo, desc = 'Open the alternate file' },
+      { '<leader>t<space>', ':A<CR>', mode = nvo, desc = 'Open the alternate file' },
+      { '<leader>ts', ':AS<CR>', mode = nvo, desc = 'Open the alternate file in a horizontal split' },
+      { '<leader>tv', ':AV<CR>', mode = nvo, desc = 'Open the alternate file in a vertical split' },
+    },
     init = function()
       local transformations = vim.g.projectionist_transformations or {}
       transformations.nontest = function(input)

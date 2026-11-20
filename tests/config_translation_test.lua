@@ -2,6 +2,7 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
+local child = dofile(tests_dir .. '/support/editor.lua')
 
 -- which-key draws its title and its list in separate windows, so this reads every window of filetype wk.
 local read_which_key_window = [[
@@ -15,32 +16,10 @@ local read_which_key_window = [[
   return lines
 ]]
 
--- Starts a child Neovim with this config. It returns when VeryLazy has run, as in an editor where a user types.
-local function start_editor()
-  local socket = vim.fn.tempname()
-  local job = vim.fn.jobstart({ vim.v.progpath, '--headless', '--listen', socket })
-  assert(vim.wait(5000, function() return vim.uv.fs_stat(socket) ~= nil end), 'the child Neovim opened no socket')
-  local editor = vim.fn.sockconnect('pipe', socket, { rpc = true })
-  assert(
-    vim.wait(5000, function() return vim.rpcrequest(editor, 'nvim_get_vvar', 'vim_did_enter') == 1 end),
-    'the child Neovim did not reach VimEnter'
-  )
-  -- A headless Neovim never fires UIEnter, and lazy.nvim fires VeryLazy only after it. Fire it by hand.
-  vim.rpcrequest(editor, 'nvim_exec_lua', [[
-    vim.api.nvim_exec_autocmds('UIEnter', { modeline = false })
-    vim.schedule(function() vim.schedule(function() vim.g.test_started = true end) end)
-  ]], {})
-  assert(
-    vim.wait(5000, function() return vim.rpcrequest(editor, 'nvim_exec_lua', 'return vim.g.test_started', {}) == true end),
-    'the child Neovim did not run VeryLazy'
-  )
-  return editor, job
-end
-
 -- Types the keys in a new editor and returns the lines of the which-key window. It waits until done
 -- accepts the lines. It returns the last lines that it read when the wait ends, or nil without a window.
 local function which_key_window(keys, done)
-  local editor, job = start_editor()
+  local editor, job = child.start()
   vim.rpcrequest(editor, 'nvim_input', keys)
   local lines
   vim.wait(3000, function()

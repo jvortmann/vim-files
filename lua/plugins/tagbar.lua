@@ -1,7 +1,16 @@
+local nvo = { 'n', 'x', 's', 'o' }
+
 return {
   {
     'majutsushi/tagbar',
     cmd = { 'Tagbar', 'TagbarOpenAutoClose' },
+    keys = {
+      { '<M-i>', ':TagbarOpenAutoClose<CR>', mode = nvo, silent = true, desc = 'Open tagbar, close it after a jump' },
+      { '<leader>ii', ':TagbarOpenAutoClose<CR>', mode = nvo, silent = true, desc = 'Open tagbar, close it after a jump' },
+      { '<M-S-i>', ':Tagbar<CR>', mode = nvo, silent = true, desc = 'Toggle tagbar' },
+      { '<leader>i', ':Tagbar<CR>', mode = nvo, silent = true, desc = 'Toggle tagbar' },
+      { '<leader>i<space>', ':Tagbar<CR>', mode = nvo, silent = true, desc = 'Toggle tagbar' },
+    },
     init = function()
       -- configuring tagbar
       vim.g.tagbar_width = 60
