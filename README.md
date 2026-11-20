@@ -45,7 +45,8 @@ other files. `~/.vimrc.force` loads last.
 - `init.lua` is the entry. It loads the modules of `lua/config/`: `defaults`,
   `guioptions`, `autocmds/`, `keymaps/` and `plugins/`.
 - `lua/plugins/<name>.lua` holds one lazy.nvim spec for each plugin.
-- `conf/` holds the settings and the maps that are still VimScript.
+- `conf/` holds `force_default` and the settings that are still VimScript:
+  `ale` and `neosnippet`. It holds no maps.
 - `spell/` holds the spell file that `zg` writes.
 
 ## Tests
@@ -149,9 +150,11 @@ In the quickfix window (mode n):
 | `<Leader>fg` | n, v, o | Grep the files, as you type |
 | `<Leader>fw` | n, v, o | Grep the word under the cursor |
 | `<Leader>fh` | n, v, o | Find recent files and the open buffers |
-| `<F2>` | n, v, o | Toggle NERDTree |
+| `<F2>` | n, v, o | Toggle the file tree (nvim-tree) |
 | `<M-i>`, `<Leader>ii` | n, v, o | Open tagbar, close it after a jump |
 | `<M-S-i>`, `<Leader>i`, `<Leader>i<Space>` | n, v, o | Toggle tagbar |
+
+`:e .` still opens netrw, because nvim-tree does not take over folders.
 
 ### Format, surround and snippets
 

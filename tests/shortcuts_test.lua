@@ -11,12 +11,12 @@ vim.fn.system({ 'git', 'init', '-q', root })
 vim.cmd('silent edit ' .. vim.fn.fnameescape(root .. '/lib/order.rb'))
 
 -- Neovim records the file of a Lua map only when 'verbose' is on, and this editor did not start with it. So a
--- child editor with -V1 lists the maps from conf/shortcuts, from lua/config/keymaps, and from the keys of the
--- plugin specs, which lazy.nvim sets.
+-- child editor with -V1 lists the maps from lua/config/keymaps and from the keys of the plugin specs, which
+-- lazy.nvim sets.
 local list_maps = table.concat({
   'local ours = {}',
   'for _, info in ipairs(vim.fn.getscriptinfo()) do',
-  "  for _, part in ipairs({ '/conf/shortcuts/', '/lua/config/keymaps/', '/lazy/core/handler/keys.lua' }) do",
+  "  for _, part in ipairs({ '/lua/config/keymaps/', '/lazy/core/handler/keys.lua' }) do",
   '    if info.name:find(part, 1, true) then ours[info.sid] = true end',
   '  end',
   'end',

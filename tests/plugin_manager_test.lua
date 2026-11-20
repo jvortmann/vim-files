@@ -11,7 +11,7 @@ local expected_plugins = {
   'tpope/vim-projectionist', 'ibhagwan/fzf-lua', 'nvim-tree/nvim-web-devicons', 'folke/which-key.nvim',
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'nvim-mini/mini.surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
-  'scrooloose/nerdtree', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
+  'nvim-tree/nvim-tree.lua', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
   'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'lewis6991/gitsigns.nvim', 'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8',
 }
@@ -78,7 +78,6 @@ local function plugin_dir(name)
 end
 
 local command_plugins = {
-  { plugin = 'nerdtree', defines = 'NERDTree', triggers = { 'NERDTreeToggle' } },
   { plugin = 'tagbar', defines = 'TagbarToggle', triggers = { 'Tagbar', 'TagbarOpenAutoClose' } },
 }
 
@@ -98,6 +97,10 @@ check('fzf-lua is not loaded at startup', package.loaded['fzf-lua'] == nil, 'fzf
 for _, tool in ipairs({ 'fzf', 'rg' }) do
   check('fzf-lua finds ' .. tool .. ' on PATH', vim.fn.executable(tool) == 1, tool .. ' is not on PATH')
 end
+
+check('nvim-tree is not loaded at startup', package.loaded['nvim-tree'] == nil, 'nvim-tree is loaded at startup')
+local tree_after_toggle = in_child('NvimTreeToggle', 'tostring(package.loaded["nvim-tree"] ~= nil)')
+check('nvim-tree loads on NvimTreeToggle', tree_after_toggle == 'true', 'nvim-tree after NvimTreeToggle: ' .. tree_after_toggle)
 
 check('mini.pairs is not loaded at startup', _G.MiniPairs == nil, 'MiniPairs exists at startup')
 local pairs_after_insert = in_child('doautocmd InsertEnter', 'tostring(_G.MiniPairs ~= nil)')

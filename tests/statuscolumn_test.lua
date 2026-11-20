@@ -120,11 +120,14 @@ local open_alone = [[
   end
   vim.cmd('only')
 ]]
-pane = screen.start({ cwd = new_folder({ 'local function one() end' }), args = { 'file.txt' } })
+local folder = new_folder({ 'local function one() end' })
+pane = screen.start({ cwd = folder, args = { 'file.txt' } })
 pane.run(open_alone, 'help')
 equals('a help window shows no number and no sign cell', start_of_row_with(pane, 'help.txt'), 'help.txt')
-pane.run(open_alone, 'NERDTreeToggle')
-equals('a NERDTree window shows no number and no sign cell', start_of_row_with(pane, '" Press ? for help'), '" Press ? for help')
+pane.run(open_alone, 'NvimTreeToggle')
+-- The first row of nvim-tree starts with the path of the folder.
+local root = folder:sub(1, 10)
+equals('an nvim-tree window shows no number and no sign cell', start_of_row_with(pane, root), root)
 pane.run(open_alone, 'setfiletype lua | Tagbar')
 equals('a tagbar window shows no number and no sign cell', start_of_row_with(pane, '" Press <F1>'), '" Press <F1>')
 pane.run(open_alone, 'terminal echo terminal-output')
