@@ -11,7 +11,7 @@ require('config.plugins.init')
 require('config.defaults')
 
 -- Load the autocmd options
-require('config.autocmd.init')
+require('config.autocmds.init')
 
 -- Load the gui options
 require('config.guioptions')

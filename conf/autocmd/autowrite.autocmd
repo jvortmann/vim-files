@@ -1,4 +1,0 @@
-" vim: ft=vim
-augroup AutoWrite
-    autocmd! BufLeave * :update
-augroup END
