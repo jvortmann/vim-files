@@ -2,22 +2,11 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local child = dofile(tests_dir .. '/support/editor.lua')
+local git_repo = dofile(tests_dir .. '/support/git_repo.lua')
 local equals = report.equals
 
 local indexed = { 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten' }
 local edited = { 'one', 'two', 'THREE', 'four', 'five', 'six', 'seven', 'EIGHT', 'NINE', 'ten' }
-
--- Makes a git repo with file.txt in the index as `indexed`, then writes `edited` to the file on disk.
--- gitsigns compares the file with the index, so the repo needs no commit.
-local function new_repo()
-  local dir = vim.fn.resolve(vim.fn.tempname())
-  vim.fn.mkdir(dir, 'p')
-  vim.system({ 'git', '-C', dir, 'init', '-q' }, { stdin = false }):wait()
-  vim.fn.writefile(indexed, dir .. '/file.txt')
-  vim.system({ 'git', '-C', dir, 'add', 'file.txt' }, { stdin = false }):wait()
-  vim.fn.writefile(edited, dir .. '/file.txt')
-  return dir
-end
 
 -- Lists the lines with a gitsigns sign for a change that is not staged.
 local signed_lines = [[
@@ -35,7 +24,7 @@ local signed_lines = [[
 -- Opens file.txt of a new repo in a child Neovim and waits for the git signs.
 -- It returns a function that runs Lua in the child, and the child job.
 local function open_edited_file()
-  local dir = new_repo()
+  local dir = git_repo.new(indexed, edited)
   local editor, job = child.start({ cwd = dir, files = { 'file.txt' } })
   local function run(code, ...)
     return vim.rpcrequest(editor, 'nvim_exec_lua', code, { ... })

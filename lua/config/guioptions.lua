@@ -21,6 +21,7 @@ if not ok then
 end
 
 vim.opt.number = true
+require('config.statuscolumn').setup()
 vim.opt.tabstop = 2
 vim.opt.mouse = 'a'
 vim.opt.ruler = true
