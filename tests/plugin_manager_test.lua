@@ -8,7 +8,7 @@ local expected_plugins = {
   'nelstrom/vim-textobj-rubyblock', 'stevearc/conform.nvim', 'dense-analysis/ale', 'itchyny/vim-qfedit',
   'junegunn/vim-peekaboo', 'mileszs/ack.vim',
   'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
-  'tpope/vim-projectionist', 'junegunn/fzf', 'junegunn/fzf.vim', 'folke/which-key.nvim',
+  'tpope/vim-projectionist', 'ibhagwan/fzf-lua', 'nvim-tree/nvim-web-devicons', 'folke/which-key.nvim',
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'nvim-mini/mini.surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
   'scrooloose/nerdtree', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
@@ -77,11 +77,6 @@ local function plugin_dir(name)
   end
 end
 
-for name, built in pairs({ fzf = 'bin/fzf' }) do
-  local path = plugin_dir(name) .. '/' .. built
-  check('the build of ' .. name .. ' made ' .. built, vim.fn.executable(path) == 1, path .. ' is missing')
-end
-
 local command_plugins = {
   { plugin = 'nerdtree', defines = 'NERDTree', triggers = { 'NERDTreeToggle' } },
   { plugin = 'tagbar', defines = 'TagbarToggle', triggers = { 'Tagbar', 'TagbarOpenAutoClose' } },
@@ -97,6 +92,11 @@ for _, case in ipairs(command_plugins) do
     local got = in_child(trigger, 'vim.fn.exists(":' .. case.defines .. '")')
     check(case.plugin .. ' loads on ' .. trigger, got == '2', ':' .. case.defines .. ' after ' .. trigger .. ', got ' .. got)
   end
+end
+
+check('fzf-lua is not loaded at startup', package.loaded['fzf-lua'] == nil, 'fzf-lua is loaded at startup')
+for _, tool in ipairs({ 'fzf', 'rg' }) do
+  check('fzf-lua finds ' .. tool .. ' on PATH', vim.fn.executable(tool) == 1, tool .. ' is not on PATH')
 end
 
 check('mini.pairs is not loaded at startup', _G.MiniPairs == nil, 'MiniPairs exists at startup')

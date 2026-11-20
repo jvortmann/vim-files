@@ -52,7 +52,7 @@ local function shows_name(lines, name)
   return false
 end
 
--- The fzf maps stay VimScript. which-key gives them the descriptions that vim-shortcut showed.
+-- The fzf-lua keys keep the names that vim-shortcut showed, and which-key shows them.
 -- Each key is the prefix that the test types after <leader>h. Its names are the ones the window shows.
 local fzf_names = {
   ['\\'] = { 'Find files (fallback)', 'Find open buffers (fallback)' },

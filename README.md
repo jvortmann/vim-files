@@ -11,11 +11,12 @@ Neovim 0.12 or newer, and git. lazy.nvim installs itself on the first start.
 | Tool | Used by |
 | --- | --- |
 | `tree-sitter` CLI | nvim-treesitter (main branch) builds the parsers with it |
-| ripgrep (`rg`) | ack.vim searches with it when `rg` exists |
+| `fzf` | fzf-lua needs the binary on `PATH`. Install it with Homebrew |
+| ripgrep (`rg`) | ack.vim searches with it when `rg` exists. It also serves the grep keys of fzf-lua |
+| `fd` | fzf-lua lists files with it when it exists, optional |
+| Nerd Font | the file icons of nvim-web-devicons |
 | universal-ctags | tagbar |
 | prettier | conform.nvim, optional |
-
-fzf needs no install. The fzf plugin builds the binary.
 
 conform.nvim runs the `node_modules/.bin/prettier` of the project, or a
 global `prettier` when the project has none. It formats on save only in a
@@ -145,7 +146,9 @@ In the quickfix window (mode n):
 | `<Leader>fo`, `<Leader>o` | n, v, o | Find open buffers |
 | `<Leader>ft` | n, v, o | Find tags in the current buffer |
 | `<Leader>fta` | n, v, o | Find tags |
-| `<Leader>fh` | n, v, o | Find files history |
+| `<Leader>fg` | n, v, o | Grep the files, as you type |
+| `<Leader>fw` | n, v, o | Grep the word under the cursor |
+| `<Leader>fh` | n, v, o | Find recent files and the open buffers |
 | `<F2>` | n, v, o | Toggle NERDTree |
 | `<M-i>`, `<Leader>ii` | n, v, o | Open tagbar, close it after a jump |
 | `<M-S-i>`, `<Leader>i`, `<Leader>i<Space>` | n, v, o | Toggle tagbar |
