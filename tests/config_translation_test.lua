@@ -96,22 +96,63 @@ for prefix, names in vim.spairs(fzf_names) do
 end
 report.equals('which-key shows the name of each fzf map', unnamed, {})
 
-local spell_bad = vim.api.nvim_get_hl(0, { name = 'SpellBad', link = false })
-local orange = 16753920
-check(
-  'SpellBad keeps the colorscheme colors and adds an orange undercurl',
-  spell_bad.undercurl == true and spell_bad.sp == orange and spell_bad.fg ~= nil,
-  'expected undercurl, sp ' .. orange .. ' and a colorscheme fg, got ' .. vim.inspect(spell_bad)
-)
+-- Opens a float in Neovim inside a tmux pane. It returns the background of the float text as the pane
+-- draws it, an "r;g;b" string, or nil when no float shows.
+local function float_background_on_screen()
+  local server = 'float_test_' .. vim.fn.getpid()
+  local open_float = [[
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { 'float text' })
+    vim.api.nvim_open_win(buf, false, { relative = 'editor', row = 2, col = 2, width = 20, height = 3, style = 'minimal' })
+  ]]
+  vim.fn.system({
+    'tmux', '-L', server, '-f', '/dev/null', 'new-session', '-d', '-x', '80', '-y', '24',
+    vim.v.progpath, '-i', 'NONE', '-c', 'lua ' .. open_float,
+  })
+  local background
+  vim.wait(5000, function()
+    local screen = vim.fn.system({ 'tmux', '-L', server, 'capture-pane', '-e', '-p' })
+    local before = screen:match('([^\n]*)float text')
+    for color in (before or ''):gmatch('48;2;(%d+;%d+;%d+)m') do
+      background = color
+    end
+    return background ~= nil
+  end)
+  vim.fn.system({ 'tmux', '-L', server, 'send-keys', ':qa!', 'Enter' })
+  return background
+end
 
-local spell_cap = vim.api.nvim_get_hl(0, { name = 'SpellCap', link = false })
-check(
-  'SpellCap keeps the colorscheme colors and draws a dotted underline, not an undercurl',
-  spell_cap.underdotted == true and spell_cap.undercurl == nil
-    and spell_cap.fg ~= nil and spell_cap.sp == spell_cap.fg
-    and spell_cap.cterm ~= nil and spell_cap.cterm.underline == true,
-  'expected underdotted, no undercurl, the colorscheme fg as sp and a cterm underline, got '
-    .. vim.inspect(spell_cap)
-)
+report.equals('a float draws on the solarized base02 background', float_background_on_screen(), '7;54;66')
+
+-- Checks the colors that the config sets on top of the colorscheme. Each check name ends with the moment in `when`.
+local function check_colors(when)
+  local spell_bad = vim.api.nvim_get_hl(0, { name = 'SpellBad', link = false })
+  local orange = 16753920
+  check(
+    'SpellBad keeps the colorscheme colors and adds an orange undercurl ' .. when,
+    spell_bad.undercurl == true and spell_bad.sp == orange and spell_bad.fg ~= nil,
+    'expected undercurl, sp ' .. orange .. ' and a colorscheme fg, got ' .. vim.inspect(spell_bad)
+  )
+
+  local spell_cap = vim.api.nvim_get_hl(0, { name = 'SpellCap', link = false })
+  check(
+    'SpellCap keeps the colorscheme colors and draws a dotted underline, not an undercurl ' .. when,
+    spell_cap.underdotted == true and spell_cap.undercurl == nil
+      and spell_cap.fg ~= nil and spell_cap.sp ~= nil
+      and spell_cap.cterm ~= nil and spell_cap.cterm.underline == true,
+    'expected underdotted, no undercurl, a colorscheme fg and sp and a cterm underline, got '
+      .. vim.inspect(spell_cap)
+  )
+
+  report.equals('floats take the popup menu colors ' .. when, vim.api.nvim_get_hl(0, { name = 'NormalFloat' }), { link = 'Pmenu' })
+end
+
+check_colors('at startup')
+vim.cmd('colorscheme solarized8')
+check_colors('after the colorscheme loads again')
+vim.o.background = 'light'
+check_colors('after the background changes to light')
+vim.o.background = 'dark'
+check_colors('after the background changes back to dark')
 
 report.finish()

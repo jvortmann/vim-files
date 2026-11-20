@@ -2,6 +2,18 @@
 vim.opt.termguicolors = true
 
 vim.opt.background = 'dark'
+-- A colorscheme load replaces these colors. A change of 'background' loads the colorscheme again.
+-- The autocmd sets the colors after each load. It sits before the first `colorscheme` call, so startup sets them too.
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = vim.api.nvim_create_augroup('config_colors', { clear = true }),
+  callback = function()
+    -- Set spellcheck settings
+    vim.cmd('highlight SpellBad term=underline gui=undercurl guisp=Orange')
+    vim.cmd('highlight SpellCap term=underline gui=underdotted')
+    -- solarized8 sets no NormalFloat, so floats take the popup menu colors
+    vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'Pmenu' })
+  end,
+})
 -- Try to set colorscheme, fallback gracefully if not available
 local ok, _ = pcall(vim.cmd, 'colorscheme solarized8')
 if not ok then
@@ -22,7 +34,3 @@ vim.opt.scrolloff = 3
 
 -- Command-line completion shows a list of matches
 vim.opt.wildmenu = true
-
--- Set spellcheck settings
-vim.cmd('highlight SpellBad term=underline gui=undercurl guisp=Orange')
-vim.cmd('highlight SpellCap term=underline gui=underdotted')
