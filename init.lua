@@ -16,8 +16,8 @@ require('config.autocmd.init')
 -- Load the gui options
 require('config.guioptions')
 
--- Load shortcuts
-require('config.shortcuts.init')
+-- Load the keymaps
+require('config.keymaps.init')
 
 -- Load local vimrc file if it exists
 if vim.fn.filereadable(vim.fn.expand("$HOME/.vimrc.local")) == 1 then

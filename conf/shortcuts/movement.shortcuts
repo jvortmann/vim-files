@@ -1,4 +1,0 @@
-" vim: ft=vim
-" set mapping to not jump when using Shift Up/Down
-noremap <S-Up> <Up>
-noremap <S-Down> <Down>

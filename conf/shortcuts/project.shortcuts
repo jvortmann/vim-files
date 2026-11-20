@@ -1,5 +1,0 @@
-" vim: ft=vim
-
-" set mapping to run 'makeprg' (:make)
-noremap <F5> :make<CR>
-noremap <F6> :make %<CR>
