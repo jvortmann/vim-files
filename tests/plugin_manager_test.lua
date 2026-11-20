@@ -12,7 +12,7 @@ local expected_plugins = {
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'nvim-mini/mini.surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
   'scrooloose/nerdtree', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
-  'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'airblade/vim-gitgutter', 'vim-airline/vim-airline',
+  'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'lewis6991/gitsigns.nvim', 'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8',
 }
 

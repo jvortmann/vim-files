@@ -3,10 +3,9 @@ local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h'
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
 
--- ALE and gitgutter start processes for each opened buffer. They do not affect the alternates.
--- With them on, the test takes about 31 seconds. With them off, it takes about 17 seconds.
+-- ALE starts processes for each opened buffer. It does not affect the alternates.
+-- With ALE on, the test takes about 21 seconds. With ALE off, it takes about 12 seconds.
 vim.cmd('silent! ALEDisable')
-vim.cmd('silent! GitGutterDisable')
 
 local root
 
