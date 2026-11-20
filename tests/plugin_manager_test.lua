@@ -1,4 +1,4 @@
--- Run: nvim --headless -c 'luafile tests/plugin_manager_test.lua' </dev/null
+-- Run: nvim -i NONE --headless -c 'luafile tests/plugin_manager_test.lua' </dev/null
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
@@ -50,7 +50,7 @@ check(
 )
 
 local function child_stdout(args)
-  return vim.system(vim.list_extend({ vim.v.progpath, '--headless' }, args), { stdin = false }):wait().stdout
+  return vim.system(vim.list_extend({ vim.v.progpath, '-i', 'NONE', '--headless' }, args), { stdin = false }):wait().stdout
 end
 
 local function in_child(command, expression)
