@@ -48,12 +48,12 @@ local function start_of_row_with(pane, text)
   return found
 end
 
--- Returns the foreground color, as "r;g;b", that the pane draws for the number on the row that contains text.
-local function number_color(pane, number, text)
+-- Returns the foreground color, as "r;g;b", that the pane draws for cells on the first row that contains text.
+local function cell_color(pane, text, cells)
   for _, row in ipairs(pane.rows(true)) do
     if row:find(text, 1, true) then
       local color
-      for found in (row:match('^(.*)' .. number .. ' ') or ''):gmatch('38;2;(%d+;%d+;%d+)m') do
+      for found in (row:match('^(.*)' .. vim.pesc(cells)) or ''):gmatch('38;2;(%d+;%d+;%d+)m') do
         color = found
       end
       return color
@@ -83,8 +83,8 @@ equals('a sign of two cells shows its first character', row_with(pane, 'one', 'x
 pane.run(place_sign, 2, ' y', 30)
 equals('a sign that starts with a blank shows its first visible character', row_with(pane, 'two', 'y  2 two'), 'y  2 two')
 -- Lines 1 and 2 now have a sign, and the cursor is on line 1.
-equals('the number of the cursor line keeps the CursorLineNr color', number_color(pane, 1, 'one'), group_color(pane, 'CursorLineNr'))
-equals('the number of another line keeps the LineNr color', number_color(pane, 2, 'two'), group_color(pane, 'LineNr'))
+equals('the number of the cursor line keeps the CursorLineNr color', cell_color(pane, 'one', '1 '), group_color(pane, 'CursorLineNr'))
+equals('the number of another line keeps the LineNr color', cell_color(pane, 'two', '2 '), group_color(pane, 'LineNr'))
 pane.run([[vim.api.nvim_buf_set_extmark(0, vim.api.nvim_create_namespace('statuscolumn_test'), 1, 0, { number_hl_group = 'ErrorMsg', priority = 50 })]])
 equals('a sign mark with no text does not hide the sign of the line', row_with(pane, 'two', 'y  2 two'), 'y  2 two')
 pane.run([[vim.api.nvim_buf_set_extmark(0, vim.api.nvim_create_namespace('statuscolumn_test'), 0, 0, { sign_text = 'z', priority = 60 })]])
@@ -96,8 +96,13 @@ pane.run([[vim.wo.number = false]])
 equals('a window with no line numbers shows the sign cell and a blank before the text', row_with(pane, 'one', 'z one'), 'z one')
 pane.stop()
 
-pane = screen.start({ cwd = git_repo.new({ 'one', 'two', 'three' }, { 'one', 'two', 'THREE' }), args = { 'file.txt' } })
+pane = screen.start({ cwd = git_repo.new({ 'one', 'two', 'three', 'four' }, { 'one', 'two', 'THREE', 'four', 'five' }), args = { 'file.txt' } })
 equals('a changed line shows its git sign right before its number', row_with(pane, 'THREE', '┃  3 THREE'), '┃  3 THREE')
+equals('an added line shows a bar on the left edge of the sign cell', row_with(pane, 'five', '▏  5 five'), '▏  5 five')
+equals('the bar of an added line is solarized green', cell_color(pane, 'five', '▏'), '133;153;0')
+equals('the bar of a changed line is solarized yellow', cell_color(pane, 'THREE', '┃'), '181;137;0')
+-- The repo has no commit, so gitsigns shows each line of the index as a staged added line.
+equals('a staged added line shows the same bar', row_with(pane, 'one', '▏  1 one'), '▏  1 one')
 pane.run(place_sign, 3, 'x ', 30)
 equals('a line with two signs shows the sign of the higher priority', row_with(pane, 'THREE', 'x  3 THREE'), 'x  3 THREE')
 pane.stop()

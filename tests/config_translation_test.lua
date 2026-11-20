@@ -99,6 +99,14 @@ end
 
 report.equals('a float draws on the solarized base02 background', float_background_on_screen(), '7;54;66')
 
+-- Checks the colors of the git signs. Each check name ends with the moment in `when`.
+local function check_git_sign_colors(when)
+  for group, color in vim.spairs({ GitSignsAdd = '#859900', GitSignsChange = '#b58900', GitSignsDelete = '#dc322f' }) do
+    local fg = vim.api.nvim_get_hl(0, { name = group, link = false }).fg
+    report.equals(group .. ' draws in ' .. color .. ' ' .. when, fg and ('#%06x'):format(fg), color)
+  end
+end
+
 -- Checks the colors that the config sets on top of the colorscheme. Each check name ends with the moment in `when`.
 local function check_colors(when)
   local spell_bad = vim.api.nvim_get_hl(0, { name = 'SpellBad', link = false })
@@ -120,6 +128,7 @@ local function check_colors(when)
   )
 
   report.equals('floats take the popup menu colors ' .. when, vim.api.nvim_get_hl(0, { name = 'NormalFloat' }), { link = 'Pmenu' })
+  check_git_sign_colors(when)
 end
 
 check_colors('at startup')
@@ -129,5 +138,7 @@ vim.o.background = 'light'
 check_colors('after the background changes to light')
 vim.o.background = 'dark'
 check_colors('after the background changes back to dark')
+vim.cmd('colorscheme default')
+check_git_sign_colors('after another colorscheme loads')
 
 report.finish()

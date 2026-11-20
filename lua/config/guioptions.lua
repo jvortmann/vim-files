@@ -12,6 +12,10 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     vim.cmd('highlight SpellCap term=underline gui=underdotted')
     -- solarized8 sets no NormalFloat, so floats take the popup menu colors
     vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'Pmenu' })
+    -- The git signs take the solarized green, yellow and red
+    vim.api.nvim_set_hl(0, 'GitSignsAdd', { fg = '#859900' })
+    vim.api.nvim_set_hl(0, 'GitSignsChange', { fg = '#b58900' })
+    vim.api.nvim_set_hl(0, 'GitSignsDelete', { fg = '#dc322f' })
   end,
 })
 -- Try to set colorscheme, fallback gracefully if not available
