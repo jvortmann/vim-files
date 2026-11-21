@@ -2,6 +2,7 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local child = dofile(tests_dir .. '/support/editor.lua')
+local stub = dofile(tests_dir .. '/support/stub.lua')
 local equals = report.equals
 
 local terminal = 'test-terminal'
@@ -13,8 +14,7 @@ local function new_home()
   local dir = vim.fn.resolve(vim.fn.tempname())
   vim.fn.mkdir(dir .. '/work', 'p')
   vim.fn.mkdir(dir .. '/state', 'p')
-  vim.fn.writefile({ '#!/bin/sh', 'printf "%s\\n" "$*" >> "' .. dir .. '/calls"' }, dir .. '/hc')
-  vim.fn.setfperm(dir .. '/hc', 'rwxr-xr-x')
+  stub.write(dir .. '/hc', dir .. '/calls')
   return {
     dir = dir,
     work = dir .. '/work',
@@ -51,7 +51,7 @@ end
 -- Waits a moment for a call to the stub, and returns the calls that it got.
 local function calls(home)
   vim.wait(1000, function() return exists(home.calls) end)
-  return exists(home.calls) and vim.fn.readfile(home.calls) or {}
+  return stub.calls(home.calls)
 end
 
 local home = new_home()
