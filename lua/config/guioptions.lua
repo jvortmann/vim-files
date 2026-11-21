@@ -25,6 +25,10 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { link = 'SpellLocal' })
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInfo', { link = 'SpellRare' })
     vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { link = 'SpellRare' })
+    -- The diagnostic text takes only the text color of the diff group, so it keeps the background of the line
+    for severity, diff_group in pairs({ Error = 'DiffDelete', Warn = 'DiffChange', Info = 'DiffText', Hint = 'DiffText' }) do
+      vim.api.nvim_set_hl(0, 'DiagnosticVirtualText' .. severity, { fg = vim.api.nvim_get_hl(0, { name = diff_group, link = false }).fg })
+    end
   end,
 })
 -- Try to set colorscheme, fallback gracefully if not available

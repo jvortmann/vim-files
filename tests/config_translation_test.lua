@@ -140,6 +140,14 @@ local function check_colors(when)
   end
   report.equals('a diagnostic underline looks like the matching spell group ' .. when, underlines, {})
 
+  local virtual_text = {}
+  local expected_virtual_text = {}
+  for severity, diff_group in vim.spairs({ Error = 'DiffDelete', Warn = 'DiffChange', Info = 'DiffText', Hint = 'DiffText' }) do
+    virtual_text[severity] = vim.api.nvim_get_hl(0, { name = 'DiagnosticVirtualText' .. severity, link = false })
+    expected_virtual_text[severity] = { fg = vim.api.nvim_get_hl(0, { name = diff_group, link = false }).fg or 'a diff color' }
+  end
+  report.equals('the diagnostic text takes the text color of the matching diff group ' .. when, virtual_text, expected_virtual_text)
+
   report.equals('floats take the popup menu colors ' .. when, vim.api.nvim_get_hl(0, { name = 'NormalFloat' }), { link = 'Pmenu' })
   check_git_sign_colors(when)
 end

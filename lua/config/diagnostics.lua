@@ -1,5 +1,6 @@
 vim.diagnostic.config({
   severity_sort = true,
+  virtual_text = { current_line = true },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = 'x',

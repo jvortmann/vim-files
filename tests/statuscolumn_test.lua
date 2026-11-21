@@ -108,7 +108,8 @@ pane = screen.start({ cwd = new_folder({ 'one', 'two', 'three', 'four' }), args 
 pane.run(set_diagnostics, { 1, 'ERROR' }, { 2, 'WARN' }, { 3, 'INFO' }, { 4, 'HINT' })
 equals(
   'a diagnostic shows x, !, or i in the sign cell, by its severity',
-  { row_with(pane, 'one', 'x  1 one'), row_with(pane, 'two', '!  2 two'), row_with(pane, 'three', 'i  3 three'), row_with(pane, 'four', 'i  4 four') },
+  -- The cursor is on line 1, so that row also shows the message of the diagnostic after the text.
+  { start_of_row_with(pane, 'x  1 one'), row_with(pane, 'two', '!  2 two'), row_with(pane, 'three', 'i  3 three'), row_with(pane, 'four', 'i  4 four') },
   { 'x  1 one', '!  2 two', 'i  3 three', 'i  4 four' }
 )
 equals(
@@ -118,7 +119,7 @@ equals(
   { group_color(pane, 'DiffDelete'), group_color(pane, 'DiffChange'), group_color(pane, 'DiffText'), group_color(pane, 'DiffText') }
 )
 pane.run(set_diagnostics, { 1, 'ERROR' }, { 1, 'WARN' })
-equals('a line with a warning and an error shows x', row_with(pane, 'one', 'x  1 one'), 'x  1 one')
+equals('a line with a warning and an error shows x', start_of_row_with(pane, 'x  1 one'), 'x  1 one')
 pane.stop()
 
 pane = screen.start({ cwd = git_repo.new({ 'one', 'two', 'three', 'four' }, { 'one', 'two', 'THREE', 'four', 'five' }), args = { 'file.txt' } })

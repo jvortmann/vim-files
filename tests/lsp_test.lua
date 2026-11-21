@@ -104,4 +104,43 @@ calls = vim.rpcrequest(editor, 'nvim_exec_lua', mason.calls, {})
 vim.fn.jobstop(job)
 equals('a headless editor installs nothing and reads no registry', calls, {})
 
+local diagnostics_folder = new_folder()
+vim.fn.writefile({ 'one', 'two', 'three' }, diagnostics_folder .. '/file.txt')
+pane = screen.start({ cwd = diagnostics_folder, args = { 'file.txt' }, width = 60 })
+pane.run([[
+  local server = dofile(...)
+  local function at(line, message)
+    return { range = { start = { line = line, character = 0 }, ['end'] = { line = line, character = 1 } }, severity = 1, message = message }
+  end
+  local diagnostics = { at(0, 'first problem'), at(2, 'third problem') }
+  vim.lsp.start({ name = 'fake', root_dir = vim.fn.getcwd(), cmd = server.cmd({ initialize = { capabilities = { textDocumentSync = 1 } } }, diagnostics) })
+]], tests_dir .. '/support/lsp_server.lua')
+
+-- Waits until the rows of the pane that start with the numbers of lines 1 and 3 equal expected, and returns them.
+local function diagnostic_rows(expected)
+  local found
+  vim.wait(5000, function()
+    found = {}
+    for _, row in ipairs(pane.rows()) do
+      local number = row:match('^.%s+(%d) ')
+      if number == '1' or number == '3' then
+        found[number] = row:find('problem', 1, true) and row:match('%a+ problem') or 'no message'
+      end
+    end
+    return vim.deep_equal(found, expected)
+  end)
+  return found
+end
+
+local on_first = diagnostic_rows({ ['1'] = 'first problem', ['3'] = 'no message' })
+equals('the cursor line shows the message of its diagnostic', on_first['1'], 'first problem')
+equals('another line with a diagnostic shows no message', on_first['3'], 'no message')
+pane.run([[vim.api.nvim_win_set_cursor(0, { 3, 0 })]])
+equals(
+  'moving the cursor moves the message to the new line',
+  diagnostic_rows({ ['1'] = 'no message', ['3'] = 'third problem' }),
+  { ['1'] = 'no message', ['3'] = 'third problem' }
+)
+pane.stop()
+
 report.finish()
