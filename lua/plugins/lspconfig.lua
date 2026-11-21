@@ -30,6 +30,7 @@ return {
         },
       })
       vim.lsp.enable(servers)
+      require('config.lsp_idle').setup()
     end,
   },
 }
