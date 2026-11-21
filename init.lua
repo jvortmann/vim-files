@@ -13,6 +13,9 @@ require('config.defaults')
 -- Load the autocmd options
 require('config.autocmds.init')
 
+-- Save the session for Herdr
+require('config.herdr_session').setup()
+
 -- Load the gui options
 require('config.guioptions')
 

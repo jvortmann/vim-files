@@ -10,8 +10,9 @@ function M.start(opts)
   started = started + 1
   local server = ('screen_test_%d_%d'):format(vim.fn.getpid(), started)
   local socket = vim.fn.tempname()
+  -- The empty HC_TERMINAL_ID keeps the Neovim from saving a Herdr session when the suite runs in Herdr.
   local command = {
-    'tmux', '-L', server, '-f', '/dev/null', 'new-session', '-d',
+    'tmux', '-L', server, '-f', '/dev/null', 'new-session', '-d', '-e', 'HC_TERMINAL_ID=',
     '-x', tostring(opts.width or 40), '-y', tostring(opts.height or 10), '-c', opts.cwd or vim.fn.getcwd(),
     vim.v.progpath, '-i', 'NONE', '--listen', socket,
   }
