@@ -46,7 +46,7 @@ other files. `~/.vimrc.force` loads last.
   `guioptions`, `autocmds/`, `keymaps/` and `plugins/`.
 - `lua/plugins/<name>.lua` holds one lazy.nvim spec for each plugin.
 - `conf/` holds `force_default` and the settings that are still VimScript:
-  `ale` and `neosnippet`. It holds no maps.
+  `neosnippet`. It holds no maps.
 - `spell/` holds the spell file that `zg` writes.
 
 ## Tests

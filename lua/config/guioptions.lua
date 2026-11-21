@@ -16,6 +16,15 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     vim.api.nvim_set_hl(0, 'GitSignsAdd', { fg = '#859900' })
     vim.api.nvim_set_hl(0, 'GitSignsChange', { fg = '#b58900' })
     vim.api.nvim_set_hl(0, 'GitSignsDelete', { fg = '#dc322f' })
+    -- solarized8 sets no diagnostic colors, so signs take the diff colors and underlines take the spell colors
+    vim.api.nvim_set_hl(0, 'DiagnosticSignError', { link = 'DiffDelete' })
+    vim.api.nvim_set_hl(0, 'DiagnosticSignWarn', { link = 'DiffChange' })
+    vim.api.nvim_set_hl(0, 'DiagnosticSignInfo', { link = 'DiffText' })
+    vim.api.nvim_set_hl(0, 'DiagnosticSignHint', { link = 'DiffText' })
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { link = 'SpellBad' })
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { link = 'SpellLocal' })
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInfo', { link = 'SpellRare' })
+    vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { link = 'SpellRare' })
   end,
 })
 -- Try to set colorscheme, fallback gracefully if not available

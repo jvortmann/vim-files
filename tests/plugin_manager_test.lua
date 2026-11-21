@@ -5,7 +5,7 @@ local check = report.check
 
 local expected_plugins = {
   'nvim-treesitter/nvim-treesitter', 'brenoprata10/nvim-highlight-colors', 'keith/rspec.vim',
-  'nelstrom/vim-textobj-rubyblock', 'stevearc/conform.nvim', 'dense-analysis/ale', 'itchyny/vim-qfedit',
+  'nelstrom/vim-textobj-rubyblock', 'stevearc/conform.nvim', 'itchyny/vim-qfedit',
   'junegunn/vim-peekaboo', 'mileszs/ack.vim',
   'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
   'tpope/vim-projectionist', 'ibhagwan/fzf-lua', 'nvim-tree/nvim-web-devicons', 'folke/which-key.nvim',
@@ -42,6 +42,8 @@ check(
   vim.deep_equal(managed, expected),
   'expected ' .. #expected .. ' plugins, got ' .. vim.inspect(managed)
 )
+
+report.equals('no ALE command exists after startup', vim.fn.getcompletion('ALE', 'command'), {})
 
 check('ack.vim defines Ack with the rg command of its settings', vim.fn.exists(':Ack') == 2, 'Ack is missing')
 check(

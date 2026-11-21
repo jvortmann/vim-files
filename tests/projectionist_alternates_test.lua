@@ -3,10 +3,6 @@ local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h'
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
 
--- ALE starts processes for each opened buffer. It does not affect the alternates.
--- With ALE on, the test takes about 21 seconds. With ALE off, it takes about 12 seconds.
-vim.cmd('silent! ALEDisable')
-
 local root
 
 local function touch(path)

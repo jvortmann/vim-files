@@ -1,7 +1,6 @@
 {
   "QFEnter": { "branch": "master", "commit": "2fc2669681b33c8e675a0789e6b3e9e3b5b08417" },
   "ack.vim": { "branch": "master", "commit": "36e40f9ec91bdbf6f1adf408522a73a6925c3042" },
-  "ale": { "branch": "master", "commit": "422c0e8ef42e2315a5b58dc281fccc59b816c37a" },
   "conform.nvim": { "branch": "master", "commit": "016802de402556da54c36bd7359b441266b01cdd" },
   "fzf-lua": { "branch": "main", "commit": "a8312697c30b4d3b110fa3dc56e3699107aed9a0" },
   "gitsigns.nvim": { "branch": "main", "commit": "c0862d382a35b7b45757d8d151a6a634c09bf3ce" },

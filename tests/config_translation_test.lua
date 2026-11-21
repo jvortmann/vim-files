@@ -127,6 +127,19 @@ local function check_colors(when)
       .. vim.inspect(spell_cap)
   )
 
+  local underlines = {}
+  for group, spell_group in vim.spairs({
+    DiagnosticUnderlineError = 'SpellBad',
+    DiagnosticUnderlineWarn = 'SpellLocal',
+    DiagnosticUnderlineInfo = 'SpellRare',
+    DiagnosticUnderlineHint = 'SpellRare',
+  }) do
+    if not vim.deep_equal(vim.api.nvim_get_hl(0, { name = group, link = false }), vim.api.nvim_get_hl(0, { name = spell_group, link = false })) then
+      table.insert(underlines, group .. ' ' .. vim.inspect(vim.api.nvim_get_hl(0, { name = group, link = false }), { newline = '', indent = '' }))
+    end
+  end
+  report.equals('a diagnostic underline looks like the matching spell group ' .. when, underlines, {})
+
   report.equals('floats take the popup menu colors ' .. when, vim.api.nvim_get_hl(0, { name = 'NormalFloat' }), { link = 'Pmenu' })
   check_git_sign_colors(when)
 end

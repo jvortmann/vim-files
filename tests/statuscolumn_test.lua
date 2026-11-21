@@ -72,7 +72,7 @@ equals('a line with no sign has one blank cell before its number', row_with(pane
 -- The pane is 40 cells wide, so the text area takes 35 of the 50 cells of line 3, and 'showbreak' starts the rest.
 local continued = '     ↪  ' .. string.rep('w', 15)
 equals('the rest of a wrapped line starts at the column of the text above', row_with(pane, '↪', continued), continued)
--- ALE and the diagnostics place signs of two cells, such as 'x '.
+-- A diagnostic sign has two cells, such as 'x '.
 local place_sign = [[
   local row, text, priority = ...
   local namespace = vim.api.nvim_create_namespace('statuscolumn_test')
@@ -110,6 +110,12 @@ equals(
   'a diagnostic shows x, !, or i in the sign cell, by its severity',
   { row_with(pane, 'one', 'x  1 one'), row_with(pane, 'two', '!  2 two'), row_with(pane, 'three', 'i  3 three'), row_with(pane, 'four', 'i  4 four') },
   { 'x  1 one', '!  2 two', 'i  3 three', 'i  4 four' }
+)
+equals(
+  'a diagnostic sign takes the color of the matching diff group',
+  -- The underlines split the text of each line with color codes, so the test finds each row by its number.
+  { cell_color(pane, '1 ', 'x'), cell_color(pane, '2 ', '!'), cell_color(pane, '3 ', 'i'), cell_color(pane, '4 ', 'i') },
+  { group_color(pane, 'DiffDelete'), group_color(pane, 'DiffChange'), group_color(pane, 'DiffText'), group_color(pane, 'DiffText') }
 )
 pane.run(set_diagnostics, { 1, 'ERROR' }, { 1, 'WARN' })
 equals('a line with a warning and an error shows x', row_with(pane, 'one', 'x  1 one'), 'x  1 one')
