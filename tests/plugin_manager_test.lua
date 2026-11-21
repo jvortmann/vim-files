@@ -13,7 +13,8 @@ local expected_plugins = {
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
   'nvim-tree/nvim-tree.lua', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
   'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'lewis6991/gitsigns.nvim', 'vim-airline/vim-airline',
-  'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8',
+  'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8', 'neovim/nvim-lspconfig',
+  'mason-org/mason.nvim',
 }
 
 local function managed_plugins()

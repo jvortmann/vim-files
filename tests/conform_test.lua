@@ -3,6 +3,7 @@ local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h'
 local report = dofile(tests_dir .. '/support/report.lua')
 local equals = report.equals
 local run_scheduled = dofile(tests_dir .. '/support/scheduled.lua')
+local lsp_server = dofile(tests_dir .. '/support/lsp_server.lua')
 
 local notified = {}
 local notify = vim.notify
@@ -63,25 +64,12 @@ local function start_formatting_server(dir, new_text)
   vim.lsp.start({
     name = 'formatting-server',
     root_dir = dir,
-    cmd = function()
-      local id = 0
-      return {
-        request = function(method, _, callback)
-          id = id + 1
-          local results = {
-            initialize = { capabilities = { documentFormattingProvider = true } },
-            ['textDocument/formatting'] = {
-              { range = { start = { line = 0, character = 0 }, ['end'] = { line = 1, character = 0 } }, newText = new_text },
-            },
-          }
-          callback(nil, results[method])
-          return true, id
-        end,
-        notify = function() return true end,
-        is_closing = function() return false end,
-        terminate = function() end,
-      }
-    end,
+    cmd = lsp_server.cmd({
+      initialize = { capabilities = { documentFormattingProvider = true } },
+      ['textDocument/formatting'] = {
+        { range = { start = { line = 0, character = 0 }, ['end'] = { line = 1, character = 0 } }, newText = new_text },
+      },
+    }),
   })
 end
 

@@ -1,11 +1,14 @@
 local M = {}
 
+local mason = dofile(vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h') .. '/mason.lua')
+
 local started = 0
 
 -- Starts Neovim with this config in a tmux pane of opts.width by opts.height cells, and waits for VimEnter.
 -- opts.cwd is the directory of Neovim, and opts.args lists its arguments, such as the files that it opens.
 -- It returns run(code, ...), which runs Lua in that Neovim, rows(colors), which reads the rows of the pane,
 -- and stop(), which ends the tmux server. With colors true, the rows keep the color escape codes.
+-- The Neovim loads the fake mason registry, so it installs no language server.
 function M.start(opts)
   started = started + 1
   local server = ('screen_test_%d_%d'):format(vim.fn.getpid(), started)
@@ -16,6 +19,7 @@ function M.start(opts)
     '-x', tostring(opts.width or 40), '-y', tostring(opts.height or 10), '-c', opts.cwd or vim.fn.getcwd(),
     vim.v.progpath, '-i', 'NONE', '--listen', socket,
   }
+  vim.list_extend(command, mason.args())
   vim.fn.system(vim.list_extend(command, opts.args or {}))
   local screen = {}
   function screen.stop()

@@ -10,6 +10,9 @@ require('config.plugins.init')
 -- Load the default options
 require('config.defaults')
 
+-- Set how diagnostics show
+require('config.diagnostics')
+
 -- Load the autocmd options
 require('config.autocmds.init')
 

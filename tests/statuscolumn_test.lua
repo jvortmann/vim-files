@@ -96,6 +96,25 @@ pane.run([[vim.wo.number = false]])
 equals('a window with no line numbers shows the sign cell and a blank before the text', row_with(pane, 'one', 'z one'), 'z one')
 pane.stop()
 
+-- Sets diagnostics on the current buffer of the pane. Each argument is a line number and a severity.
+local set_diagnostics = [=[
+  local diagnostics = {}
+  for _, entry in ipairs({ ... }) do
+    table.insert(diagnostics, { lnum = entry[1] - 1, col = 0, severity = vim.diagnostic.severity[entry[2]], message = entry[2] })
+  end
+  vim.diagnostic.set(vim.api.nvim_create_namespace('statuscolumn_test_diagnostics'), 0, diagnostics)
+]=]
+pane = screen.start({ cwd = new_folder({ 'one', 'two', 'three', 'four' }), args = { 'file.txt' } })
+pane.run(set_diagnostics, { 1, 'ERROR' }, { 2, 'WARN' }, { 3, 'INFO' }, { 4, 'HINT' })
+equals(
+  'a diagnostic shows x, !, or i in the sign cell, by its severity',
+  { row_with(pane, 'one', 'x  1 one'), row_with(pane, 'two', '!  2 two'), row_with(pane, 'three', 'i  3 three'), row_with(pane, 'four', 'i  4 four') },
+  { 'x  1 one', '!  2 two', 'i  3 three', 'i  4 four' }
+)
+pane.run(set_diagnostics, { 1, 'ERROR' }, { 1, 'WARN' })
+equals('a line with a warning and an error shows x', row_with(pane, 'one', 'x  1 one'), 'x  1 one')
+pane.stop()
+
 pane = screen.start({ cwd = git_repo.new({ 'one', 'two', 'three', 'four' }, { 'one', 'two', 'THREE', 'four', 'five' }), args = { 'file.txt' } })
 equals('a changed line shows its git sign right before its number', row_with(pane, 'THREE', '┃  3 THREE'), '┃  3 THREE')
 equals('an added line shows a bar on the left edge of the sign cell', row_with(pane, 'five', '▏  5 five'), '▏  5 five')
@@ -105,6 +124,8 @@ equals('the bar of a changed line is solarized yellow', cell_color(pane, 'THREE'
 equals('a staged added line shows the same bar', row_with(pane, 'one', '▏  1 one'), '▏  1 one')
 pane.run(place_sign, 3, 'x ', 30)
 equals('a line with two signs shows the sign of the higher priority', row_with(pane, 'THREE', 'x  3 THREE'), 'x  3 THREE')
+pane.run(set_diagnostics, { 5, 'HINT' })
+equals('a diagnostic on an added line shows instead of the git sign', row_with(pane, 'five', 'i  5 five'), 'i  5 five')
 pane.stop()
 
 -- Edits file.txt in one window, runs the command, and keeps only the window that it opened.

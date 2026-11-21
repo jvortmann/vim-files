@@ -1,13 +1,16 @@
 local M = {}
 
+local mason = dofile(vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h') .. '/mason.lua')
+
 -- Starts a child Neovim with this config. It returns when VeryLazy has run, as in an editor where a user types.
 -- opts.cwd is the directory of the child, and opts.files lists the files that it opens.
 -- opts.args lists more arguments, which come before the files.
 -- opts.env sets environment variables of the child. The value false removes the variable.
+-- The child loads the fake mason registry, so it installs no language server.
 function M.start(opts)
   opts = opts or {}
   local socket = vim.fn.tempname()
-  local command = { vim.v.progpath, '-i', 'NONE', '--headless', '--listen', socket }
+  local command = vim.list_extend({ vim.v.progpath, '-i', 'NONE', '--headless', '--listen', socket }, mason.args())
   vim.list_extend(vim.list_extend(command, opts.args or {}), opts.files or {})
   local env, removed = {}, {}
   for name, value in pairs(opts.env or {}) do

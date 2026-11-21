@@ -3,6 +3,7 @@ local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h'
 local report = dofile(tests_dir .. '/support/report.lua')
 local child = dofile(tests_dir .. '/support/editor.lua')
 local stub = dofile(tests_dir .. '/support/stub.lua')
+local mason = dofile(tests_dir .. '/support/mason.lua')
 local equals = report.equals
 
 local terminal = 'test-terminal'
@@ -134,7 +135,7 @@ equals('a clean quit removes the session file', exists(home.session), false)
 -- Starts nvim with its terminal interface on a pseudo terminal, as in a Herdr pane. It waits until nvim labels the terminal.
 local function start_in_terminal(home)
   local socket = vim.fn.tempname()
-  local command = { 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--listen', socket }
+  local command = vim.list_extend({ 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--listen', socket }, mason.args())
   local job = vim.fn.jobstart(vim.list_extend(command, home.args), {
     pty = true,
     width = 80,
