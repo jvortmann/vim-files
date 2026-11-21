@@ -18,6 +18,10 @@ Neovim 0.12 or newer, and git. lazy.nvim installs itself on the first start.
 | universal-ctags | tagbar |
 | prettier | conform.nvim, optional |
 
+mason.nvim installs the language servers into `~/.local/share/nvim/mason`.
+It installs each missing server on the first interactive start. mise
+provides the language toolchains: ruby, node, go, rust and zig.
+
 conform.nvim runs the `node_modules/.bin/prettier` of the project, or a
 global `prettier` when the project has none. It formats on save only in a
 project that has a prettier config.
@@ -39,6 +43,31 @@ Keep both links: the config reads `conf/` through `~/.vim`.
 
 Put your own settings in `~/.vimrc.local`. The config loads it after the
 other files. `~/.vimrc.force` loads last.
+
+## Language servers
+
+nvim-lspconfig configures seven servers.
+
+| Server | Language |
+| --- | --- |
+| `vtsls`, `eslint` | TypeScript and JavaScript |
+| `ruby_lsp` | Ruby |
+| `lua_ls` | Lua |
+| `gopls` | Go |
+| `zls` | Zig |
+| `rust_analyzer` | Rust |
+
+A server starts only inside a project root, never for a single file. It
+stops after one hour without use, and starts again on the next use of its
+buffer. `vim.g.lsp_idle_ms` sets the limit in milliseconds.
+
+Diagnostics show the signs `x`, `!` and `i`. The message shows as virtual text
+on the cursor line only.
+
+## Herdr
+
+Inside a Herdr terminal, `<C-h>`, `<C-j>`, `<C-k>` and `<C-l>` also move
+across Herdr panes. Neovim saves one session file for each Herdr terminal.
 
 ## Layout
 
@@ -156,6 +185,40 @@ In the quickfix window (mode n):
 
 `:e .` still opens netrw, because nvim-tree does not take over folders.
 
+### Git hunks
+
+| Key | Mode | Action |
+| --- | --- | --- |
+| `]c` | n | Go to the next git hunk |
+| `[c` | n | Go to the previous git hunk |
+| `<Leader>gs` | n, v | Stage the hunk, or the selected lines |
+| `<Leader>gr` | n, v | Reset the hunk, or the selected lines |
+| `<Leader>gp` | n | Preview the hunk |
+| `<Leader>gb` | n | Show the git blame of the line |
+| `ih` | o, x | Select the hunk |
+
+In a diff window, `]c` and `[c` keep their built-in jumps.
+
+### Language server
+
+These keys exist only in a buffer with a running server. Without one, `K`
+does nothing. `<C-w>d` is the exception, because Neovim defines it for every
+buffer.
+
+| Key | Mode | Action |
+| --- | --- | --- |
+| `K` | n | Show the documentation of the symbol |
+| `gd` | n | Go to the definition |
+| `grn` | n | Rename the symbol |
+| `gra` | n, x | Show the code actions |
+| `grr` | n | List the references |
+| `gri` | n | List the implementations |
+| `gO` | n | List the symbols of the buffer |
+| `]d` | n | Go to the next diagnostic |
+| `[d` | n | Go to the previous diagnostic |
+| `<C-w>d` | n | Show the diagnostic message |
+| `<C-s>` | i, s | Show the signature of the function |
+
 ### Format, surround and snippets
 
 | Key | Mode | Action |
@@ -179,4 +242,4 @@ backslash comes before it and no word character comes after it.
 | --- | --- | --- |
 | `<F1>` | n | No help |
 | `Q` | n | No register replay |
-| `K` | n | No keyword lookup |
+| `K` | n | No keyword lookup, except in a buffer with a language server |
