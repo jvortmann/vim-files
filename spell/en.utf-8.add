@@ -373,3 +373,7 @@ spellfile
 zg
 runtimepath
 utf
+gsed
+subagents
+lazy
+colorscheme
