@@ -5,7 +5,8 @@ return {
       local parts = require('config.statusline_parts')
       parts.setup()
       local file_name = { 'filename', path = 1, symbols = { readonly = '[RO]' } }
-      local position = '%l/%L:%v'
+      local percent = '%p%%:%L'
+      local position = '%l:%v'
       require('lualine').setup({
         options = {
           icons_enabled = false,
@@ -22,12 +23,12 @@ return {
           lualine_b = { { 'diagnostics', sources = { 'nvim_diagnostic' }, sections = { 'error', 'warn' } }, parts.whitespace },
           lualine_c = { file_name },
           lualine_x = { 'searchcount', parts.words, 'filetype' },
-          lualine_y = { parts.encoding, '%p%%' },
+          lualine_y = { parts.encoding, percent },
           lualine_z = { position },
         },
         inactive_sections = {
           lualine_c = { file_name },
-          lualine_x = { position },
+          lualine_x = { percent, position },
         },
         extensions = { 'quickfix' },
       })

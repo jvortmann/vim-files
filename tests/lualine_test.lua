@@ -76,9 +76,9 @@ local code_line = statusline().str
 check('the statusline shows no word count for a code file', not code_line:find('words', 1, true), 'got ' .. vim.inspect(code_line))
 
 open('sub/file.txt', { 'one', 'two', 'three', 'four' })
-shows('the statusline shows how far the cursor is in the file, in percent', '25%')
+shows('the statusline shows how far the cursor is in the file, in percent, and the count of lines', '25%:4')
 vim.api.nvim_win_set_cursor(0, { 2, 2 })
-shows('the statusline shows the line, the count of lines and the column', '2/4:3')
+shows('the statusline shows the line and the column', ' 2:3 ')
 
 local namespace = vim.api.nvim_create_namespace('lualine_test')
 vim.diagnostic.set(namespace, 0, vim.tbl_map(function(severity)
@@ -121,6 +121,11 @@ check(
 vim.cmd('enew')
 local new_line = statusline().str
 check('the statusline of a new buffer shows no file format', not new_line:find('unix', 1, true), 'got ' .. vim.inspect(new_line))
+check(
+  'the statusline of an empty buffer shows numbers for the position',
+  new_line:find('100%:1', 1, true) ~= nil and new_line:find(' 0:1 ', 1, true) ~= nil,
+  'got ' .. vim.inspect(new_line)
+)
 
 open('sub/file.txt', { 'two', 'one two' })
 vim.fn.setreg('/', 'two')
@@ -164,7 +169,7 @@ equals(
     vim.trim(inactive.str):gsub('%s+', ' '),
     #vim.tbl_filter(function(part) return part.group ~= inactive.highlights[1].group end, inactive.highlights),
   },
-  { 'sub/file.txt 2/4:3', 0 }
+  { 'sub/file.txt 50%:4 2:3', 0 }
 )
 vim.cmd('only')
 
