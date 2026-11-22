@@ -15,7 +15,7 @@ Neovim 0.12 or newer, and git. lazy.nvim installs itself on the first start.
 | ripgrep (`rg`) | `:grep` searches with it. It also serves the grep keys of fzf-lua |
 | `fd` | fzf-lua lists files with it when it exists, optional |
 | Nerd Font | the file icons of nvim-web-devicons |
-| universal-ctags | tagbar |
+| universal-ctags | the tag keys of fzf-lua |
 | prettier | conform.nvim, optional |
 
 mason.nvim installs the language servers into `~/.local/share/nvim/mason`.
@@ -190,8 +190,6 @@ In the quickfix window (mode n):
 | `<Leader>fw` | n, v, o | Grep the word under the cursor |
 | `<Leader>fh` | n, v, o | Find recent files and the open buffers |
 | `<F2>` | n, v, o | Toggle the file tree (nvim-tree) |
-| `<M-i>`, `<Leader>ii` | n, v, o | Open tagbar, close it after a jump |
-| `<M-S-i>`, `<Leader>i`, `<Leader>i<Space>` | n, v, o | Toggle tagbar |
 
 `:e .` still opens netrw, because nvim-tree does not take over folders.
 

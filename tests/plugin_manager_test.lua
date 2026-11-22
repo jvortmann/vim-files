@@ -5,13 +5,12 @@ local check = report.check
 
 local expected_plugins = {
   'nvim-treesitter/nvim-treesitter', 'brenoprata10/nvim-highlight-colors', 'keith/rspec.vim',
-  'nelstrom/vim-textobj-rubyblock', 'stevearc/conform.nvim', 'itchyny/vim-qfedit',
-  'junegunn/vim-peekaboo',
+  'stevearc/conform.nvim',
   'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
   'tpope/vim-projectionist', 'ibhagwan/fzf-lua', 'nvim-tree/nvim-web-devicons', 'folke/which-key.nvim',
-  'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'nvim-mini/mini.surround',
-  'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
-  'nvim-tree/nvim-tree.lua', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
+  'nvim-mini/mini.surround',
+  'tpope/vim-endwise',
+  'nvim-tree/nvim-tree.lua', 'nvim-mini/mini.pairs',
   'lewis6991/gitsigns.nvim', 'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8', 'neovim/nvim-lspconfig',
   'mason-org/mason.nvim', 'saghen/blink.cmp', 'rafamadriz/friendly-snippets',
@@ -52,10 +51,26 @@ report.equals(
 )
 
 report.equals('no Ack command exists after startup', vim.fn.getcompletion('Ack', 'command'), {})
-check(
-  'ragtag adds its global insert mappings, as its settings say',
-  vim.fn.maparg('<C-X>/', 'i') ~= '',
-  'the <C-X>/ insert mapping is missing'
+report.equals('no Tagbar command exists after startup', vim.fn.getcompletion('Tagbar', 'command'), {})
+
+local removed_plugin_words = { 'unimpaired', 'textobj', 'Repeat', 'peekaboo', 'targets#', 'ragtag' }
+local removed_plugin_maps = {}
+for _, mode in ipairs({ 'n', 'x', 's', 'o', 'i', 'c' }) do
+  for _, map in ipairs(vim.api.nvim_get_keymap(mode)) do
+    for _, word in ipairs(removed_plugin_words) do
+      if (map.lhs .. ' ' .. (map.rhs or '')):find(word, 1, true) then
+        table.insert(removed_plugin_maps, mode .. ' ' .. map.lhs)
+        break
+      end
+    end
+  end
+end
+report.equals('no map of a removed plugin exists after startup', removed_plugin_maps, {})
+report.equals('<C-X>/ has no insert map after startup', vim.fn.maparg('<C-X>/', 'i'), '')
+report.equals(
+  ']q and [q keep the built-in quickfix maps of Neovim',
+  { vim.fn.maparg(']q', 'n', false, true).desc, vim.fn.maparg('[q', 'n', false, true).desc },
+  { ':cnext', ':cprevious' }
 )
 
 local function child_stdout(args)
@@ -83,22 +98,6 @@ local function plugin_dir(name)
     if plugin.name == name then
       return plugin.dir
     end
-  end
-end
-
-local command_plugins = {
-  { plugin = 'tagbar', defines = 'TagbarToggle', triggers = { 'Tagbar', 'TagbarOpenAutoClose' } },
-}
-
-for _, case in ipairs(command_plugins) do
-  check(
-    case.plugin .. ' is not loaded at startup',
-    vim.fn.exists(':' .. case.defines) ~= 2,
-    ':' .. case.defines .. ' exists at startup'
-  )
-  for _, trigger in ipairs(case.triggers) do
-    local got = in_child(trigger, 'vim.fn.exists(":' .. case.defines .. '")')
-    check(case.plugin .. ' loads on ' .. trigger, got == '2', ':' .. case.defines .. ' after ' .. trigger .. ', got ' .. got)
   end
 end
 
