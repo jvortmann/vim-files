@@ -1,7 +1,5 @@
 local failures = {}
 local count = 0
--- The test file that loads this module with dofile, relative to the current folder.
-local test_file = vim.fn.fnamemodify(debug.getinfo(3, 'S').source:sub(2), ':.')
 
 local report = {}
 
@@ -12,8 +10,6 @@ function report.check(name, ok, detail)
   else
     local message = detail:gsub('\n', '\n    ')
     io.stdout:write(('not ok %d - %s\n  ---\n  message: |\n    %s\n  ...\n'):format(count, name, message))
-    -- The message goes to stderr too. run.sh shows the stderr of a failed file, and a person reads it more easily than YAML.
-    io.stderr:write(('%s: %s: %s\n'):format(test_file, name, detail))
     table.insert(failures, name)
   end
 end

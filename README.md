@@ -102,10 +102,21 @@ TEST_TIMEOUT=30 ./tests/run.sh        # 30 seconds for each file, 120 by default
 `JOBS` sets another number. Each file runs in headless Neovim with this
 config. The script prints one TAP version 14 stream.
 
-Each file is a subtest, in file order, with its time as `# time=…ms`. A failed
-file shows its stderr as `#` comment lines inside its subtest. The last test
-point is the ShaDa check. The stream ends with `1..N`, `# pass P, fail F` and
-`# wall time …ms`.
+The plan of the run, `1..N`, comes right after `TAP version 14`. It has one test
+point for each file and one for the ShaDa check, which comes last.
+
+Each file is a subtest, in file order, with its time as `# time=…ms`. The plan
+of the subtest comes right after its `# Subtest:` line. A file can fail with no
+`not ok` line of its own. It has no plan, a wrong plan, or a non-zero exit.
+Then the subtest gets one more `not ok` line with the reason. A failed file
+shows its stderr, such as a Lua error, as `#` comment lines inside its subtest.
+
+The stream ends with three lines:
+
+- `# files: P pass, F fail`
+- `# checks: P pass, F fail`, which counts every test point in the files and the
+  ShaDa check
+- `# wall time …ms`
 
 The output has color only on a terminal. `NO_COLOR=1` turns it off.
 `COLOR=always` or `COLOR=never` overrides both.

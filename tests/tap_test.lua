@@ -87,6 +87,11 @@ equals('run.sh prints TAP version 14 that passes, with a subtest for each file a
     subtests = { [passing] = { plan = '1..1', passed = 1, failed = 0, errors = {} } },
   },
 })
+equals(
+  'run.sh prints the plan of the run after the version line, and the plan of a file after its Subtest line',
+  vim.list_slice(vim.split(passing_run.stdout, '\n'), 1, 4),
+  { 'TAP version 14', '1..2', '# Subtest: ' .. passing, '    1..1' }
+)
 local colored = run_suite({ passing }, { COLOR = 'always' }).stdout
 equals('run.sh colors its output with COLOR=always, and prints no color to a pipe', {
   pipe = passing_run.stdout:find('\27[', 1, true) ~= nil,
@@ -107,25 +112,31 @@ equals(
   0
 )
 
-local failing = report_file({ "report.check('second', false, 'one\\ntwo')", 'report.finish()' })
+local failing = report_file({ "report.check('second', false, 'the message\\nof the check')", 'report.finish()' })
 local crashing = report_file({ "report.check('first', true)", "error('crash')" })
 suite = run_suite({ failing, hanging, crashing }, { TEST_TIMEOUT = '1' })
-equals('a failing check, a timeout and a crash before the plan each make their file not ok, and the run fails', {
+equals('a failing check, a timeout and a crash make their file not ok, the run fails, and a message shows once', {
   code = suite.code,
   run = parse_tap(suite.stdout).run,
-  message = suite.stdout:find('    # ' .. failing .. ': second: one\n    # two\n', 1, true) ~= nil,
+  message = select(2, suite.stdout:gsub('the message', '')),
   timeout = suite.stdout:find('    not ok - ' .. hanging .. ' timed out after 1 s\n', 1, true) ~= nil,
 }, {
   code = 1,
   run = { plan = '1..4', passed = 1, failed = 3, errors = {} },
-  message = true,
+  message = 1,
   timeout = true,
 })
+equals('a crash shows its Lua error as comments, up to the last line of stderr, which has no newline', {
+  error = suite.stdout:find('\n    # E5113: Lua chunk: ', 1, true) ~= nil,
+  last = suite.stdout:find('in main chunk\nnot ok 3 - ' .. crashing, 1, true) ~= nil,
+}, { error = true, last = true })
+local two_failing = report_file({ "report.check('a', true)", "report.check('b', false, 'b')", "report.check('c', false, 'c')", 'report.finish()' })
 equals(
-  'a failed file shows the last line of its stderr, which has no newline after a Lua error',
-  suite.stdout:find('in main chunk\nnot ok 3 - ' .. crashing, 1, true) ~= nil,
-  true
+  'the summary counts the files and the checks apart, and the ShaDa check is a check',
+  run_suite({ two_failing }).stdout:match('\n(# files: [^\n]*\n# checks: [^\n]*)\n# wall time %d+ms\n$'),
+  '# files: 0 pass, 1 fail\n# checks: 2 pass, 2 fail'
 )
+equals('run.sh prints no tab, not even from the stack trace of a Lua error', suite.stdout:find('\t', 1, true), nil)
 
 equals(
   'a file in the repo shows by its path from the root of the repo',
@@ -141,14 +152,29 @@ equals('run.sh prints the files in their order, even when a later file finishes 
   slow_first_finished_last = tonumber(ordered:match('ok 1 %- [^\n]+ # time=(%d+)ms')) > tonumber(ordered:match('ok 2 %- [^\n]+ # time=(%d+)ms')),
 }, { order = true, slow_first_finished_last = true })
 
-local no_plan, not_ok = vim.fn.tempname() .. '_test.lua', vim.fn.tempname() .. '_test.lua'
+local no_plan, bad_plan, not_ok = vim.fn.tempname() .. '_test.lua', vim.fn.tempname() .. '_test.lua', vim.fn.tempname() .. '_test.lua'
 vim.fn.writefile({ [[io.stdout:write('ok 1 - only\n')]], [[vim.cmd('qall!')]] }, no_plan)
+vim.fn.writefile({ [[io.stdout:write('ok 1 - only\n1..2\n')]], [[vim.cmd('qall!')]] }, bad_plan)
 vim.fn.writefile({ [[io.stdout:write('not ok 1 - raw\n1..1\n')]], [[vim.cmd('qall!')]] }, not_ok)
-suite = run_suite({ no_plan, not_ok })
-equals(
-  'a file that exits with status 0 fails when it prints no plan or a not ok line',
-  { code = suite.code, run = parse_tap(suite.stdout).run },
-  { code = 1, run = { plan = '1..3', passed = 1, failed = 2, errors = {} } }
-)
+suite = run_suite({ no_plan, bad_plan, not_ok })
+local tap = parse_tap(suite.stdout)
+equals('a file that exits with status 0 fails when it prints no plan, a wrong plan or a not ok line', {
+  code = suite.code,
+  run = tap.run,
+  no_plan = tap.subtests[no_plan],
+  bad_plan = tap.subtests[bad_plan],
+  checks = suite.stdout:match('\n(# checks: [^\n]*)\n'),
+  reasons = {
+    suite.stdout:find('\n    not ok 2 - the file printed no plan\n', 1, true) ~= nil,
+    suite.stdout:find('\n    not ok 2 - the plan is 1..2, but the file printed 1 test point\n', 1, true) ~= nil,
+  },
+}, {
+  code = 1,
+  run = { plan = '1..4', passed = 1, failed = 3, errors = {} },
+  no_plan = { plan = '1..2', passed = 1, failed = 1, errors = {} },
+  bad_plan = { plan = '1..2', passed = 1, failed = 1, errors = {} },
+  checks = '# checks: 3 pass, 3 fail',
+  reasons = { true, true },
+})
 
 report.finish()

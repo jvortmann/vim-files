@@ -61,10 +61,10 @@ case "${COLOR:-auto}" in
 esac
 in_yaml=0
 
-# Prints the line $1. With color, an ok line is green, a not ok line red, a Subtest line and the pass line bold, and a
-# YAML block or another comment dim.
+# Prints the line $1. With color, an ok line is green, a not ok line red, a Subtest line and the count lines bold, and
+# a YAML block or another comment dim. A tab, as in the stack trace of a Lua error, becomes two spaces.
 emit() {
-  local start=''
+  local start='' text="${1//$'\t'/  }"
   if [ "$color" -eq 1 ]; then
     if [[ $1 =~ ^\ *---$ ]]; then
       in_yaml=1
@@ -78,22 +78,67 @@ emit() {
       start=$'\e[32m'
     elif [[ $1 =~ ^\ *not\ ok ]]; then
       start=$'\e[31m'
-    elif [[ $1 =~ ^#\ (Subtest:|pass\ ) ]]; then
+    elif [[ $1 =~ ^#\ (Subtest:|files:|checks:) ]]; then
       start=$'\e[1m'
     elif [[ $1 =~ ^\ *# ]]; then
       start=$'\e[2m'
     fi
   fi
   if [ -n "$start" ]; then
-    printf '%s%s\e[0m\n' "$start" "$1"
+    printf '%s%s\e[0m\n' "$start" "$text"
   else
-    printf '%s\n' "$1"
+    printf '%s\n' "$text"
+  fi
+}
+
+# Prints the subtest of test file number $1, named $2, which ended with exit status $3. Its plan comes first, as the
+# plan of the run does. A file that fails with no not ok line of its own gets one more test point that gives the reason.
+# Sets subtest_failed to 1 when the file fails, and adds its checks to checks_passed and checks_failed.
+print_subtest() {
+  local out="$work/$1.out" plan points failures reason='' total line
+  plan="$(grep -m 1 -E '^1\.\.[0-9]+$' "$out")"
+  points=$(grep -cE '^(not )?ok( |$)' "$out")
+  failures=$(grep -c '^not ok' "$out")
+  if [ "$failures" -eq 0 ]; then
+    if [ -z "$plan" ]; then
+      reason='the file printed no plan'
+    elif [ "$plan" != "1..$points" ]; then
+      reason="the plan is $plan, but the file printed $points test point$([ "$points" -eq 1 ] || echo s)"
+    elif [ "$3" -ne 0 ]; then
+      reason="the file exited with status $3"
+    fi
+  fi
+  total=$points
+  [ -n "$reason" ] && total=$((points + 1))
+  subtest_failed=0
+  if [ "$failures" -gt 0 ] || [ -n "$reason" ]; then
+    subtest_failed=1
+  fi
+  checks_passed=$((checks_passed + points - failures))
+  checks_failed=$((checks_failed + total - points + failures))
+  emit "# Subtest: $2"
+  emit "    1..$total"
+  while IFS= read -r line || [ -n "$line" ]; do
+    [ -n "$line" ] && [[ ! $line =~ ^1\.\.[0-9]+$ ]] && emit "    $line"
+  done <"$out"
+  [ -n "$reason" ] && emit "    not ok $total - $reason"
+  if [ "$subtest_failed" -eq 1 ]; then
+    # The stderr of a failed file holds the cause, such as a Lua error. Comment lines keep the stream TAP.
+    while IFS= read -r line || [ -n "$line" ]; do
+      line="${line//$'\r'/}"
+      [ -n "$line" ] && emit "    # $line"
+    done <"$work/$1.err"
   fi
 }
 
 emit 'TAP version 14'
+# The plan comes first: one test point for each file, and one for the ShaDa check.
+emit "1..$(( ${#test_files[@]} + 1 ))"
 number=0
-failed=0
+files_passed=0
+files_failed=0
+checks_passed=0
+checks_failed=0
 for i in "${!test_files[@]}"; do
   until [ -e "$work/$i.done" ]; do
     # When xargs ended and the file has no result, the file never ran to its end.
@@ -107,20 +152,12 @@ for i in "${!test_files[@]}"; do
   read -r code time <"$work/$i.done"
   name="${test_files[$i]#"$PWD/"}"
   number=$((number + 1))
-  emit "# Subtest: $name"
-  while IFS= read -r line || [ -n "$line" ]; do
-    [ -n "$line" ] && emit "    $line"
-  done <"$work/$i.out"
-  # A file passes when it exits with status 0, prints its plan and prints no not ok line.
-  if [ "$code" -eq 0 ] && grep -q '^1\.\.[0-9]' "$work/$i.out" && ! grep -q '^not ok' "$work/$i.out"; then
+  print_subtest "$i" "$name" "$code"
+  if [ "$subtest_failed" -eq 0 ]; then
+    files_passed=$((files_passed + 1))
     emit "ok $number - $name # time=${time}ms"
   else
-    failed=$((failed + 1))
-    # The stderr of a failed file holds the cause, such as a Lua error. Comment lines keep the stream TAP.
-    while IFS= read -r line || [ -n "$line" ]; do
-      line="${line//$'\r'/}"
-      [ -n "$line" ] && emit "    # $line"
-    done <"$work/$i.err"
+    files_failed=$((files_failed + 1))
     emit "not ok $number - $name # time=${time}ms"
   fi
 done
@@ -129,9 +166,10 @@ wait
 number=$((number + 1))
 shada_after="$(ls -A "$shada_dir" 2>/dev/null)"
 if [ "$shada_after" = "$shada_before" ]; then
+  checks_passed=$((checks_passed + 1))
   emit "ok $number - the suite leaves $shada_dir unchanged"
 else
-  failed=$((failed + 1))
+  checks_failed=$((checks_failed + 1))
   emit "not ok $number - the suite changes $shada_dir"
   emit '  ---'
   emit '  message: |'
@@ -140,8 +178,8 @@ else
   done < <(diff <(printf '%s\n' "$shada_before") <(printf '%s\n' "$shada_after"))
   emit '  ...'
 fi
-emit "1..$number"
-emit "# pass $((number - failed)), fail $failed"
+emit "# files: $files_passed pass, $files_failed fail"
+emit "# checks: $checks_passed pass, $checks_failed fail"
 emit "# wall time $(milliseconds_since "$run_started")ms"
 
-[ "$failed" -eq 0 ]
+[ "$checks_failed" -eq 0 ]
