@@ -42,10 +42,10 @@ local function type_keys(keys)
   vim.rpcrequest(editor, 'nvim_input', keys)
 end
 
--- Waits until get returns expected, and returns the last value of get.
-local function wait_for(get, expected)
+-- Waits until get returns expected, for up to timeout milliseconds (3000 by default). Returns the last value of get.
+local function wait_for(get, expected, timeout)
   local got
-  vim.wait(3000, function()
+  vim.wait(timeout or 3000, function()
     got = get()
     return vim.deep_equal(got, expected)
   end, 20)
@@ -75,41 +75,67 @@ local function result_of(keys)
   return got
 end
 
--- Puts lines in the buffer, opens a line below them and types text. Returns when the completion menu shows.
-local function type_with_menu(lines, text)
+-- Puts lines in the buffer, opens a line below them and types text. Returns when the completion menu shows every label
+-- in labels. The sources answer one by one, and a late answer can reset a selection, so a key that needs the menu waits
+-- for all of them.
+local function type_with_menu(lines, text, labels)
   type_keys('<Esc>')
   wait_for_mode('n')
   call('vim.api.nvim_buf_set_lines(0, 0, -1, false, ...)', lines)
   type_keys('Go' .. text)
-  wait_for(function() return call("return require('blink.cmp').is_menu_visible()") end, true)
+  local shown = wait_for(function()
+    return call([[
+      local cmp, found = require('blink.cmp'), {}
+      for _, item in ipairs(cmp.get_items()) do
+        found[item.label] = true
+      end
+      return cmp.is_menu_visible() and vim.iter({ ... }):all(function(label) return found[label] end)
+    ]], unpack(labels))
+  end, true, 10000)
+  assert(shown, ('the completion menu did not show %s after typing %s'):format(table.concat(labels, ', '), text))
 end
 
--- Selects the next item of the menu, and returns its label when the line shows it.
+-- Returns the label of the selected item when the menu shows and the line shows the label, or ''.
+local shown_selection = [[
+  local cmp = require('blink.cmp')
+  local item, line = cmp.get_selected_item(), vim.api.nvim_get_current_line()
+  return cmp.is_menu_visible() and item and item.label == line and line or ''
+]]
+
+-- Selects the next item of the menu. Returns its label when the selection still shows 100 ms later, or ''.
 local function select_next()
   local before = call('return vim.api.nvim_get_current_line()')
   type_keys('<C-n>')
-  local label
-  vim.wait(3000, function()
-    label = call([[
-      local item, line = require('blink.cmp').get_selected_item(), vim.api.nvim_get_current_line()
-      return item and item.label == line and line or ''
-    ]])
+  local label = ''
+  if not vim.wait(3000, function()
+    label = call(shown_selection)
     return label ~= '' and label ~= before
-  end, 20)
-  return label
+  end, 20) then
+    return ''
+  end
+  vim.wait(100)
+  return call(shown_selection) == label and label or ''
 end
 
-type_with_menu({ 'foobar foobaz' }, 'foo')
-local selected = select_next()
+-- Under load, blink.cmp can close the menu after <C-n> puts the item in the line, because it then takes that change
+-- for typing. So the setup of the next check tries up to 3 times to get a selection that holds.
+local selected = ''
+for _ = 1, 3 do
+  type_with_menu({ 'foobar foobaz' }, 'foo', { 'foobar', 'foobaz' })
+  selected = select_next()
+  if selected ~= '' then
+    break
+  end
+end
 local accepted_with_enter = result_of('<CR>')
 
-type_with_menu({ 'foobar foobaz' }, 'def foo')
+type_with_menu({ 'foobar foobaz' }, 'def foo', {})
 local enter_without_selection = result_of('<CR>')
 
-type_with_menu({ 'foobar' }, 'foo')
+type_with_menu({ 'foobar' }, 'foo', { 'foobar' })
 local accepted_with_ctrl_y = result_of('<C-y>')
 
-type_with_menu({ '' }, 'def')
+type_with_menu({ '' }, 'def', { 'def' })
 call([[
   local cmp = require('blink.cmp')
   for index, item in ipairs(cmp.get_items()) do

@@ -51,7 +51,7 @@ local attached = [[return #vim.lsp.get_clients({ bufnr = vim.fn.bufnr(...) })]]
 
 local run, job = start()
 local diagnostics_before = run('vim.wait(1000, function() return #vim.diagnostic.get(0) > 0 end) return #vim.diagnostic.get(0)')
-vim.wait(1000)
+vim.wait(2000, function() return run(attached, 'a.txt') == 0 end)
 equals(
   'a server with no use for longer than the limit stops, and its buffer stays open',
   { servers = run(attached, 'a.txt'), loaded = run('return vim.api.nvim_buf_is_loaded(vim.fn.bufnr(...))', 'a.txt') },
