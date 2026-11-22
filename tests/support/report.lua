@@ -11,8 +11,8 @@ function report.check(name, ok, detail)
     io.stdout:write(('ok %d - %s\n'):format(count, name))
   else
     local message = detail:gsub('\n', '\n    ')
-    io.stdout:write(('not ok %d - %s\n  ---\n  message: |-\n    %s\n  ...\n'):format(count, name, message))
-    -- prove does not show the YAML block, so the message goes to stderr too, which prove shows.
+    io.stdout:write(('not ok %d - %s\n  ---\n  message: |\n    %s\n  ...\n'):format(count, name, message))
+    -- The message goes to stderr too. run.sh shows the stderr of a failed file, and a person reads it more easily than YAML.
     io.stderr:write(('%s: %s: %s\n'):format(test_file, name, detail))
     table.insert(failures, name)
   end

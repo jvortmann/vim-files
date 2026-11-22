@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs one test file in headless Neovim with the config of ~/.config/nvim, and prints its TAP on stdout. prove runs it.
+# Runs one test file in headless Neovim with the config of ~/.config/nvim, and prints its TAP on stdout. run.sh runs it.
 # A file that runs longer than TEST_TIMEOUT seconds (120 by default) ends with a not ok line.
 test_timeout="${TEST_TIMEOUT:-120}"
 started=$SECONDS

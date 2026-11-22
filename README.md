@@ -98,12 +98,25 @@ JOBS=1 ./tests/run.sh                 # one file at a time
 TEST_TIMEOUT=30 ./tests/run.sh        # 30 seconds for each file, 120 by default
 ```
 
-`run.sh` runs the files with `prove`, which comes with Perl. It runs as many
-files at once as the machine has CPUs, and `JOBS` sets another number. Each
-file runs in headless Neovim with this config and prints TAP. The script needs
-`timeout` from GNU coreutils. It exits with status 1 when a file fails or runs
-past its time limit. It also exits with status 1 when the suite changes the
-ShaDa folder.
+`run.sh` runs the files in parallel, as many at once as the machine has CPUs.
+`JOBS` sets another number. Each file runs in headless Neovim with this
+config. The script prints one TAP version 14 stream.
+
+Each file is a subtest, in file order, with its time as `# time=…ms`. A failed
+file shows its stderr as `#` comment lines inside its subtest. The last test
+point is the ShaDa check. The stream ends with `1..N`, `# pass P, fail F` and
+`# wall time …ms`.
+
+The output has color only on a terminal. `NO_COLOR=1` turns it off.
+`COLOR=always` or `COLOR=never` overrides both.
+
+The script needs `timeout` from GNU coreutils. It does not need Perl. It exits
+with status 1 when a file fails or runs past its time limit. It also exits with
+status 1 when the suite changes the ShaDa folder.
+
+`prove` and TAP::Parser of Perl 5.34 (version 3.43) know TAP only up to
+version 13. They read every test point. They report the version 14 line as a
+parse error, so `prove` marks the stream FAIL.
 
 ## Shortcuts
 
