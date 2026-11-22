@@ -238,7 +238,7 @@ buffer.
 | `<C-f>`, `<C-b>` | i | Scroll the documentation of the item down or up |
 | `<C-Space>` | i | Open the menu. With the menu open, show or hide the documentation |
 | `<Tab>`, `<S-Tab>` | i, s | Go to the next or previous field of a snippet |
-| `<C-k>` | i | Start a digraph. blink.cmp maps it to signature help, which is off, so the key falls back to the digraph |
+| `<C-k>` | i | Show or hide the signature of the function. When no language server of the buffer gives signatures, start a digraph |
 
 ### Format and surround
 

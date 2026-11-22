@@ -133,6 +133,46 @@ wait_for_mode('i')
 type_keys('x')
 local jumped = wait_for(buffer_lines, { '', 'def method_name', '  x', 'end' })
 
+type_keys('<Esc>')
+wait_for_mode('n')
+call('vim.api.nvim_buf_set_lines(0, 0, -1, false, { "" })')
+type_keys('i<C-k>e:')
+local digraph = wait_for(buffer_lines, { 'ë' })
+
+type_keys('<Esc>')
+wait_for_mode('n')
+call([[
+  local server = dofile(...)
+  vim.cmd('enew')
+  vim.lsp.start({
+    name = 'signature_server',
+    root_dir = vim.fn.getcwd(),
+    cmd = server.cmd({
+      initialize = { capabilities = { signatureHelpProvider = { triggerCharacters = { '(', ',' } } } },
+      ['textDocument/signatureHelp'] = { signatures = { { label = 'total(price, tax)' } } },
+    }),
+  })
+]], tests_dir .. '/support/lsp_server.lua')
+wait_for(function() return call('return #vim.lsp.get_clients({ bufnr = 0 })') end, 1)
+-- Returns 'blocked' while the child waits for the rest of a key, such as the digraph of <C-k>.
+-- A request then blocks, and nvim_get_mode is the one that answers.
+local function signature_visible()
+  if vim.rpcrequest(editor, 'nvim_get_mode').blocking then
+    return 'blocked'
+  end
+  return call("return require('blink.cmp').is_signature_visible()")
+end
+type_keys('i<C-k>')
+local shown_with_ctrl_k = wait_for(signature_visible, true)
+type_keys('<C-k>')
+local hidden_with_ctrl_k = wait_for(signature_visible, false)
+type_keys('<Esc>')
+wait_for_mode('n')
+type_keys('ototal')
+local before_paren = wait_for(signature_visible, false)
+type_keys('(')
+local shown_on_paren = { before_paren, wait_for(signature_visible, true) }
+
 vim.fn.jobstop(job)
 
 equals(
@@ -148,5 +188,9 @@ equals(
 equals('blink.cmp maps no key in the command line', cmdline_keys, {})
 equals('<C-y> accepts the first item of the completion menu', accepted_with_ctrl_y, { lines = { 'foobar', 'foobar' }, accepted = true })
 equals('<Tab> jumps to the next field of a snippet from friendly-snippets', jumped, { '', 'def method_name', '  x', 'end' })
+equals('<C-k> enters a digraph in a buffer with no language server', digraph, { 'ë' })
+equals('<C-k> in insert mode shows the signature of the function', shown_with_ctrl_k, true)
+equals('<C-k> hides the signature that shows', hidden_with_ctrl_k, false)
+equals('typing ( shows the signature by itself', shown_on_paren, { false, true })
 
 report.finish()
