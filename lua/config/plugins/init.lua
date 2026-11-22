@@ -14,9 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   spec = {
-    -- Some plugins read their settings only when their plugin files load.
-    -- lazy.nvim runs every init at startup, before it loads any plugin, so the settings go there.
-    { 'folke/lazy.nvim', init = function() require('config.plugins.settings.init') end },
     { import = 'plugins' },
   },
   checker = { enabled = false },

@@ -74,8 +74,7 @@ across Herdr panes. Neovim saves one session file for each Herdr terminal.
 - `init.lua` is the entry. It loads the modules of `lua/config/`: `defaults`,
   `guioptions`, `autocmds/`, `keymaps/` and `plugins/`.
 - `lua/plugins/<name>.lua` holds one lazy.nvim spec for each plugin.
-- `conf/` holds `force_default` and the settings that are still VimScript:
-  `neosnippet`. It holds no maps.
+- `conf/` holds `force_default`. It holds no maps.
 - `spell/` holds the spell file that `zg` writes.
 
 ## Tests
@@ -219,7 +218,7 @@ buffer.
 | `<C-w>d` | n | Show the diagnostic message |
 | `<C-s>` | i, s | Show the signature of the function |
 
-### Format, surround and snippets
+### Format and surround
 
 | Key | Mode | Action |
 | --- | --- | --- |
@@ -229,8 +228,6 @@ buffer.
 | `S{char}` | x | Surround the selection |
 | `cs{old}{new}` | n | Change the surrounding pair |
 | `ds{char}` | n | Delete the surrounding pair |
-| `<C-k>` | i, s | Expand a snippet or jump to the next field (neosnippet) |
-| `<C-k>` | x | Expand the selection as a snippet (neosnippet) |
 | `<Leader>h` | n, x | Show all shortcuts (which-key) |
 
 mini.pairs closes a pair in insert mode. A bracket pairs only when no

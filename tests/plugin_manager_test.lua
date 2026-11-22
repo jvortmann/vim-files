@@ -12,7 +12,7 @@ local expected_plugins = {
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'nvim-mini/mini.surround',
   'tpope/vim-endwise', 'kopischke/vim-fetch', 'kana/vim-textobj-user', 'wellle/targets.vim',
   'nvim-tree/nvim-tree.lua', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
-  'Shougo/neosnippet', 'Shougo/neosnippet-snippets', 'lewis6991/gitsigns.nvim', 'vim-airline/vim-airline',
+  'lewis6991/gitsigns.nvim', 'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8', 'neovim/nvim-lspconfig',
   'mason-org/mason.nvim',
 }
@@ -44,6 +44,12 @@ check(
 )
 
 report.equals('no ALE command exists after startup', vim.fn.getcompletion('ALE', 'command'), {})
+report.equals('no NeoSnippet command exists after startup', vim.fn.getcompletion('NeoSnippet', 'command'), {})
+report.equals(
+  '<C-k> has no map in insert, select or visual mode after startup',
+  { vim.fn.maparg('<C-k>', 'i'), vim.fn.maparg('<C-k>', 's'), vim.fn.maparg('<C-k>', 'x') },
+  { '', '', '' }
+)
 
 check('ack.vim defines Ack with the rg command of its settings', vim.fn.exists(':Ack') == 2, 'Ack is missing')
 check(
