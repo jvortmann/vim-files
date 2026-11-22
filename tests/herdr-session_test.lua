@@ -4,6 +4,7 @@ local report = dofile(tests_dir .. '/support/report.lua')
 local child = dofile(tests_dir .. '/support/editor.lua')
 local stub = dofile(tests_dir .. '/support/stub.lua')
 local mason = dofile(tests_dir .. '/support/mason.lua')
+local rpc = dofile(tests_dir .. '/support/rpc.lua')
 local equals = report.equals
 
 local terminal = 'test-terminal'
@@ -157,9 +158,13 @@ local function start_in_terminal(home)
     cwd = home.work,
     env = home.env,
   })
-  assert(vim.wait(5000, function() return exists(socket) end), 'the nvim in the terminal opened no socket')
+  local editor
+  assert(vim.wait(5000, function()
+    editor = rpc.connect(socket)
+    return editor ~= nil
+  end), 'the nvim in the terminal opened no socket')
   assert(vim.wait(5000, function() return exists(home.calls) end), 'the nvim in the terminal did not label it')
-  return vim.fn.sockconnect('pipe', socket, { rpc = true }), job
+  return editor, job
 end
 
 home = new_home()

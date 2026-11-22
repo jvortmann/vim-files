@@ -1,6 +1,8 @@
 local M = {}
 
-local mason = dofile(vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h') .. '/mason.lua')
+local support_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
+local mason = dofile(support_dir .. '/mason.lua')
+local rpc = dofile(support_dir .. '/rpc.lua')
 
 local started = 0
 -- The tmux servers that run now. When a test throws before its stop(), they stop as Neovim exits.
@@ -37,11 +39,14 @@ function M.start(opts)
     vim.fn.system({ 'tmux', '-L', server, 'kill-server' })
     running[server] = nil
   end
-  if not vim.wait(5000, function() return vim.uv.fs_stat(socket) ~= nil end) then
+  local editor
+  if not vim.wait(5000, function()
+    editor = rpc.connect(socket)
+    return editor ~= nil
+  end) then
     screen.stop()
     error('the Neovim in tmux opened no socket')
   end
-  local editor = vim.fn.sockconnect('pipe', socket, { rpc = true })
   if not vim.wait(5000, function() return vim.rpcrequest(editor, 'nvim_get_vvar', 'vim_did_enter') == 1 end) then
     screen.stop()
     error('the Neovim in tmux did not reach VimEnter')

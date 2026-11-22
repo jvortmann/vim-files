@@ -1,12 +1,19 @@
 local failures = {}
+local count = 0
+-- The test file that loads this module with dofile, relative to the current folder.
+local test_file = vim.fn.fnamemodify(debug.getinfo(3, 'S').source:sub(2), ':.')
 
 local report = {}
 
 function report.check(name, ok, detail)
+  count = count + 1
   if ok then
-    print('ok   ' .. name)
+    io.stdout:write(('ok %d - %s\n'):format(count, name))
   else
-    print('FAIL ' .. name .. ': ' .. detail)
+    local message = detail:gsub('\n', '\n    ')
+    io.stdout:write(('not ok %d - %s\n  ---\n  message: |-\n    %s\n  ...\n'):format(count, name, message))
+    -- prove does not show the YAML block, so the message goes to stderr too, which prove shows.
+    io.stderr:write(('%s: %s: %s\n'):format(test_file, name, detail))
     table.insert(failures, name)
   end
 end
@@ -16,7 +23,7 @@ function report.equals(name, got, expected)
 end
 
 function report.finish()
-  io.stdout:write('\n')
+  io.stdout:write(('1..%d\n'):format(count))
   if #failures > 0 then
     vim.cmd('cquit')
   end

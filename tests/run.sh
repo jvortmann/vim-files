@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
-# Runs each tests/*_test.lua in headless Neovim, with the config that ~/.config/nvim loads.
-# Exits with status 1 when a test file fails, throws or runs longer than TEST_TIMEOUT seconds (120 by default).
+# Runs test files with prove, each in headless Neovim with the config that ~/.config/nvim loads. It runs the files that it
+# gets, or every tests/*_test.lua. JOBS sets how many files run at once (the CPU count by default), and TEST_TIMEOUT the
+# time limit of one file in seconds (120 by default).
+# Exits with status 1 when a file fails, or when the suite changes the ShaDa folder.
 set -u
 shopt -s nullglob
 
 command -v timeout >/dev/null || { echo 'run.sh needs the timeout command of GNU coreutils' >&2; exit 1; }
-test_timeout="${TEST_TIMEOUT:-120}"
+command -v prove >/dev/null || { echo 'run.sh needs prove, which comes with Perl' >&2; exit 1; }
 
+# The files that the caller gives are relative to its folder, so make them absolute before the cd to the root of the repo.
+test_files=()
+for name in "$@"; do
+  [[ "$name" = /* ]] || name="$PWD/$name"
+  test_files+=("$name")
+done
 cd "$(dirname "$0")/.." || exit 1
-test_files=(tests/*_test.lua)
+[ "${#test_files[@]}" -gt 0 ] || test_files=(tests/*_test.lua)
 if [ "${#test_files[@]}" -eq 0 ]; then
   echo 'No tests/*_test.lua files found' >&2
   exit 1
@@ -20,26 +28,7 @@ shada_dir="$(nvim --clean --headless -i NONE -c 'lua io.stdout:write(vim.fn.stdp
 [ -n "$shada_dir" ] || { echo 'Could not find the ShaDa folder' >&2; exit 1; }
 shada_before="$(ls -A "$shada_dir" 2>/dev/null)"
 
-for name in "${test_files[@]}"; do
-  started=$SECONDS
-  # A file that throws a Lua error never reaches report.finish. The cquit then makes nvim exit with status 1.
-  # A stuck nvim can ignore SIGTERM, so -k sends SIGKILL 5 seconds later.
-  output="$(timeout -k 5 "$test_timeout" nvim -i NONE --headless -c "luafile $name" -c cquit </dev/null 2>&1)"
-  code=$?
-  if [ "$code" -eq 0 ]; then
-    result=PASS
-  else
-    result=FAIL
-    status=1
-    printf '%s\n' "$output"
-    # timeout exits with 124 after SIGTERM, and with 137 after SIGKILL. Another SIGKILL also gives 137, so the time must have run out too.
-    if [ "$code" -eq 124 ] || { [ "$code" -eq 137 ] && [ "$((SECONDS - started))" -ge "$test_timeout" ]; }; then
-      printf 'FAIL %s timed out after %s s\n' "$name" "$test_timeout"
-    fi
-  fi
-  checks="$(printf '%s\n' "$output" | grep -c '^ok ')"
-  printf '%s %s (%s ok, %ss)\n' "$result" "$name" "$checks" "$((SECONDS - started))"
-done
+prove -j"${JOBS:-$(getconf _NPROCESSORS_ONLN)}" --timer -e tests/tap-nvim.sh "${test_files[@]}" || status=1
 
 shada_after="$(ls -A "$shada_dir" 2>/dev/null)"
 if [ "$shada_after" = "$shada_before" ]; then

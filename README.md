@@ -92,11 +92,18 @@ across Herdr panes. Neovim saves one session file for each Herdr terminal.
 ## Tests
 
 ```sh
-./tests/run.sh
+./tests/run.sh                        # every tests/*_test.lua
+./tests/run.sh tests/grep_test.lua    # one file, or a few
+JOBS=1 ./tests/run.sh                 # one file at a time
+TEST_TIMEOUT=30 ./tests/run.sh        # 30 seconds for each file, 120 by default
 ```
 
-It runs every `tests/*_test.lua` in headless Neovim. It exits with status 1
-when a file fails.
+`run.sh` runs the files with `prove`, which comes with Perl. It runs as many
+files at once as the machine has CPUs, and `JOBS` sets another number. Each
+file runs in headless Neovim with this config and prints TAP. The script needs
+`timeout` from GNU coreutils. It exits with status 1 when a file fails or runs
+past its time limit. It also exits with status 1 when the suite changes the
+ShaDa folder.
 
 ## Shortcuts
 

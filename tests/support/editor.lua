@@ -1,6 +1,8 @@
 local M = {}
 
-local mason = dofile(vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h') .. '/mason.lua')
+local support_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
+local mason = dofile(support_dir .. '/mason.lua')
+local rpc = dofile(support_dir .. '/rpc.lua')
 
 -- Starts a child Neovim with this config. It returns when VeryLazy has run, as in an editor where a user types.
 -- opts.cwd is the directory of the child, and opts.files lists the files that it opens.
@@ -32,14 +34,17 @@ function M.start(opts)
     on_exit = function(_, code) exit_code = code end,
   })
   assert(job > 0, 'the child Neovim did not start: ' .. table.concat(command, ' '))
+  local editor
   assert(
-    vim.wait(5000, function() return exit_code ~= nil or vim.uv.fs_stat(socket) ~= nil end),
+    vim.wait(5000, function()
+      editor = exit_code == nil and rpc.connect(socket) or nil
+      return exit_code ~= nil or editor ~= nil
+    end),
     'the child Neovim opened no socket'
   )
   if exit_code then
     error(('the child Neovim exited with %d before it opened its socket: %s'):format(exit_code, table.concat(stderr)))
   end
-  local editor = vim.fn.sockconnect('pipe', socket, { rpc = true })
   assert(
     vim.wait(5000, function() return vim.rpcrequest(editor, 'nvim_get_vvar', 'vim_did_enter') == 1 end),
     'the child Neovim did not reach VimEnter'
