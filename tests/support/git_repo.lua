@@ -12,4 +12,12 @@ function M.new(indexed, edited)
   return dir
 end
 
+-- Writes files, a map of names to lines, into dir. It makes the folders that a name needs.
+function M.write(dir, files)
+  for name, lines in pairs(files) do
+    vim.fn.mkdir(vim.fs.dirname(dir .. '/' .. name), 'p')
+    vim.fn.writefile(lines, dir .. '/' .. name)
+  end
+end
+
 return M

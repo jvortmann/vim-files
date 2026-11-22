@@ -24,16 +24,24 @@ return {
       -- Each picker keeps its queries in its own file in that folder.
       vim.g.fzf_history_dir = '~/.config/fzf/fzf-history'
     end,
-    opts = {
-      winopts = { width = 0.9, height = 0.6 },
-      hls = {
-        normal = 'NormalFloat',
-        border = 'FloatBorder',
-        title = 'FloatBorder',
-        preview_normal = 'NormalFloat',
-        preview_border = 'FloatBorder',
-        preview_title = 'FloatBorder',
-      },
-    },
+    opts = function()
+      local defaults = require('fzf-lua.defaults').defaults
+      return {
+        winopts = { width = 0.9, height = 0.6 },
+        hls = {
+          normal = 'NormalFloat',
+          border = 'FloatBorder',
+          title = 'FloatBorder',
+          preview_normal = 'NormalFloat',
+          preview_border = 'FloatBorder',
+          preview_title = 'FloatBorder',
+        },
+        files = {
+          fd_opts = '--exclude node_modules ' .. defaults.files.fd_opts,
+          rg_opts = "-g '!node_modules' " .. defaults.files.rg_opts,
+        },
+        grep = { rg_opts = "-g '!node_modules' " .. defaults.grep.rg_opts },
+      }
+    end,
   },
 }

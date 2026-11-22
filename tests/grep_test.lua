@@ -5,7 +5,7 @@ local git_repo = dofile(tests_dir .. '/support/git_repo.lua')
 local equals = report.equals
 
 local repo = git_repo.new({ 'first', '  needle' }, { 'first', '  needle' })
-for name, lines in pairs({
+git_repo.write(repo, {
   ['.gitignore'] = { 'build/' },
   ['.hidden/x.txt'] = { 'needle' },
   ['node_modules/pkg/index.js'] = { 'needle' },
@@ -13,10 +13,7 @@ for name, lines in pairs({
   ['vendor/lib.rb'] = { 'needle' },
   ['lib/vendor/x.rb'] = { 'needle' },
   ['build/out.txt'] = { 'needle' },
-}) do
-  vim.fn.mkdir(vim.fs.dirname(repo .. '/' .. name), 'p')
-  vim.fn.writefile(lines, repo .. '/' .. name)
-end
+})
 vim.cmd.cd(vim.fn.fnameescape(repo))
 
 vim.cmd('silent grep needle')
