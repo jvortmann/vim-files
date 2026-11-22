@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # Runs each tests/*_test.lua in headless Neovim, with the config that ~/.config/nvim loads.
-# Exits with status 1 when a test file fails or throws.
+# Exits with status 1 when a test file fails, throws or runs longer than TEST_TIMEOUT seconds (120 by default).
 set -u
 shopt -s nullglob
+
+command -v timeout >/dev/null || { echo 'run.sh needs the timeout command of GNU coreutils' >&2; exit 1; }
+test_timeout="${TEST_TIMEOUT:-120}"
 
 cd "$(dirname "$0")/.." || exit 1
 test_files=(tests/*_test.lua)
@@ -20,12 +23,19 @@ shada_before="$(ls -A "$shada_dir" 2>/dev/null)"
 for name in "${test_files[@]}"; do
   started=$SECONDS
   # A file that throws a Lua error never reaches report.finish. The cquit then makes nvim exit with status 1.
-  if output="$(nvim -i NONE --headless -c "luafile $name" -c cquit </dev/null 2>&1)"; then
+  # A stuck nvim can ignore SIGTERM, so -k sends SIGKILL 5 seconds later.
+  output="$(timeout -k 5 "$test_timeout" nvim -i NONE --headless -c "luafile $name" -c cquit </dev/null 2>&1)"
+  code=$?
+  if [ "$code" -eq 0 ]; then
     result=PASS
   else
     result=FAIL
     status=1
     printf '%s\n' "$output"
+    # timeout exits with 124 after SIGTERM, and with 137 after SIGKILL. Another SIGKILL also gives 137, so the time must have run out too.
+    if [ "$code" -eq 124 ] || { [ "$code" -eq 137 ] && [ "$((SECONDS - started))" -ge "$test_timeout" ]; }; then
+      printf 'FAIL %s timed out after %s s\n' "$name" "$test_timeout"
+    fi
   fi
   checks="$(printf '%s\n' "$output" | grep -c '^ok ')"
   printf '%s %s (%s ok, %ss)\n' "$result" "$name" "$checks" "$((SECONDS - started))"

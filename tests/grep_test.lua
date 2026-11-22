@@ -16,7 +16,11 @@ git_repo.write(repo, {
 })
 vim.cmd.cd(vim.fn.fnameescape(repo))
 
+local empty_home = git_repo.empty_home()
+local home, config_home = vim.env.HOME, vim.env.XDG_CONFIG_HOME
+vim.env.HOME, vim.env.XDG_CONFIG_HOME = empty_home, empty_home
 vim.cmd('silent grep needle')
+vim.env.HOME, vim.env.XDG_CONFIG_HOME = home, config_home
 local results = vim.fn.getqflist()
 
 local function relative_name(item)

@@ -27,30 +27,32 @@ local function start(env)
   return run, editor, job, dir .. '/calls'
 end
 
--- Types keys in the child, and waits a moment for one more call to the stub. Returns the calls that it got.
-local function press(editor, file, keys)
+-- Types keys in the child, and waits up to timeout milliseconds for one more call to the stub.
+-- Returns the calls that came after the keys. The stub runs in the background, so a call can come late.
+local function press(editor, file, keys, timeout)
   local before = #stub.calls(file)
   vim.rpcrequest(editor, 'nvim_input', keys)
-  vim.wait(1000, function() return #stub.calls(file) > before end)
-  return stub.calls(file)
+  vim.wait(timeout, function() return #stub.calls(file) > before end)
+  return vim.list_slice(stub.calls(file), before + 1)
 end
 
 local run, editor, job, file = start()
-for _, keys in ipairs({ '<C-h>', '<C-j>', '<C-k>', '<C-l>' }) do
-  press(editor, file, keys)
+local moves = {}
+for _, key in ipairs({ 'h', 'j', 'k', 'l' }) do
+  moves[key] = press(editor, file, '<C-' .. key .. '>', 5000)
 end
-equals('in Herdr, ctrl-h/j/k/l at the edge moves the Herdr focus in that direction', stub.calls(file), {
-  'do pane.go {"direction":"left"}',
-  'do pane.go {"direction":"down"}',
-  'do pane.go {"direction":"up"}',
-  'do pane.go {"direction":"right"}',
+equals('in Herdr, ctrl-h/j/k/l at the edge moves the Herdr focus in that direction', moves, {
+  h = { 'do pane.go {"direction":"left"}' },
+  j = { 'do pane.go {"direction":"down"}' },
+  k = { 'do pane.go {"direction":"up"}' },
+  l = { 'do pane.go {"direction":"right"}' },
 })
 vim.fn.jobstop(job)
 
 run, editor, job, file = start()
 local right = run([[vim.cmd('vsplit') return vim.api.nvim_get_current_win()]])
 equals('in Herdr, ctrl-h inside nvim moves to the next window and leaves Herdr alone', {
-  calls = press(editor, file, '<C-h>'),
+  calls = press(editor, file, '<C-h>', 1000),
   moved = run('return vim.api.nvim_get_current_win()') ~= right,
 }, { calls = {}, moved = true })
 vim.fn.jobstop(job)

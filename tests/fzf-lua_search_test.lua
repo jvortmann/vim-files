@@ -12,9 +12,7 @@ git_repo.write(repo, {
   ['node_modules/pkg/index.js'] = { 'needle' },
 })
 
--- rg and fd read the global git ignore file of the user, which can list node_modules. An empty home hides it.
-local empty_home = vim.fn.tempname()
-vim.fn.mkdir(empty_home, 'p')
+local empty_home = git_repo.empty_home()
 
 -- Runs the shell command of a picker in the repo, and returns the sorted names of the files that it lists.
 local function listed_files(command)

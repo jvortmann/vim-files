@@ -24,8 +24,21 @@ function M.start(opts)
   if #removed > 0 then
     command = vim.list_extend(vim.list_extend({ 'env' }, removed), command)
   end
-  local job = vim.fn.jobstart(command, { cwd = opts.cwd or vim.fn.getcwd(), env = next(env) and env or nil })
-  assert(vim.wait(5000, function() return vim.uv.fs_stat(socket) ~= nil end), 'the child Neovim opened no socket')
+  local stderr, exit_code = {}, nil
+  local job = vim.fn.jobstart(command, {
+    cwd = opts.cwd or vim.fn.getcwd(),
+    env = next(env) and env or nil,
+    on_stderr = function(_, data) table.insert(stderr, table.concat(data, '\n')) end,
+    on_exit = function(_, code) exit_code = code end,
+  })
+  assert(job > 0, 'the child Neovim did not start: ' .. table.concat(command, ' '))
+  assert(
+    vim.wait(5000, function() return exit_code ~= nil or vim.uv.fs_stat(socket) ~= nil end),
+    'the child Neovim opened no socket'
+  )
+  if exit_code then
+    error(('the child Neovim exited with %d before it opened its socket: %s'):format(exit_code, table.concat(stderr)))
+  end
   local editor = vim.fn.sockconnect('pipe', socket, { rpc = true })
   assert(
     vim.wait(5000, function() return vim.rpcrequest(editor, 'nvim_get_vvar', 'vim_did_enter') == 1 end),
