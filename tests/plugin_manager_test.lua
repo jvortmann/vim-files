@@ -6,7 +6,7 @@ local check = report.check
 local expected_plugins = {
   'nvim-treesitter/nvim-treesitter', 'brenoprata10/nvim-highlight-colors', 'keith/rspec.vim',
   'nelstrom/vim-textobj-rubyblock', 'stevearc/conform.nvim', 'itchyny/vim-qfedit',
-  'junegunn/vim-peekaboo', 'mileszs/ack.vim',
+  'junegunn/vim-peekaboo',
   'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
   'tpope/vim-projectionist', 'ibhagwan/fzf-lua', 'nvim-tree/nvim-web-devicons', 'folke/which-key.nvim',
   'tpope/vim-unimpaired', 'tpope/vim-repeat', 'tpope/vim-ragtag', 'nvim-mini/mini.surround',
@@ -51,7 +51,7 @@ report.equals(
   { '', '', '' }
 )
 
-check('ack.vim defines Ack with the rg command of its settings', vim.fn.exists(':Ack') == 2, 'Ack is missing')
+report.equals('no Ack command exists after startup', vim.fn.getcompletion('Ack', 'command'), {})
 check(
   'ragtag adds its global insert mappings, as its settings say',
   vim.fn.maparg('<C-X>/', 'i') ~= '',

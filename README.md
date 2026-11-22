@@ -12,7 +12,7 @@ Neovim 0.12 or newer, and git. lazy.nvim installs itself on the first start.
 | --- | --- |
 | `tree-sitter` CLI | nvim-treesitter (main branch) builds the parsers with it |
 | `fzf` | fzf-lua needs the binary on `PATH`. Install it with Homebrew |
-| ripgrep (`rg`) | ack.vim searches with it when `rg` exists. It also serves the grep keys of fzf-lua |
+| ripgrep (`rg`) | `:grep` searches with it. It also serves the grep keys of fzf-lua |
 | `fd` | fzf-lua lists files with it when it exists, optional |
 | Nerd Font | the file icons of nvim-web-devicons |
 | universal-ctags | tagbar |

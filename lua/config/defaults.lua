@@ -12,6 +12,7 @@ vim.opt.showmatch = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.inccommand = 'nosplit'
+vim.o.grepprg = "rg --vimgrep --hidden -g '!.git' -g '!/vendor' -g '!node_modules'"
 
 -- Enable auto write
 vim.opt.autowriteall = true
