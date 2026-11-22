@@ -11,8 +11,8 @@ local expected_plugins = {
   'nvim-mini/mini.surround',
   'tpope/vim-endwise',
   'nvim-tree/nvim-tree.lua', 'nvim-mini/mini.pairs',
-  'lewis6991/gitsigns.nvim', 'vim-airline/vim-airline',
-  'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8', 'neovim/nvim-lspconfig',
+  'lewis6991/gitsigns.nvim', 'nvim-lualine/lualine.nvim',
+  'yssl/QFEnter', 'lifepillar/vim-solarized8', 'neovim/nvim-lspconfig',
   'mason-org/mason.nvim', 'saghen/blink.cmp', 'rafamadriz/friendly-snippets',
 }
 

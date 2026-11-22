@@ -2,7 +2,8 @@
 
 A Neovim configuration in Lua. [lazy.nvim](https://github.com/folke/lazy.nvim)
 manages the plugins, and the color scheme is solarized8. Floating windows use
-the color of the popup menu.
+the color of the popup menu. lualine draws the statusline, with a solarized
+theme that follows the background.
 
 ## Requirements
 
