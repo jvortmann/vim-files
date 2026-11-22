@@ -70,7 +70,10 @@ blink.cmp completes from the language server, file paths, the words of the
 buffer and the snippets of friendly-snippets. The menu opens while you type,
 with no item selected. `<CR>` accepts the selected item. With no selection,
 `<CR>` starts a new line. `<C-y>` accepts the selected item, or the first item.
-Completion on the command line is off.
+
+On the command line, blink.cmp opens the menu as you type, with no item
+selected. `<Tab>` completes, `<Up>` and `<Down>` keep the history, and `<CR>`
+runs the typed command. `/` and `?` list the words of the buffer.
 
 ## Herdr
 
@@ -239,6 +242,10 @@ buffer.
 | `<C-Space>` | i | Open the menu. With the menu open, show or hide the documentation |
 | `<Tab>`, `<S-Tab>` | i, s | Go to the next or previous field of a snippet |
 | `<C-k>` | i | Show or hide the signature of the function. When no language server of the buffer gives signatures, start a digraph |
+| `<Tab>`, `<S-Tab>` | c | Select the next or previous item, and insert it |
+| `<C-n>`, `<C-p>`, `<Right>`, `<Left>` | c | Select the next or previous item |
+| `<C-y>` | c | Accept the selected item |
+| `<C-e>` | c | Close the menu |
 
 ### Format and surround
 

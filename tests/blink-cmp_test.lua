@@ -60,16 +60,6 @@ local function buffer_lines()
   return call('return vim.api.nvim_buf_get_lines(0, 0, -1, false)')
 end
 
-local cmdline_keys = call([[
-  local keys = {}
-  for _, map in ipairs(vim.api.nvim_get_keymap('c')) do
-    if vim.startswith(map.desc or '', 'blink.cmp') then
-      table.insert(keys, map.lhs)
-    end
-  end
-  return keys
-]])
-
 call([[vim.api.nvim_create_autocmd('User', { pattern = 'BlinkCmpAccept', callback = function() vim.g.accepted = true end })]])
 
 -- Types keys, and waits until blink.cmp accepts an item or the number of lines changes.
@@ -174,6 +164,33 @@ local before_paren = wait_for(signature_visible, false)
 type_keys('(')
 local shown_on_paren = { before_paren, wait_for(signature_visible, true) }
 
+type_keys('<Esc>')
+wait_for_mode('n')
+-- Returns whether the menu of blink.cmp shows, and whether its items hold the echo command.
+local function cmdline_menu()
+  return call([[
+    local cmp = require('blink.cmp')
+    local labels = vim.tbl_map(function(item) return item.label end, cmp.get_items())
+    return { visible = cmp.is_menu_visible(), echo = vim.tbl_contains(labels, 'echo') }
+  ]])
+end
+type_keys(':ech')
+local menu_while_typing = wait_for(cmdline_menu, { visible = true, echo = true })
+type_keys('<Tab>')
+local completed_with_tab = wait_for(function()
+  return call("local item = require('blink.cmp').get_selected_item() return { vim.fn.getcmdline(), item and item.label }")
+end, { 'echo', 'echo' })
+type_keys('<Esc>')
+wait_for_mode('n')
+type_keys(':let g:typed = 1<CR>')
+local ran_with_enter = wait_for(function() return call('return vim.g.typed') end, 1)
+type_keys(':le')
+wait_for(function() return call("return require('blink.cmp').is_menu_visible()") end, true)
+type_keys('<Up>')
+local recalled_with_up = wait_for(function() return call('return vim.fn.getcmdline()') end, 'let g:typed = 1')
+type_keys('<Esc>')
+wait_for_mode('n')
+
 vim.fn.jobstop(job)
 
 equals(
@@ -186,12 +203,15 @@ equals(
   enter_without_selection,
   { lines = { 'foobar foobaz', 'def foo', '  ', 'end' }, accepted = false }
 )
-equals('blink.cmp maps no key in the command line', cmdline_keys, {})
 equals('<C-y> accepts the first item of the completion menu', accepted_with_ctrl_y, { lines = { 'foobar', 'foobar' }, accepted = true })
 equals('<Tab> jumps to the next field of a snippet from friendly-snippets', jumped, { '', 'def method_name', '  x', 'end' })
 equals('<C-k> enters a digraph in a buffer with no language server', digraph, { 'ë' })
 equals('<C-k> in insert mode shows the signature of the function', shown_with_ctrl_k, true)
 equals('<C-k> hides the signature that shows', hidden_with_ctrl_k, false)
 equals('typing ( shows the signature by itself', shown_on_paren, { false, true })
+equals('typing on the command line opens the menu of blink.cmp, with the matching commands', menu_while_typing, { visible = true, echo = true })
+equals('<Tab> on the command line completes the command with the first item of the menu', completed_with_tab, { 'echo', 'echo' })
+equals('<CR> on the command line with no selected item runs the typed command', ran_with_enter, 1)
+equals('<Up> on the command line with the menu open recalls the last command', recalled_with_up, 'let g:typed = 1')
 
 report.finish()

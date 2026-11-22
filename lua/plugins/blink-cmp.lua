@@ -18,7 +18,9 @@ return {
         },
       },
       completion = { list = { selection = { preselect = false } } },
-      cmdline = { enabled = false },
+      cmdline = {
+        completion = { list = { selection = { preselect = false } }, menu = { auto_show = true } },
+      },
       signature = { enabled = true },
     },
   },
