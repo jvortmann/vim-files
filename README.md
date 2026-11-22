@@ -226,6 +226,8 @@ buffer.
 | `]d` | n | Go to the next diagnostic |
 | `[d` | n | Go to the previous diagnostic |
 | `<C-w>d` | n | Show the diagnostic message |
+| `<Leader>d` | n | List the diagnostics of the buffer in the location list |
+| `<Leader>D` | n | List the diagnostics of all buffers in the quickfix list |
 | `<C-s>` | i, s | Show the signature of the function |
 
 ### Completion

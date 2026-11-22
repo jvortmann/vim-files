@@ -67,7 +67,7 @@ equals(
 )
 
 local lsp_keys = {
-  'n K', 'n gd', 'n grn', 'n gra', 'x gra', 'n grr', 'n gri', 'n gO', 'n [d', 'n ]d', 'i <C-S>', 's <C-S>',
+  'n K', 'n gd', 'n grn', 'n gra', 'x gra', 'n grr', 'n gri', 'n gO', 'n [d', 'n ]d', 'i <C-S>', 's <C-S>', 'n \\d', 'n \\D',
 }
 
 -- Returns the entries of lsp_keys that have no map with a description in the current buffer only.
@@ -142,5 +142,73 @@ equals(
   { ['1'] = 'no message', ['3'] = 'third problem' }
 )
 pane.stop()
+
+-- Opens the file name in the folder, attaches a fake server with a warning on line 1 and an error on line 3, and waits for them.
+local function open_with_diagnostics(dir, name)
+  vim.fn.writefile({ 'one', 'two', 'three' }, dir .. '/' .. name)
+  vim.cmd('silent edit ' .. vim.fn.fnameescape(dir .. '/' .. name))
+  local function at(line, severity, message)
+    return { range = { start = { line = line, character = 0 }, ['end'] = { line = line, character = 1 } }, severity = severity, message = message }
+  end
+  vim.lsp.start({
+    name = 'diagnostics-server',
+    root_dir = dir,
+    cmd = lsp_server.cmd({ initialize = { capabilities = { textDocumentSync = 1 } } }, { at(0, 2, 'a warning'), at(2, 1, 'an error') }),
+  })
+  vim.wait(2000, function() return #vim.diagnostic.get(0) == 2 end)
+end
+
+-- Returns the file name, line, type and text of each item of a list.
+local function entries(items)
+  return vim.tbl_map(function(item)
+    return { vim.fn.fnamemodify(vim.api.nvim_buf_get_name(item.bufnr), ':t'), item.lnum, item.type, item.text }
+  end, items)
+end
+
+local list_folder = new_folder()
+open_with_diagnostics(list_folder, 'a.txt')
+local file_window = vim.api.nvim_get_current_win()
+vim.api.nvim_feedkeys('\\d', 'mx', false)
+local loclist = vim.fn.getloclist(file_window, { title = 1, items = 1 })
+equals('\\d lists the diagnostics of the buffer in the location list, errors first, and opens it', {
+  title = loclist.title,
+  items = entries(loclist.items),
+  open = vim.fn.getloclist(file_window, { winid = 1 }).winid ~= 0,
+}, {
+  title = 'Diagnostics',
+  items = { { 'a.txt', 3, 'E', 'an error' }, { 'a.txt', 1, 'W', 'a warning' } },
+  open = true,
+})
+vim.cmd('lclose')
+
+open_with_diagnostics(list_folder, 'b.txt')
+vim.api.nvim_feedkeys('\\D', 'mx', false)
+local qflist = vim.fn.getqflist({ title = 1, items = 1 })
+equals('\\D lists the diagnostics of every buffer in the quickfix list, errors first, and opens it', {
+  title = qflist.title,
+  items = entries(qflist.items),
+  open = vim.fn.getqflist({ winid = 1 }).winid ~= 0,
+}, {
+  title = 'Diagnostics of all buffers',
+  items = {
+    { 'a.txt', 3, 'E', 'an error' }, { 'b.txt', 3, 'E', 'an error' },
+    { 'a.txt', 1, 'W', 'a warning' }, { 'b.txt', 1, 'W', 'a warning' },
+  },
+  open = true,
+})
+vim.cmd('cclose')
+
+vim.cmd('silent edit ' .. vim.fn.fnameescape(list_folder .. '/a.txt'))
+vim.diagnostic.set(vim.api.nvim_create_namespace('lsp_test_linter'), 0, {
+  { lnum = 1, col = 0, severity = vim.diagnostic.severity.INFO, message = 'from a linter' },
+})
+file_window = vim.api.nvim_get_current_win()
+vim.api.nvim_feedkeys('\\d', 'mx', false)
+equals(
+  '\\d also lists a diagnostic that comes from no language server',
+  entries(vim.fn.getloclist(file_window)),
+  { { 'a.txt', 3, 'E', 'an error' }, { 'a.txt', 1, 'W', 'a warning' }, { 'a.txt', 2, 'I', 'from a linter' } }
+)
+vim.cmd('lclose')
 
 report.finish()
