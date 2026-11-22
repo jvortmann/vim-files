@@ -1,4 +1,4 @@
--- Run: nvim -i NONE --headless -c 'luafile tests/highlight-colors_test.lua' </dev/null
+-- Run: tests/run.sh tests/highlight-colors_test.lua
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check

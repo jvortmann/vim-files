@@ -1,4 +1,4 @@
--- Run: nvim -i NONE --headless -c 'luafile tests/tap_test.lua' </dev/null
+-- Run: tests/run.sh tests/tap_test.lua
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local equals = report.equals
@@ -30,6 +30,15 @@ equals(
   run_report({ "report.check('first', true)", "report.check('second', false, 'one\\ntwo')", 'report.finish()' }),
   { code = 1, stdout = 'ok 1 - first\nnot ok 2 - second\n  ---\n  message: |\n    one\n    two\n  ...\n1..2\n' }
 )
+
+local without_run_line = {}
+for _, file in ipairs(vim.fn.glob(tests_dir .. '/*_test.lua', false, true)) do
+  local name = vim.fs.basename(file)
+  if vim.fn.readfile(file, '', 1)[1] ~= '-- Run: tests/run.sh tests/' .. name then
+    table.insert(without_run_line, name)
+  end
+end
+equals('each test file starts with a Run comment that runs it with tests/run.sh', without_run_line, {})
 
 local hanging = vim.fn.tempname() .. '.lua'
 vim.fn.writefile({ 'vim.wait(1e9)' }, hanging)
