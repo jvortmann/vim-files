@@ -80,4 +80,15 @@ io.stdout:write('\n')
 equals('a yank highlights the yanked line with IncSearch', during, { 1 })
 equals('the yank highlight ends after its timeout', after, {})
 
+vim.cmd('silent checkhealth vim.deprecated')
+local deprecated = {}
+local health_shown = false
+for _, line in ipairs(vim.api.nvim_buf_get_lines(0, 0, -1, false)) do
+  table.insert(deprecated, line:match('WARNING (%S+) is deprecated'))
+  health_shown = health_shown or line:match('^vim%.deprecated:') ~= nil
+end
+io.stdout:write('\n')
+equals('checkhealth shows the vim.deprecated report', health_shown, true)
+equals('a yank uses no deprecated Neovim feature', deprecated, {})
+
 report.finish()
