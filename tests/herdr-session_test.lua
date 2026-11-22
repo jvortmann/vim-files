@@ -7,6 +7,10 @@ local mason = dofile(tests_dir .. '/support/mason.lua')
 local equals = report.equals
 
 local terminal = 'test-terminal'
+-- A child saves after this many milliseconds with no event, which keeps the test fast. A check that no save happens
+-- waits no_save_ms, which is long enough for a save.
+local quiet_ms = 50
+local no_save_ms = 4 * quiet_ms
 
 -- Returns a new home for a child. It has a work folder, a state folder, and a stub of hc that writes each call to a file.
 -- home.env is the environment of a Herdr terminal with a fake tmux, and home.args gives the child the stub.
@@ -22,7 +26,7 @@ local function new_home()
     session = dir .. '/state/nvim/sessions/' .. terminal .. '.vim',
     calls = dir .. '/calls',
     env = { HC_TERMINAL_ID = terminal, XDG_STATE_HOME = dir .. '/state', TMUX = dir .. '/tmux,1,0', TMUX_PANE = '%0' },
-    args = { '--cmd', 'let g:herdr_hc = ' .. vim.fn.string(dir .. '/hc') },
+    args = { '--cmd', ('let g:herdr_hc = %s | let g:herdr_session_quiet_ms = %d'):format(vim.fn.string(dir .. '/hc'), quiet_ms) },
   }
 end
 
@@ -49,28 +53,38 @@ local function exists(path)
   return vim.uv.fs_stat(path) ~= nil
 end
 
--- Waits a moment for a call to the stub, and returns the calls that it got.
-local function calls(home)
-  vim.wait(1000, function() return exists(home.calls) end)
-  return stub.calls(home.calls)
-end
-
 local home = new_home()
 local run, job = start(home)
 run([[vim.cmd('split')]])
 equals('in Herdr, a split writes the session file', vim.wait(5000, function() return exists(home.session) end), true)
-equals('at start, nvim labels its terminal with the session file', calls(home), {
+vim.wait(5000, function() return exists(home.calls) end)
+equals('at start, nvim labels its terminal with the session file', stub.calls(home.calls), {
   'label ' .. terminal .. ' restore.nvim=' .. home.session,
 })
+vim.fn.jobstop(job)
+
+-- Splits the window in the child, and returns whether it saves the session within 400 milliseconds. That is more than
+-- quiet_ms and less than the default of 500, so the result shows which quiet time the child uses.
+local function saved_soon(run)
+  local writes = run('return vim.g.session_writes')
+  run([[vim.cmd('split')]])
+  return vim.wait(400, function() return run('return vim.g.session_writes') > writes end)
+end
+
+run, job = start(new_home())
+equals('with g:herdr_session_quiet_ms at 50, a split saves the session within 400 ms', saved_soon(run), true)
+vim.fn.jobstop(job)
+run, job = start(new_home(), {}, { '--cmd', 'unlet g:herdr_session_quiet_ms' })
+equals('by default, a split waits 500 ms before it saves the session', saved_soon(run), false)
 vim.fn.jobstop(job)
 
 -- Splits the window and waits longer than a save takes. Returns whether the file exists, and the calls to the stub.
 local function after_split(home, env)
   local run, job = start(home, env)
   run([[vim.cmd('split')]])
-  vim.wait(2000)
+  vim.wait(no_save_ms)
   vim.fn.jobstop(job)
-  return { file = exists(home.session), calls = calls(home) }
+  return { file = exists(home.session), calls = stub.calls(home.calls) }
 end
 
 equals(
@@ -204,7 +218,7 @@ vim.fn.jobstop(restore_job)
 vim.fn.jobstop(job)
 
 run, job = start(new_home())
-vim.wait(2000)
+vim.wait(no_save_ms)
 writes = run('return vim.g.session_writes')
 run([[
   for _ = 1, 20 do
@@ -212,27 +226,28 @@ run([[
     vim.cmd('close')
   end
 ]])
-vim.wait(3000)
+vim.wait(5000, function() return run('return vim.g.session_writes') > writes end)
+vim.wait(no_save_ms)
 writes = run('return vim.g.session_writes') - writes
-report.check('a burst of 20 splits and closes writes the session at most twice', writes <= 2, writes .. ' writes')
+report.check('a burst of 20 splits and closes writes the session once or twice', writes >= 1 and writes <= 2, writes .. ' writes')
 vim.fn.jobstop(job)
 
 run, job, editor = start(new_home())
 vim.rpcrequest(editor, 'nvim_input', 'q:')
 vim.wait(5000, function() return run('return vim.fn.getcmdwintype()') == ':' end)
 run([[vim.v.errmsg = '' vim.api.nvim_exec_autocmds('VimResized', {})]])
-vim.wait(1500)
+vim.wait(no_save_ms, function() return run('return vim.v.errmsg') ~= '' end)
 equals('a save while the command-line window is open shows no error', run('return vim.v.errmsg'), '')
 vim.fn.jobstop(job)
 
 home = new_home()
 vim.system(
-  vim.list_extend({ 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--headless', '-c', 'split', '-c', 'sleep 1', '-c', 'cquit' }, home.args),
+  vim.list_extend({ 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--headless', '-c', 'split', '-c', 'sleep ' .. no_save_ms .. 'm', '-c', 'cquit' }, home.args),
   { cwd = home.work, env = home.env }
 ):wait(10000)
 equals(
   'a headless nvim, such as a script, writes no file and calls no hc',
-  { file = exists(home.session), calls = calls(home) },
+  { file = exists(home.session), calls = stub.calls(home.calls) },
   { file = false, calls = {} }
 )
 

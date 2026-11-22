@@ -1,8 +1,5 @@
 local M = {}
 
--- The save waits until no event came for this many milliseconds.
-local quiet_ms = 500
-
 local start, save
 
 function M.setup()
@@ -26,7 +23,10 @@ function start(terminal, group)
   local timer = vim.uv.new_timer()
   vim.api.nvim_create_autocmd({ 'BufEnter', 'WinNew', 'WinClosed', 'VimResized', 'CursorHold' }, {
     group = group,
-    callback = function() timer:start(quiet_ms, 0, vim.schedule_wrap(function() save(file) end)) end,
+    -- The save waits until no event came for vim.g.herdr_session_quiet_ms, 500 milliseconds by default.
+    callback = function()
+      timer:start(vim.g.herdr_session_quiet_ms or 500, 0, vim.schedule_wrap(function() save(file) end))
+    end,
   })
   vim.api.nvim_create_autocmd('VimLeavePre', {
     group = group,
