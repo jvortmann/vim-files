@@ -64,6 +64,14 @@ buffer. `vim.g.lsp_idle_ms` sets the limit in milliseconds.
 Diagnostics show the signs `x`, `!` and `i`. The message shows as virtual text
 on the cursor line only.
 
+## Completion
+
+blink.cmp completes from the language server, file paths, the words of the
+buffer and the snippets of friendly-snippets. The menu opens while you type,
+with no item selected. `<CR>` accepts the selected item. With no selection,
+`<CR>` starts a new line. `<C-y>` accepts the selected item, or the first item.
+Completion on the command line is off.
+
 ## Herdr
 
 Inside a Herdr terminal, `<C-h>`, `<C-j>`, `<C-k>` and `<C-l>` also move
@@ -217,6 +225,20 @@ buffer.
 | `[d` | n | Go to the previous diagnostic |
 | `<C-w>d` | n | Show the diagnostic message |
 | `<C-s>` | i, s | Show the signature of the function |
+
+### Completion
+
+| Key | Mode | Action |
+| --- | --- | --- |
+| `<C-n>`, `<C-p>` | i | Select the next or previous item of the menu. Without a menu, they do nothing |
+| `<Down>`, `<Up>` | i | Select the next or previous item of the menu. Without a menu, they move the cursor |
+| `<CR>` | i | Accept the selected item, or start a new line |
+| `<C-y>` | i | Accept the selected item, or the first item |
+| `<C-e>` | i | Close the menu, and remove the item text that the selection typed |
+| `<C-f>`, `<C-b>` | i | Scroll the documentation of the item down or up |
+| `<C-Space>` | i | Open the menu. With the menu open, show or hide the documentation |
+| `<Tab>`, `<S-Tab>` | i, s | Go to the next or previous field of a snippet |
+| `<C-k>` | i | Start a digraph. blink.cmp maps it to signature help, which is off, so the key falls back to the digraph |
 
 ### Format and surround
 

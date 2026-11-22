@@ -14,7 +14,7 @@ local expected_plugins = {
   'nvim-tree/nvim-tree.lua', 'nvim-mini/mini.pairs', 'majutsushi/tagbar',
   'lewis6991/gitsigns.nvim', 'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes', 'yssl/QFEnter', 'lifepillar/vim-solarized8', 'neovim/nvim-lspconfig',
-  'mason-org/mason.nvim',
+  'mason-org/mason.nvim', 'saghen/blink.cmp', 'rafamadriz/friendly-snippets',
 }
 
 local function managed_plugins()
