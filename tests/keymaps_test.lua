@@ -28,7 +28,6 @@ local function undescribed_maps()
   add({ 'Y', '<CR>' }, { 'n' })
   add({ '<F2>' })
   add({ '<F3>', '<S-F3>', '<leader>t', '<leader>t<space>', '<leader>ts', '<leader>tv' })
-  add({ '<F7>', '<S-F7>' })
   add({
     '<leader>f', '<leader>o', '<leader>ff', '<leader>fl', '<leader>fla', '<leader>fm', '<leader>fo', '<leader>ft',
     '<leader>fta', '<leader>fh', '<leader>fg', '<leader>fw',

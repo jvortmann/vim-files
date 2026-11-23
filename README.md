@@ -201,8 +201,8 @@ In the quickfix window (mode n):
 | --- | --- | --- |
 | `<F5>` | n, v, o | Run `makeprg` |
 | `<F6>` | n, v, o | Run `makeprg` on the current file |
-| `<F7>` | n, v, o | Git blame, with `.git-blame-ignore-revs` when it exists |
-| `<S-F7>` | n, v, o | Git diff in a vertical split |
+| `<F7>` | n, v, o | Git blame of the file in a window at the left, with `.git-blame-ignore-revs` when it exists |
+| `<S-F7>` | n, v, o | Git diff of the file against the index, in a vertical split |
 | `<F3>`, `<Leader>t`, `<Leader>t<Space>` | n, v, o | Open the alternate file |
 | `<S-F3>`, `<Leader>ts` | n, v, o | Open the alternate file in a horizontal split |
 | `<Leader>tv` | n, v, o | Open the alternate file in a vertical split |

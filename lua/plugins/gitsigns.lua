@@ -36,6 +36,9 @@ return {
         map('n', '<leader>gp', gitsigns.preview_hunk, 'Preview the git hunk')
         map('n', '<leader>gb', function() gitsigns.blame_line() end, 'Show the git blame of the line')
         map({ 'o', 'x' }, 'ih', gitsigns.select_hunk, 'Git hunk')
+        local nvo = { 'n', 'x', 's', 'o' }
+        map(nvo, '<F7>', gitsigns.blame, 'Git blame')
+        map(nvo, '<S-F7>', gitsigns.diffthis, 'Git diff in a vertical split')
       end,
     },
   },

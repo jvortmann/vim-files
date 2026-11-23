@@ -78,6 +78,11 @@ end
 
 local run, job = open_edited_file()
 equals('opening an edited file shows a git sign on each changed line', run(signed_lines), { 3, 8, 9 })
+equals(
+  '<F7> and <S-F7> have a description for which-key in a file of a git repo',
+  run('return dofile(...).undescribed({ "<F7>", "<S-F7>" })', tests_dir .. '/support/keymaps.lua'),
+  {}
+)
 vim.fn.jobstop(job)
 
 local staged = with_line(indexed, 3, 'THREE')
@@ -152,6 +157,45 @@ equals(
     read = function(run) return run('return _G.blame_call') end,
   }),
   { full = false }
+)
+
+local function window_with_filetype(filetype)
+  return function(run)
+    return run([[
+      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == ... then
+          return true
+        end
+      end
+      return false
+    ]], filetype)
+  end
+end
+
+equals(
+  '<F7> opens the gitsigns blame window of the file',
+  after_keys({ line = 1, keys = '<F7>', expected = true, read = window_with_filetype('gitsigns-blame') }),
+  true
+)
+
+-- Reads the number of diff windows, the layout of the tab, and if a diff window shows the index version from gitsigns.
+local function read_diff(run)
+  return run([[
+    local count, from_gitsigns = 0, false
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+      if vim.wo[win].diff then
+        count = count + 1
+        from_gitsigns = from_gitsigns or vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)):find('^gitsigns://') ~= nil
+      end
+    end
+    return { count, vim.fn.winlayout()[1], from_gitsigns }
+  ]])
+end
+
+equals(
+  '<S-F7> opens a vertical diff of the file against the index from gitsigns',
+  after_keys({ line = 1, keys = '<S-F7>', expected = { 2, 'row', true }, read = read_diff }),
+  { 2, 'row', true }
 )
 
 local function read_line(run)
