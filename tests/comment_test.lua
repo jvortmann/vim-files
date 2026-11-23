@@ -2,15 +2,12 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local equals = report.equals
+local lines_after_keys = dofile(tests_dir .. '/support/typing.lua').lines_after_keys
 
 local code = { 'local a = 1', 'local b = 2' }
 
 local function after_keys(keys)
-  vim.cmd('silent edit ' .. vim.fn.fnameescape(vim.fn.tempname() .. '.lua'))
-  vim.api.nvim_buf_set_lines(0, 0, -1, false, code)
-  vim.api.nvim_win_set_cursor(0, { 1, 0 })
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), 'mx', false)
-  return vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  return lines_after_keys('.lua', code, keys)
 end
 
 -- After nvim_feedkeys, the next message starts without a newline. So run all keys first, and print the checks after.

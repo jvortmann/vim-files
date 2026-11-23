@@ -4,6 +4,7 @@ local report = dofile(tests_dir .. '/support/report.lua')
 local equals = report.equals
 local run_scheduled = dofile(tests_dir .. '/support/scheduled.lua')
 local lsp_server = dofile(tests_dir .. '/support/lsp_server.lua')
+local typing = dofile(tests_dir .. '/support/typing.lua')
 
 local notified = {}
 local notify = vim.notify
@@ -46,11 +47,10 @@ local function save(dir, name, lines)
 end
 
 local function press(dir, name, lines, keys)
-  vim.cmd('silent edit ' .. vim.fn.fnameescape(dir .. '/' .. name))
-  vim.api.nvim_buf_set_lines(0, 0, -1, true, lines)
+  typing.open(dir .. '/' .. name, lines)
   vim.v.errmsg = ''
   notified = {}
-  vim.api.nvim_feedkeys(vim.keycode(keys), 'mx', false)
+  typing.type(keys)
   vim.wait(3000, function()
     return not vim.deep_equal(vim.api.nvim_buf_get_lines(0, 0, -1, true), lines)
   end)
