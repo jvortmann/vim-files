@@ -58,7 +58,8 @@ local home = new_home()
 local run, job = start(home)
 run([[vim.cmd('split')]])
 equals('in Herdr, a split writes the session file', vim.wait(5000, function() return exists(home.session) end), true)
-vim.wait(5000, function() return exists(home.calls) end)
+-- The stub creates its file a moment before it writes the call, so the test waits for the call itself.
+vim.wait(2000, function() return #stub.calls(home.calls) > 0 end, 10)
 equals('at start, nvim labels its terminal with the session file', stub.calls(home.calls), {
   'label ' .. terminal .. ' restore.nvim=' .. home.session,
 })
