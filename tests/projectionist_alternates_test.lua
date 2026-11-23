@@ -27,23 +27,25 @@ local function alternates(path)
   return relative
 end
 
+-- Returns the first alternate of path that exists, or nil. It also returns the list of all the alternates.
 local function first_existing(path)
-  for _, file in ipairs(alternates(path)) do
+  local candidates = alternates(path)
+  for _, file in ipairs(candidates) do
     if vim.fn.filereadable(root .. '/' .. file) == 1 then
-      return file
+      return file, candidates
     end
   end
-  return nil
+  return nil, candidates
 end
 
 local function jumps(from, to)
   touch(from)
   touch(to)
-  local got = first_existing(from)
+  local got, candidates = first_existing(from)
   check(
     from .. ' jumps to ' .. to,
     got == to,
-    'got ' .. tostring(got) .. ' from candidates ' .. vim.inspect(alternates(from))
+    'got ' .. tostring(got) .. ' from candidates ' .. vim.inspect(candidates)
   )
 end
 
@@ -111,11 +113,11 @@ end
 new_project('package.json')
 touch('src/auth/login.ts')
 touch('tests/auth/login.test.ts')
-local got = first_existing('src/auth/login.ts')
+local got, candidates = first_existing('src/auth/login.ts')
 check(
   'a project with only package.json jumps from src/auth/login.ts to tests/auth/login.test.ts',
   got == 'tests/auth/login.test.ts',
-  'got ' .. tostring(got) .. ' from candidates ' .. vim.inspect(alternates('src/auth/login.ts'))
+  'got ' .. tostring(got) .. ' from candidates ' .. vim.inspect(candidates)
 )
 
 -- In a ruby gem, a file of lib and its spec are the alternate of each other.
