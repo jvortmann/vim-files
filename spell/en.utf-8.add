@@ -377,3 +377,6 @@ gsed
 subagents
 lazy
 colorscheme
+zig
+LSP
+toml
