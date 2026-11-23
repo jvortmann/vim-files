@@ -43,6 +43,7 @@ return {
         'dockerfile',
         'elixir',
         'elm',
+        'embedded_template',
         'erlang',
         'go',
         'gomod',

@@ -17,8 +17,11 @@ end
 
 -- Checks that each { row, col, name } of expected has a highlight capture of that name.
 local function check_captures(name, buf, expected)
-  vim.treesitter.get_parser(buf):parse(true)
-  local found, ok = {}, true
+  local parser = vim.treesitter.get_parser(buf)
+  if parser then
+    parser:parse(true)
+  end
+  local found, ok = {}, parser ~= nil
   for index, position in ipairs(expected) do
     local captures = vim.treesitter.get_captures_at_pos(buf, position[1], position[2])
     found[index] = vim.tbl_map(function(capture) return capture.capture end, captures)
@@ -67,6 +70,22 @@ vim.cmd('silent edit ' .. vim.fn.fnameescape(toml_file))
 local toml_buf = vim.api.nvim_get_current_buf()
 check_captures('a toml buffer gets treesitter highlight captures', toml_buf, { { 0, 1, 'property' } })
 vim.fn.delete(toml_file)
+
+local erb_file = vim.fn.tempname() .. '.html.erb'
+vim.fn.writefile({ '<div class="greeting">', '  <%= greeting.upcase %>', '</div>' }, erb_file)
+vim.cmd('silent edit ' .. vim.fn.fnameescape(erb_file))
+local erb_buf = vim.api.nvim_get_current_buf()
+check_captures(
+  'an html.erb buffer gets html and ruby highlight captures',
+  erb_buf,
+  { { 0, 1, 'tag' }, { 1, 15, 'function.call' } }
+)
+vim.fn.delete(erb_file)
+check(
+  'the spec installs the parser of html.erb buffers',
+  vim.list_contains(languages_in_spec(), vim.treesitter.language.get_lang('eruby')),
+  'got ' .. vim.inspect(languages_in_spec())
+)
 
 local unreadable_languages = vim.tbl_filter(function(language)
   local path = vim.api.nvim_get_runtime_file('queries/' .. language .. '/highlights.scm', false)[1]
