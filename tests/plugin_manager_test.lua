@@ -11,7 +11,7 @@ local expected_plugins = {
   'tpope/vim-projectionist', 'ibhagwan/fzf-lua', 'nvim-tree/nvim-web-devicons', 'folke/which-key.nvim',
   'nvim-mini/mini.surround',
   'tpope/vim-endwise',
-  'nvim-tree/nvim-tree.lua', 'nvim-mini/mini.pairs',
+  'nvim-tree/nvim-tree.lua', 'nvim-mini/mini.pairs', 'windwp/nvim-ts-autotag',
   'lewis6991/gitsigns.nvim', 'nvim-lualine/lualine.nvim',
   'yssl/QFEnter', 'lifepillar/vim-solarized8', 'neovim/nvim-lspconfig',
   'mason-org/mason.nvim', 'saghen/blink.cmp', 'rafamadriz/friendly-snippets',
@@ -123,7 +123,7 @@ check('fzf-lua is not loaded at startup', package.loaded['fzf-lua'] == nil, 'fzf
 check('nvim-tree is not loaded at startup', package.loaded['nvim-tree'] == nil, 'nvim-tree is loaded at startup')
 check('mini.pairs is not loaded at startup', _G.MiniPairs == nil, 'MiniPairs exists at startup')
 check('conform is not loaded at startup', package.loaded.conform == nil, 'conform is loaded at startup')
-for _, name in ipairs({ 'nvim-treesitter', 'mini.surround', 'QFEnter' }) do
+for _, name in ipairs({ 'nvim-treesitter', 'mini.surround', 'QFEnter', 'nvim-ts-autotag' }) do
   local plugin = require('lazy.core.config').plugins[name]
   check(name .. ' is not loaded at startup', plugin ~= nil and plugin._.loaded == nil, name .. ' is loaded at startup')
 end

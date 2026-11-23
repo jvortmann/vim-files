@@ -308,6 +308,10 @@ buffer.
 mini.pairs closes a pair in insert mode. A bracket pairs only when no
 backslash comes before it and no word character comes after it.
 
+nvim-ts-autotag closes a tag as you type it. Typing `<div>` adds
+`</div>`. When you rename a tag in insert mode, the pair gets the new
+name when you leave insert mode. This also works in ERB.
+
 ### Disabled keys
 
 | Key | Mode | Effect |
