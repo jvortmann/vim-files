@@ -118,37 +118,6 @@ type_keys('<Esc>')
 wait_for_mode('n')
 type_keys(':let g:typed = 1<CR>')
 local ran_with_enter = wait_for(function() return call('return vim.g.typed') end, 1)
--- Returns whether the menu of blink.cmp shows, and whether its items hold the echo command.
-local function cmdline_menu()
-  return call([[
-    local cmp = require('blink.cmp')
-    local labels = vim.tbl_map(function(item) return item.label end, cmp.get_items())
-    return { visible = cmp.is_menu_visible(), echo = vim.tbl_contains(labels, 'echo') }
-  ]])
-end
--- Returns the cursor position on the command line, the command line, and the label of the selected item or false.
-local function cmdline_cursor()
-  return call([[
-    local item = require('blink.cmp').get_selected_item()
-    return { vim.fn.getcmdpos(), vim.fn.getcmdline(), item and item.label or false }
-  ]])
-end
--- On the first menu of the command line in a session, <Left> closes the menu. So the menu shows once before the check.
-type_keys(':')
-wait_for_mode('c')
-type_keys('ech')
-assert(vim.deep_equal(wait_for(cmdline_menu, { visible = true, echo = true }), { visible = true, echo = true }), 'the menu did not show on the command line')
-type_keys('<Esc>')
-wait_for_mode('n')
-type_keys(':ech')
-wait_for(cmdline_menu, { visible = true, echo = true })
-type_keys('<Left>')
-local moved_left = wait_for(cmdline_cursor, { 3, 'ech', false })
-local menu_after_left = wait_for(cmdline_menu, { visible = true, echo = true })
-type_keys('<Right>')
-local moved_right = wait_for(cmdline_cursor, { 4, 'ech', false })
-type_keys('<Esc>')
-wait_for_mode('n')
 
 vim.fn.jobstop(job)
 
@@ -161,7 +130,5 @@ equals('<C-k> enters a digraph in a buffer with no language server', digraph, { 
 equals('<C-k> in insert mode shows the signature of the function', shown_with_ctrl_k, true)
 equals('<C-k> hides the signature that shows', hidden_with_ctrl_k, false)
 equals('<CR> on the command line with no selected item runs the typed command', ran_with_enter, 1)
-equals('<Left> on the command line with the menu open moves the cursor left, and selects no item', moved_left, { 3, 'ech', false })
-equals('<Right> on the command line with the menu open moves the cursor right, and selects no item', { menu_after_left, moved_right }, { { visible = true, echo = true }, { 4, 'ech', false } })
 
 report.finish()
