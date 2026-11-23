@@ -51,6 +51,7 @@ vim.fn.jobstop(job)
 
 run, editor, job, file = start()
 local right = run([[vim.cmd('vsplit') return vim.api.nvim_get_current_win()]])
+-- A wrong call to Herdr can take more than 300 ms to reach the stub, so the check waits 1 second for it.
 equals('in Herdr, ctrl-h inside nvim moves to the next window and leaves Herdr alone', {
   calls = press(editor, file, '<C-h>', 1000),
   moved = run('return vim.api.nvim_get_current_win()') ~= right,

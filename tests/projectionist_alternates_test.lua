@@ -101,8 +101,12 @@ local function check_extension(ext)
 end
 
 new_project('mise.toml')
-for _, ext in ipairs({ 'ts', 'tsx', 'js', 'jsx' }) do
-  check_extension(ext)
+check_extension('ts')
+-- The config builds the same projections for each extension in one loop, so two jumps show that the loop covers the
+-- other extensions.
+for _, ext in ipairs({ 'tsx', 'js', 'jsx' }) do
+  jumps('src/auth/login.' .. ext, 'tests/auth/login.test.' .. ext)
+  jumps('tests/auth/login.test.' .. ext, 'src/auth/login.' .. ext)
 end
 
 new_project('package.json')

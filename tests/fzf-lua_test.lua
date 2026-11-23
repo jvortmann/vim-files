@@ -3,7 +3,6 @@ local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h'
 local report = dofile(tests_dir .. '/support/report.lua')
 local screen = dofile(tests_dir .. '/support/screen.lua')
 local child = dofile(tests_dir .. '/support/editor.lua')
-local keymaps = dofile(tests_dir .. '/support/keymaps.lua')
 local equals = report.equals
 
 local leader = vim.g.mapleader or '\\'
@@ -33,11 +32,24 @@ local pickers = {
 equals('<C-x><C-k> in insert mode is the dictionary completion of Neovim', vim.fn.maparg('<C-x><C-k>', 'i'), '')
 equals('fzf keeps its history in the folder of fzf.vim', vim.g.fzf_history_dir, '~/.config/fzf/fzf-history')
 
-local find_keys = { '<leader>fg', '<leader>fw' }
-for _, case in ipairs(pickers) do
-  table.insert(find_keys, '<leader>' .. case[1])
+-- which-key shows the description of a map, so each find key keeps the name that vim-shortcut showed.
+local find_names = {
+  ['<leader>f'] = 'Find files (fallback)', ['<leader>o'] = 'Find open buffers (fallback)',
+  ['<leader>ff'] = 'Find files', ['<leader>fl'] = 'Find lines in current buffer', ['<leader>fm'] = 'Find marks',
+  ['<leader>fo'] = 'Find open buffers', ['<leader>ft'] = 'Find tags on current buffer',
+  ['<leader>fh'] = 'Find files history', ['<leader>fla'] = 'Find lines in open buffers', ['<leader>fta'] = 'Find tags',
+  ['<leader>fg'] = 'Grep the files', ['<leader>fw'] = 'Grep the word under the cursor',
+}
+local wrong_names = {}
+for lhs, name in vim.spairs(find_names) do
+  for _, mode in ipairs({ 'n', 'x', 's', 'o' }) do
+    local desc = vim.fn.maparg(lhs, mode, false, true).desc
+    if desc ~= name then
+      table.insert(wrong_names, ('%s %s: %s'):format(mode, lhs, vim.inspect(desc)))
+    end
+  end
 end
-equals('every find key has a description for which-key', keymaps.undescribed(find_keys), {})
+equals('every find key has its name for which-key, in each mode', wrong_names, {})
 
 -- The tags picker reads the tags file, and the btags picker runs ctags on first.lua.
 local tags_folder = new_folder({

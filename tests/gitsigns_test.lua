@@ -35,8 +35,11 @@ end
 
 -- Lists the lines of file.txt in the index of the repo in dir.
 local function index_of(dir)
-  local shown = vim.system({ 'git', '-C', dir, 'show', ':file.txt' }, { stdin = false }):wait().stdout
-  return vim.split(shown, '\n', { trimempty = true })
+  local result = vim.system({ 'git', '-C', dir, 'show', ':file.txt' }, { stdin = false, text = true }):wait(10000)
+  if not result or result.code ~= 0 then
+    error(('git show :file.txt in %s ended with %s: %s'):format(dir, result and result.code or 'no result', result and result.stderr or ''))
+  end
+  return vim.split(result.stdout, '\n', { trimempty = true })
 end
 
 -- Opens the edited file, runs the Lua of case.setup if any, puts the cursor on case.line and types case.keys.

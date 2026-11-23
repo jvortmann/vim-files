@@ -45,19 +45,21 @@ for _, name in ipairs({ 'lua_ls', 'vtsls' }) do
   vim.lsp.config(name, { cmd = lsp_server.cmd({ initialize = { capabilities = {} } }) })
 end
 
--- Opens the file name in the folder, and returns the number of servers that attach to it.
-local function servers_attached(dir, name)
+-- Opens the file name in the folder, and returns the number of servers that attach to it within timeout milliseconds
+-- (2000 by default). The fake server runs in this Neovim and attaches within a few milliseconds, so a check that no
+-- server starts can use a short timeout.
+local function servers_attached(dir, name, timeout)
   vim.cmd('silent edit ' .. vim.fn.fnameescape(dir .. '/' .. name))
   local buf = vim.api.nvim_get_current_buf()
-  vim.wait(500, function() return #vim.lsp.get_clients({ bufnr = buf }) > 0 end)
+  vim.wait(timeout or 2000, function() return #vim.lsp.get_clients({ bufnr = buf }) > 0 end)
   return #vim.lsp.get_clients({ bufnr = buf })
 end
 
 local project = new_folder()
 vim.fn.mkdir(project .. '/.git')
 equals('a lua file in a folder with .git starts lua_ls', servers_attached(project, 'init.lua'), 1)
-equals('a lua file in a folder with no project marker starts no server', servers_attached(new_folder(), 'init.lua'), 0)
-equals('a typescript file in a folder with no project marker starts no server', servers_attached(new_folder(), 'app.ts'), 0)
+equals('a lua file in a folder with no project marker starts no server', servers_attached(new_folder(), 'init.lua', 100), 0)
+equals('a typescript file in a folder with no project marker starts no server', servers_attached(new_folder(), 'app.ts', 100), 0)
 
 local lua = vim.lsp.config.lua_ls.settings.Lua
 equals(
@@ -99,7 +101,9 @@ equals('an editor with a screen installs each missing server at start', calls, {
 })
 
 local editor, job = child.start()
-vim.wait(1000)
+-- child.start fires UIEnter and returns after it. An install would record refresh at once, and 200 ms lets the
+-- callback of the refresh run too.
+vim.wait(200)
 calls = vim.rpcrequest(editor, 'nvim_exec_lua', mason.calls, {})
 vim.fn.jobstop(job)
 equals('a headless editor installs nothing and reads no registry', calls, {})

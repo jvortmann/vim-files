@@ -43,39 +43,6 @@ for mode, keys in vim.spairs({ n = '\\h', x = 'v\\h' }) do
   )
 end
 
-local function shows_name(lines, name)
-  for _, line in ipairs(lines) do
-    if line:find(name .. '  ', 1, true) or vim.endswith(vim.trim(line), name) then
-      return true
-    end
-  end
-  return false
-end
-
--- The fzf-lua keys keep the names that vim-shortcut showed, and which-key shows them.
--- Each key is the prefix that the test types after <leader>h. Its names are the ones the window shows.
-local fzf_names = {
-  ['\\'] = { 'Find files (fallback)', 'Find open buffers (fallback)' },
-  ['\\f'] = {
-    'Find files', 'Find lines in current buffer', 'Find marks', 'Find open buffers',
-    'Find tags on current buffer', 'Find files history',
-  },
-  ['\\fl'] = { 'Find lines in open buffers' },
-  ['\\ft'] = { 'Find tags' },
-}
-local unnamed = {}
-for prefix, names in vim.spairs(fzf_names) do
-  local lines = which_key_window('\\h' .. prefix, function(got)
-    return shows_name(got, names[1])
-  end) or {}
-  for _, name in ipairs(names) do
-    if not shows_name(lines, name) then
-      table.insert(unnamed, prefix .. ': ' .. name)
-    end
-  end
-end
-report.equals('which-key shows the name of each fzf map', unnamed, {})
-
 -- Opens a float in Neovim inside a tmux pane. It returns the background of the float text as the pane
 -- draws it, an "r;g;b" string, or nil when no float shows.
 local function float_background_on_screen()
