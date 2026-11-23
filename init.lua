@@ -19,6 +19,9 @@ require('config.autocmds.init')
 -- Save the session for Herdr
 require('config.herdr_session').setup()
 
+-- Label the terminal with the server address for the Herdr nav mod
+require('config.herdr_server_label').setup()
+
 -- Load the gui options
 require('config.guioptions')
 

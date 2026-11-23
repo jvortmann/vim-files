@@ -55,6 +55,11 @@ local function exists(path)
   return vim.uv.fs_stat(path) ~= nil
 end
 
+-- Returns the calls to the stub that set the label restore.nvim. The server label module labels the terminal too.
+local function restore_calls(home)
+  return vim.tbl_filter(function(call) return call:find(' restore.nvim=', 1, true) ~= nil end, stub.calls(home.calls))
+end
+
 -- Each case below runs at the same time as the others, in a home of its own. It returns what it saw, and the checks
 -- come after all of them, in the order of the cases.
 
@@ -64,9 +69,9 @@ local function label_case()
   run([[vim.cmd('split')]])
   local written = tasks.wait(5000, function() return exists(home.session) end)
   -- The stub creates its file a moment before it writes the call, so the test waits for the call itself.
-  tasks.wait(2000, function() return #stub.calls(home.calls) > 0 end)
+  tasks.wait(2000, function() return #restore_calls(home) > 0 end)
   vim.fn.jobstop(job)
-  return { written = written, calls = stub.calls(home.calls), session = home.session }
+  return { written = written, calls = restore_calls(home), session = home.session }
 end
 
 -- Splits the window in the child, and returns whether it saves the session within 400 milliseconds. That is more than
