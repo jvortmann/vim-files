@@ -134,8 +134,10 @@ local function cmdline_cursor()
   ]])
 end
 -- On the first menu of the command line in a session, <Left> closes the menu. So the menu shows once before the check.
-type_keys(':ech')
-wait_for(cmdline_menu, { visible = true, echo = true })
+type_keys(':')
+wait_for_mode('c')
+type_keys('ech')
+assert(vim.deep_equal(wait_for(cmdline_menu, { visible = true, echo = true }), { visible = true, echo = true }), 'the menu did not show on the command line')
 type_keys('<Esc>')
 wait_for_mode('n')
 type_keys(':ech')

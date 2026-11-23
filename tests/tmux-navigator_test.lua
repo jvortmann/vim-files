@@ -11,7 +11,7 @@ local equals = report.equals
 local function start(env)
   local dir = vim.fn.resolve(vim.fn.tempname())
   vim.fn.mkdir(dir .. '/state', 'p')
-  stub.write(dir .. '/herdr-app', dir .. '/calls')
+  stub.link(dir .. '/herdr-app')
   local editor, job = child.start({
     env = vim.tbl_extend('force', {
       HC_TERMINAL_ID = 'test-terminal',

@@ -20,7 +20,7 @@ local function new_home()
   local dir = vim.fn.resolve(vim.fn.tempname())
   vim.fn.mkdir(dir .. '/work', 'p')
   vim.fn.mkdir(dir .. '/state', 'p')
-  stub.write(dir .. '/hc', dir .. '/calls')
+  stub.link(dir .. '/hc')
   return {
     dir = dir,
     work = dir .. '/work',

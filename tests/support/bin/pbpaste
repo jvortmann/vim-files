@@ -1,0 +1,4 @@
+#!/bin/sh
+# A fake pbpaste. It prints the file clipboard in the folder of its link, or nothing when that file does not exist.
+cat "${0%/*}/clipboard" 2>/dev/null
+exit 0

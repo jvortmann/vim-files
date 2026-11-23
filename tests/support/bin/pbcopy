@@ -1,0 +1,4 @@
+#!/bin/sh
+# A fake pbcopy. tap-nvim.sh links it into the fake folder of a test file. It keeps the copied text in the file clipboard
+# of that folder. That file is the one that TEST_CLIPBOARD names.
+cat >"${0%/*}/clipboard"

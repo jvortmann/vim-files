@@ -1,0 +1,3 @@
+#!/bin/sh
+# A stub. A test links it into a folder of its own. Each run adds its arguments, as one line, to the file calls in that folder.
+printf '%s\n' "$*" >>"${0%/*}/calls"
