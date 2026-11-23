@@ -222,7 +222,13 @@ In the quickfix window (mode n):
 | `<Leader>fw` | n, v, o | Grep the word under the cursor |
 | `<Leader>fh` | n, v, o | Find recent files and the open buffers |
 | `<F2>` | n, v, o | Toggle the file tree (nvim-tree) |
+| `H` | n | Toggle the dotfiles (nvim-tree key, in the tree window) |
+| `I` | n | Toggle the files that git ignores (nvim-tree key, in the tree window) |
+| `<C-]>` | n | Make the folder under the cursor the root (nvim-tree key, in the tree window) |
+| `-` | n | Go up one folder (nvim-tree key, in the tree window) |
+| `g?` | n | Show all keys of the tree (nvim-tree key, in the tree window) |
 
+The tree lists the whole folder, also the files that git ignores.
 `:e .` still opens netrw, because nvim-tree does not take over folders.
 
 ### Git hunks

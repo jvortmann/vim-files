@@ -65,4 +65,35 @@ end)
 equals(':e . opens the folder in netrw, not in nvim-tree', folder, { filetype = 'netrw', tree = 'none' })
 
 vim.fn.jobstop(job)
+
+local ignoring = git_repo.new({ 'one' }, { 'one' })
+git_repo.write(ignoring, {
+  ['.gitignore'] = { 'ignored.txt', '.pi/' },
+  ['ignored.txt'] = { 'x' },
+  ['.pi/settings.json'] = { '{}' },
+  ['.hidden'] = { 'x' },
+})
+editor, job = child.start({ cwd = ignoring, files = { 'file.txt' } })
+-- Returns, for each name, whether a line of the tree ends with it.
+local tree_lists = [[
+  local text = '\n' .. table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), '\n') .. '\n'
+  local listed = {}
+  for _, name in ipairs({ ... }) do
+    listed[name] = text:find('%s' .. vim.pesc(name) .. '\n') ~= nil
+  end
+  return listed
+]]
+after_keys('<F2>', 'left')
+local listed
+vim.wait(3000, function()
+  listed = run(tree_lists, 'ignored.txt', '.pi', '.hidden')
+  return listed['ignored.txt'] and listed['.pi'] and listed['.hidden']
+end)
+equals(
+  'the tree lists the files and folders that git ignores',
+  { ['ignored.txt'] = listed['ignored.txt'], ['.pi'] = listed['.pi'] },
+  { ['ignored.txt'] = true, ['.pi'] = true }
+)
+equals('the tree lists a dotfile', listed['.hidden'], true)
+vim.fn.jobstop(job)
 report.finish()

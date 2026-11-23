@@ -17,6 +17,8 @@ return {
       -- The sign column shows only when a line has a sign, so the tree has no blank sign cell,
       -- like the other side windows.
       view = { signcolumn = 'auto' },
+      -- The tree lists the whole folder, with the files that git ignores.
+      filters = { git_ignored = false },
     },
   },
 }
