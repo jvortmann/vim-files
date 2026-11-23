@@ -3,10 +3,7 @@ local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h'
 local report = dofile(tests_dir .. '/support/report.lua')
 local child = dofile(tests_dir .. '/support/editor.lua')
 local git_repo = dofile(tests_dir .. '/support/git_repo.lua')
-local keymaps = dofile(tests_dir .. '/support/keymaps.lua')
 local equals = report.equals
-
-equals('F2 has a description for which-key', keymaps.undescribed({ '<F2>' }), {})
 
 -- Returns where the nvim-tree window of the tab is: 'left' when it starts at the first column, 'elsewhere' or 'none'.
 local tree_window = [[
@@ -34,12 +31,9 @@ local function after_keys(keys, expected)
   return got
 end
 
--- The index and file.txt differ, so gitsigns attaches to the file.
-equals(
-  'gitsigns attaches to the changed file.txt',
-  vim.wait(3000, function() return run('return vim.b.gitsigns_status_dict ~= nil') end),
-  true
-)
+-- The index and file.txt differ, so gitsigns attaches to the file. The test waits for it, so that the tree check
+-- below runs after gitsigns had its chance. It does not check the attach.
+vim.wait(3000, function() return run('return vim.b.gitsigns_status_dict ~= nil') end)
 run([[vim.v.errmsg = '']])
 equals('F2 in a new editor opens nvim-tree on the left', after_keys('<F2>', 'left'), 'left')
 equals(

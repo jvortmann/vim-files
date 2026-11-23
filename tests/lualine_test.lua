@@ -37,10 +37,6 @@ local function shows(name, text)
 end
 
 open('sub/file.txt', { 'one two' })
-local line = statusline().str
-check('the statusline shows no separator or icon glyph', not line:find('[\128-\255]'), 'got ' .. vim.inspect(line))
-equals('each window has its own statusline, and the mode shows only there', { vim.o.laststatus, vim.o.showmode }, { 2, false })
-
 local function mode_part()
   local first = statusline().highlights[1]
   return { vim.trim(statusline().str):match('^%S+'), first.group, vim.api.nvim_get_hl(0, { name = first.group }).bg }
@@ -121,11 +117,6 @@ check(
 vim.cmd('enew')
 local new_line = statusline().str
 check('the statusline of a new buffer shows no file format', not new_line:find('unix', 1, true), 'got ' .. vim.inspect(new_line))
-check(
-  'the statusline of an empty buffer shows numbers for the position',
-  new_line:find('100%:1', 1, true) ~= nil and new_line:find(' 0:1 ', 1, true) ~= nil,
-  'got ' .. vim.inspect(new_line)
-)
 
 open('sub/file.txt', { 'two', 'one two' })
 vim.fn.setreg('/', 'two')

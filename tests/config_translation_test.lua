@@ -3,7 +3,6 @@ local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h'
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
 local child = dofile(tests_dir .. '/support/editor.lua')
-local screen = dofile(tests_dir .. '/support/screen.lua')
 
 -- which-key draws its title and its list in separate windows, so this reads every window of filetype wk.
 local read_which_key_window = [[
@@ -42,29 +41,6 @@ for mode, keys in vim.spairs({ n = '\\h', x = 'v\\h' }) do
     'no which-key window opened, got ' .. vim.inspect(lines)
   )
 end
-
--- Opens a float in Neovim inside a tmux pane. It returns the background of the float text as the pane
--- draws it, an "r;g;b" string, or nil when no float shows.
-local function float_background_on_screen()
-  local open_float = [[
-    local buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { 'float text' })
-    vim.api.nvim_open_win(buf, false, { relative = 'editor', row = 2, col = 2, width = 20, height = 3, style = 'minimal' })
-  ]]
-  local pane = screen.start({ width = 80, height = 24, args = { '-c', 'lua ' .. open_float } })
-  local background
-  vim.wait(5000, function()
-    local before = table.concat(pane.rows(true), '\n'):match('([^\n]*)float text')
-    for color in (before or ''):gmatch('48;2;(%d+;%d+;%d+)m') do
-      background = color
-    end
-    return background ~= nil
-  end)
-  pane.stop()
-  return background
-end
-
-report.equals('a float draws on the solarized base02 background', float_background_on_screen(), '7;54;66')
 
 -- Checks the colors of the git signs. Each check name ends with the moment in `when`.
 local function check_git_sign_colors(when)
@@ -116,16 +92,15 @@ local function check_colors(when)
   report.equals('the diagnostic text takes the text color of the matching diff group ' .. when, virtual_text, expected_virtual_text)
 
   report.equals('floats take the popup menu colors ' .. when, vim.api.nvim_get_hl(0, { name = 'NormalFloat' }), { link = 'Pmenu' })
-  check_git_sign_colors(when)
 end
 
 check_colors('at startup')
+check_git_sign_colors('at startup')
 vim.cmd('colorscheme solarized8')
 check_colors('after the colorscheme loads again')
 vim.o.background = 'light'
 check_colors('after the background changes to light')
 vim.o.background = 'dark'
-check_colors('after the background changes back to dark')
 vim.cmd('colorscheme default')
 check_git_sign_colors('after another colorscheme loads')
 

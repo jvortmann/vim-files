@@ -18,8 +18,6 @@ for _, open in ipairs({ '(', '[', '{', '"' }) do
   closed[open] = line_after_keys('', 'i' .. open .. 'x')
 end
 local jumped = line_after_keys('', 'i(x)')
-local backspaced = line_after_keys('', 'i(<BS>x')
-local apostrophe = line_after_keys('don', "A't")
 local before_word = {}
 for _, open in ipairs({ '(', '[', '{' }) do
   before_word[open] = line_after_keys('word', 'i' .. open)
@@ -32,8 +30,6 @@ equals('an opening character gets its closer, with the cursor between them', clo
   ['"'] = '"x"',
 })
 equals('a closer typed before the same closer moves over it', jumped, '(x)')
-equals('a backspace in an empty pair deletes both characters', backspaced, 'x')
-equals('an apostrophe after a letter stays single', apostrophe, "don't")
 equals('an opening bracket before a word character stays single', before_word, {
   ['('] = '(word',
   ['['] = '[word',

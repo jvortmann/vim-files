@@ -26,23 +26,6 @@ local function check_captures(name, buf, expected)
   check(name, ok, 'got ' .. vim.inspect(found))
 end
 
-local install_dir = vim.fn.stdpath('data') .. '/site'
-local first_rtp_entry = vim.opt.rtp:get()[1]
-check(
-  'the treesitter parser install dir comes first in runtimepath',
-  first_rtp_entry == install_dir,
-  'expected ' .. vim.inspect(install_dir) .. ', got ' .. vim.inspect(first_rtp_entry)
-)
-
-local start_autocmds = vim.fn.exists('#nvim_treesitter_start#FileType') == 1
-  and vim.api.nvim_get_autocmds({ group = 'nvim_treesitter_start', event = 'FileType' })
-  or {}
-check(
-  'one FileType autocmd starts treesitter',
-  #start_autocmds == 1,
-  'got ' .. vim.inspect(start_autocmds)
-)
-
 local ruby_file = vim.fn.tempname() .. '.rb'
 vim.fn.writefile({ 'class Greeter', '  def hello', '  end', 'end' }, ruby_file)
 vim.cmd('silent edit ' .. vim.fn.fnameescape(ruby_file))

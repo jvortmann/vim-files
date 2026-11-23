@@ -78,13 +78,6 @@ end
 
 local run, job = open_edited_file()
 equals('opening an edited file shows a git sign on each changed line', run(signed_lines), { 3, 8, 9 })
-local undescribed = [[
-  local keymaps = dofile(...)
-  local missing = keymaps.undescribed({ ']c', '[c', '<leader>gp', '<leader>gb' }, { 'n' })
-  vim.list_extend(missing, keymaps.undescribed({ '<leader>gs', '<leader>gr' }, { 'n', 'x' }))
-  return vim.list_extend(missing, keymaps.undescribed({ 'ih' }, { 'o', 'x' }))
-]]
-equals('every gitsigns map has a description for which-key', run(undescribed, tests_dir .. '/support/keymaps.lua'), {})
 vim.fn.jobstop(job)
 
 local staged = with_line(indexed, 3, 'THREE')

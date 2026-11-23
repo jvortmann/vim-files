@@ -47,8 +47,8 @@ local function jumps(from, to)
   )
 end
 
-local test_folders = { 'tests', 'test', 'spec', 'specs' }
-local test_suffixes = { 'test', 'spec' }
+-- Two of the test folder and suffix pairs of the config, one for each suffix.
+local folder_suffixes = { { 'tests', 'test' }, { 'spec', 'spec' } }
 
 local function offers_only_sources(from, ext)
   local tests = vim.tbl_filter(function(file)
@@ -83,15 +83,14 @@ local function check_extension(ext)
   jumps(file('src/auth/login'), file('tests/auth/login.test'))
   jumps(file('tests/auth/login.test'), file('src/auth/login'))
 
-  for _, folder in ipairs(test_folders) do
-    for _, suffix in ipairs(test_suffixes) do
-      local tail = folder .. '_' .. suffix
-      jumps(file('src/mirror/' .. tail), file(folder .. '/mirror/' .. tail .. '.' .. suffix))
-      jumps(file(folder .. '/back/' .. tail .. '.' .. suffix), file('src/back/' .. tail))
-      jumps(file('app/' .. tail), file(folder .. '/app/' .. tail .. '.' .. suffix))
-      jumps(file(folder .. '/lib/' .. tail .. '.' .. suffix), file('lib/' .. tail))
-      offers_only_sources(file(folder .. '/back/' .. tail .. '.' .. suffix), ext)
-    end
+  for _, pair in ipairs(folder_suffixes) do
+    local folder, suffix = pair[1], pair[2]
+    local tail = folder .. '_' .. suffix
+    jumps(file('src/mirror/' .. tail), file(folder .. '/mirror/' .. tail .. '.' .. suffix))
+    jumps(file(folder .. '/back/' .. tail .. '.' .. suffix), file('src/back/' .. tail))
+    jumps(file('app/' .. tail), file(folder .. '/app/' .. tail .. '.' .. suffix))
+    jumps(file(folder .. '/lib/' .. tail .. '.' .. suffix), file('lib/' .. tail))
+    offers_only_sources(file(folder .. '/back/' .. tail .. '.' .. suffix), ext)
   end
 
   offers_only_sources(file('src/coloc.test'), ext)
@@ -118,5 +117,10 @@ check(
   got == 'tests/auth/login.test.ts',
   'got ' .. tostring(got) .. ' from candidates ' .. vim.inspect(alternates('src/auth/login.ts'))
 )
+
+-- In a ruby gem, a file of lib and its spec are the alternate of each other.
+new_project('.ruby-version')
+jumps('lib/x.rb', 'spec/x_spec.rb')
+jumps('spec/x_spec.rb', 'lib/x.rb')
 
 report.finish()

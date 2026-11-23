@@ -1,12 +1,9 @@
 -- Run: tests/run.sh tests/fugitive_test.lua
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
-local keymaps = dofile(tests_dir .. '/support/keymaps.lua')
 local equals = report.equals
 
 local git_at_startup = vim.fn.exists(':Git')
-
-local undescribed = keymaps.undescribed({ '<F7>', '<S-F7>' })
 
 -- Records each command line and cancels it, so that Git blame does not run.
 local typed = {}
@@ -38,7 +35,6 @@ local with_file = f7_command(with_ignore_revs)
 io.stdout:write('\n')
 
 equals('fugitive is loaded at startup, before any key', git_at_startup, 2)
-equals('every fugitive map has a description for which-key', undescribed, {})
 equals('F7 runs Git blame when the directory has no .git-blame-ignore-revs', without_file, { 'Git blame' })
 equals(
   'F7 runs Git blame with the revisions of .git-blame-ignore-revs when the file exists',

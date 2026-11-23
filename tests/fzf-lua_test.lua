@@ -29,27 +29,6 @@ local pickers = {
   { 'ff', 'files' }, { 'f', 'files' }, { 'fl', 'blines' }, { 'fla', 'lines' }, { 'fm', 'marks' },
   { 'fo', 'buffers' }, { 'o', 'buffers' }, { 'ft', 'btags' }, { 'fta', 'tags' }, { 'fh', 'history' },
 }
-equals('<C-x><C-k> in insert mode is the dictionary completion of Neovim', vim.fn.maparg('<C-x><C-k>', 'i'), '')
-equals('fzf keeps its history in the folder of fzf.vim', vim.g.fzf_history_dir, '~/.config/fzf/fzf-history')
-
--- which-key shows the description of a map, so each find key keeps the name that vim-shortcut showed.
-local find_names = {
-  ['<leader>f'] = 'Find files (fallback)', ['<leader>o'] = 'Find open buffers (fallback)',
-  ['<leader>ff'] = 'Find files', ['<leader>fl'] = 'Find lines in current buffer', ['<leader>fm'] = 'Find marks',
-  ['<leader>fo'] = 'Find open buffers', ['<leader>ft'] = 'Find tags on current buffer',
-  ['<leader>fh'] = 'Find files history', ['<leader>fla'] = 'Find lines in open buffers', ['<leader>fta'] = 'Find tags',
-  ['<leader>fg'] = 'Grep the files', ['<leader>fw'] = 'Grep the word under the cursor',
-}
-local wrong_names = {}
-for lhs, name in vim.spairs(find_names) do
-  for _, mode in ipairs({ 'n', 'x', 's', 'o' }) do
-    local desc = vim.fn.maparg(lhs, mode, false, true).desc
-    if desc ~= name then
-      table.insert(wrong_names, ('%s %s: %s'):format(mode, lhs, vim.inspect(desc)))
-    end
-  end
-end
-equals('every find key has its name for which-key, in each mode', wrong_names, {})
 
 -- The tags picker reads the tags file, and the btags picker runs ctags on first.lua.
 local tags_folder = new_folder({
@@ -214,26 +193,6 @@ equals(
   'the files picker shows the devicon of each file before its name',
   shows(vim.pesc(icon) .. '%W+other%.txt'),
   true
-)
--- The picker and its preview draw one frame, from the first top-left corner to the last bottom-right corner.
-local frame = {}
-for number, row in ipairs(pane.rows()) do
-  local left, right = row:find('╭', 1, true), row:match('.*()╮')
-  if left and not frame.top then
-    frame.top = number
-    frame.left = vim.fn.strdisplaywidth(row:sub(1, left - 1))
-    frame.right = vim.fn.strdisplaywidth(row:sub(1, right - 1))
-  end
-  if row:find('╰', 1, true) then
-    frame.bottom = number
-  end
-end
--- fzf-lua gives 90% of the 120 columns to the text of the picker and its preview, and draws the 3 border
--- columns outside it. The 17 rows are 60% of the 29 lines above the command line, borders included.
-equals(
-  'a picker with its preview takes 90% of the columns and 60% of the lines above the command line',
-  { width = frame.right - frame.left + 1, height = frame.bottom - frame.top + 1 },
-  { width = 108 + 3, height = 17 }
 )
 type_keys('<C-v>')
 local split

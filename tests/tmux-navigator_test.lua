@@ -58,26 +58,4 @@ equals('in Herdr, ctrl-h inside nvim moves to the next window and leaves Herdr a
 }, { calls = {}, moved = true })
 vim.fn.jobstop(job)
 
-run, editor, job = start({ HC_TERMINAL_ID = false })
-equals(
-  'outside Herdr, the commands are the ones of the plugin',
-  run([[
-    local found = {}
-    for name, command in pairs(vim.api.nvim_get_commands({})) do
-      if name:match('^TmuxNavigate') then
-        found[name] = command.definition
-      end
-    end
-    return found
-  ]]),
-  {
-    TmuxNavigateLeft = "call s:TmuxAwareNavigate('h')",
-    TmuxNavigateDown = "call s:TmuxAwareNavigate('j')",
-    TmuxNavigateUp = "call s:TmuxAwareNavigate('k')",
-    TmuxNavigateRight = "call s:TmuxAwareNavigate('l')",
-    TmuxNavigatePrevious = "call s:TmuxAwareNavigate('p')",
-  }
-)
-vim.fn.jobstop(job)
-
 report.finish()

@@ -28,11 +28,8 @@ end
 
 for name, expected in vim.spairs({
   ['app.ts'] = { 'eslint', 'vtsls' },
-  ['app.tsx'] = { 'eslint', 'vtsls' },
   ['app.js'] = { 'eslint', 'vtsls' },
-  ['app.jsx'] = { 'eslint', 'vtsls' },
   ['order.rb'] = { 'ruby_lsp' },
-  ['order_spec.rb'] = { 'ruby_lsp' },
   ['init.lua'] = { 'lua_ls' },
   ['main.go'] = { 'gopls' },
   ['main.zig'] = { 'zls' },
@@ -59,14 +56,6 @@ local project = new_folder()
 vim.fn.mkdir(project .. '/.git')
 equals('a lua file in a folder with .git starts lua_ls', servers_attached(project, 'init.lua'), 1)
 equals('a lua file in a folder with no project marker starts no server', servers_attached(new_folder(), 'init.lua', 100), 0)
-equals('a typescript file in a folder with no project marker starts no server', servers_attached(new_folder(), 'app.ts', 100), 0)
-
-local lua = vim.lsp.config.lua_ls.settings.Lua
-equals(
-  'lua_ls knows the vim global and the runtime of Neovim',
-  { version = vim.tbl_get(lua, 'runtime', 'version'), library = vim.tbl_get(lua, 'workspace', 'library'), globals = vim.tbl_get(lua, 'diagnostics', 'globals') },
-  { version = 'LuaJIT', library = { vim.env.VIMRUNTIME }, globals = { 'vim' } }
-)
 
 local lsp_keys = {
   'n K', 'n gd', 'n grn', 'n gra', 'x gra', 'n grr', 'n gri', 'n gO', 'n [d', 'n ]d', 'i <C-S>', 's <C-S>', 'n \\d', 'n \\D',

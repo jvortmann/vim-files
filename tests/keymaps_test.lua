@@ -5,30 +5,44 @@ local equals = report.equals
 local child = dofile(tests_dir .. '/support/editor.lua')
 local keymaps = dofile(tests_dir .. '/support/keymaps.lua')
 
-equals('every comment map has a description', keymaps.undescribed({ '<M-/>', '<leader>/' }, { 'n', 'x' }), {})
-equals('every map that turns a key off has a description', keymaps.undescribed({ '<F1>', 'Q', 'K' }, { 'n' }), {})
-equals('every movement map has a description', keymaps.undescribed({ '<S-Up>', '<S-Down>' }), {})
-equals(
-  'every window map has a description',
-  keymaps.undescribed({ '<Space><Space>', '<Space>=', '<Space>_', '<Space><Bar>', '<Space>o', '<Space>r' }),
-  {}
-)
-equals(
-  'every location list map has a description',
-  keymaps.undescribed({ '<leader>lo', '<leader>lc', '<leader>lt', '<leader>ln', '<leader>lp' }),
-  {}
-)
-equals(
-  'every quickfix map has a description',
-  keymaps.undescribed({
+-- Lists the maps of the config, from the config and from its plugins, that have no description for which-key.
+-- The maps of the quickfix window exist only while it is open.
+local function undescribed_maps()
+  local missing = {}
+  local function add(lhs_list, modes)
+    vim.list_extend(missing, keymaps.undescribed(lhs_list, modes))
+  end
+  add({ '<M-/>', '<leader>/' }, { 'n', 'x' })
+  add({ '<F1>', 'Q', 'K' }, { 'n' })
+  add({ '<S-Up>', '<S-Down>' })
+  add({ '<Space><Space>', '<Space>=', '<Space>_', '<Space><Bar>', '<Space>o', '<Space>r' })
+  add({ '<leader>lo', '<leader>lc', '<leader>lt', '<leader>ln', '<leader>lp' })
+  add({
     '<leader><leader>o', '<leader><leader>c', '<leader><leader>t', '<leader><leader>n', '<leader><leader>p',
     '<leader>qo', '<leader>qc', '<leader>qt', '<leader>qn', '<leader>qp',
-  }),
-  {}
-)
+  })
+  add({ '<F5>', '<F6>' })
+  add({ '<M-S-Down>', '<M-S-j>', '<M-S-Up>', '<M-S-k>' }, { 'n', 'i', 'x', 's' })
+  add({ '<M-S-d>', '<leader>d', '<M-a>' })
+  add({ '>', '<' }, { 'x', 's' })
+  add({ 'Y', '<CR>' }, { 'n' })
+  add({ '<F2>' })
+  add({ '<F3>', '<S-F3>', '<leader>t', '<leader>t<space>', '<leader>ts', '<leader>tv' })
+  add({ '<F7>', '<S-F7>' })
+  add({
+    '<leader>f', '<leader>o', '<leader>ff', '<leader>fl', '<leader>fla', '<leader>fm', '<leader>fo', '<leader>ft',
+    '<leader>fta', '<leader>fh', '<leader>fg', '<leader>fw',
+  })
+  vim.fn.setqflist({ { filename = vim.fn.tempname(), lnum = 1 } })
+  vim.cmd('copen')
+  add({ '<CR>', 'h' }, { 'n' })
+  vim.cmd('cclose')
+  return missing
+end
+equals('every map of the config has a description for which-key', undescribed_maps(), {})
+
 vim.fn.setqflist({ { filename = vim.fn.tempname(), lnum = 1 } })
 vim.cmd('copen')
-equals('the maps of the quickfix window have a description', keymaps.undescribed({ '<CR>', 'h' }, { 'n' }), {})
 local quickfix_maps = {}
 for _, lhs in ipairs({ '<CR>', 'h' }) do
   local map = vim.fn.maparg(lhs, 'n', false, true)
@@ -40,18 +54,6 @@ equals(
   { ['<CR>'] = { '<CR>', 1, 1 }, h = { '<Left>', 1, 1 } }
 )
 vim.cmd('cclose')
-equals('every make map has a description', keymaps.undescribed({ '<F5>', '<F6>' }), {})
-equals(
-  'every editing map has a description',
-  vim.list_extend(
-    vim.list_extend(
-      keymaps.undescribed({ '<M-S-Down>', '<M-S-j>', '<M-S-Up>', '<M-S-k>' }, { 'n', 'i', 'x', 's' }),
-      keymaps.undescribed({ '<M-S-d>', '<leader>d', '<M-a>' })
-    ),
-    vim.list_extend(keymaps.undescribed({ '>', '<' }, { 'x', 's' }), keymaps.undescribed({ 'Y', '<CR>' }, { 'n' }))
-  ),
-  {}
-)
 
 local dir = vim.fn.resolve(vim.fn.tempname())
 vim.fn.mkdir(dir, 'p')

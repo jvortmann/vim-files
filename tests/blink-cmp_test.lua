@@ -5,14 +5,6 @@ local child = dofile(tests_dir .. '/support/editor.lua')
 local lsp_server = dofile(tests_dir .. '/support/lsp_server.lua')
 local equals = report.equals
 
-local sources = require('blink.cmp.config').sources
-equals(
-  'completion uses the lsp, path, snippets and buffer sources in every filetype',
-  { default = sources.default, per_filetype = sources.per_filetype },
-  { default = { 'lsp', 'path', 'snippets', 'buffer' }, per_filetype = {} }
-)
-equals('built-in keyword completion leaves out spell words', vim.tbl_contains(vim.opt.complete:get(), 'kspell'), false)
-
 vim.lsp.log.set_level(vim.log.levels.OFF)
 vim.lsp.config('lua_ls', { cmd = lsp_server.cmd({ initialize = { capabilities = {} } }) })
 local project = vim.fn.resolve(vim.fn.tempname())

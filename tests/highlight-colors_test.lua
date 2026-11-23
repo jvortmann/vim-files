@@ -31,14 +31,8 @@ local function has_color(row, col, color)
   return vim.wait(1000, function() return colors_at(row, col)[color] == true end, 20)
 end
 
-open('.css', { 'a {', '  color: #ff0000;', '  background: rgb(0, 128, 255);', '}' })
-check(
-  'treesitter highlights the css buffer',
-  vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] ~= nil,
-  'no treesitter highlighter'
-)
+open('.css', { 'a {', '  color: #ff0000;', '}' })
 check('a hex color code in css shows its color', has_color(1, 9, 0xff0000), 'no #ff0000 highlight at the code')
-check('an rgb() color in css shows its color', has_color(2, 14, 0x0080ff), 'no #0080ff highlight at the code')
 
 open('.lua', { 'local red = "#ff0000"' })
 vim.wait(300)

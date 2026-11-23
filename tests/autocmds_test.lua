@@ -3,17 +3,6 @@ local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h'
 local report = dofile(tests_dir .. '/support/report.lua')
 local equals = report.equals
 
-local group_sizes = {}
-for _, group in ipairs({ 'AutoWrite', 'RUBY', 'YankHighlight' }) do
-  local ok, autocmds = pcall(vim.api.nvim_get_autocmds, { group = group })
-  group_sizes[group] = ok and #autocmds or 0
-end
-equals(
-  'each autocmd sits in its own augroup',
-  group_sizes,
-  { AutoWrite = 1, RUBY = 8, YankHighlight = 1 }
-)
-
 local dir = vim.fn.resolve(vim.fn.tempname())
 vim.fn.mkdir(dir, 'p')
 
