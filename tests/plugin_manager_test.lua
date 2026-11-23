@@ -2,6 +2,7 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
+local child_stdout = dofile(tests_dir .. '/support/child_stdout.lua')
 
 local expected_plugins = {
   'nvim-treesitter/nvim-treesitter', 'brenoprata10/nvim-highlight-colors', 'keith/rspec.vim',
@@ -41,16 +42,6 @@ check(
   vim.deep_equal(managed, expected),
   'expected ' .. #expected .. ' plugins, got ' .. vim.inspect(managed)
 )
-
--- Starts a child Neovim with this config and args. Returns a function that waits up to 10 seconds for the child and
--- returns its stdout. All children start before the first wait, so they run at the same time.
-local function child_stdout(args)
-  local child = vim.system(vim.list_extend({ vim.v.progpath, '-i', 'NONE', '--headless' }, args), { stdin = false, text = true })
-  return function()
-    local result = child:wait(10000)
-    return result and result.stdout or ''
-  end
-end
 
 local function in_child(command, expression)
   return child_stdout({ '+silent! ' .. command, '+lua io.stdout:write(' .. expression .. ')', '+qa!' })
@@ -132,6 +123,10 @@ check('fzf-lua is not loaded at startup', package.loaded['fzf-lua'] == nil, 'fzf
 check('nvim-tree is not loaded at startup', package.loaded['nvim-tree'] == nil, 'nvim-tree is loaded at startup')
 check('mini.pairs is not loaded at startup', _G.MiniPairs == nil, 'MiniPairs exists at startup')
 check('conform is not loaded at startup', package.loaded.conform == nil, 'conform is loaded at startup')
+for _, name in ipairs({ 'nvim-treesitter', 'mini.surround', 'QFEnter' }) do
+  local plugin = require('lazy.core.config').plugins[name]
+  check(name .. ' is not loaded at startup', plugin ~= nil and plugin._.loaded == nil, name .. ' is loaded at startup')
+end
 
 local function loaded_file_plugins(dirs)
   local loaded = {}

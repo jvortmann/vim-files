@@ -1,6 +1,7 @@
 return {
   {
     'nvim-mini/mini.surround',
+    keys = { 'ys', 'yss', 'ds', 'cs', { 'S', mode = 'x' } },
     config = function()
       -- The vim-surround keys, from the setup in :help MiniSurround-vim-surround-config.
       require('mini.surround').setup({

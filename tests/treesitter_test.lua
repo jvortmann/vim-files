@@ -2,6 +2,7 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
+local child_stdout = dofile(tests_dir .. '/support/child_stdout.lua')
 
 -- Returns the languages that the spec installs. A stand-in for nvim-treesitter takes the list, so nothing installs.
 local function languages_in_spec()
@@ -26,8 +27,25 @@ local function check_captures(name, buf, expected)
   check(name, ok, 'got ' .. vim.inspect(found))
 end
 
+-- Starts a child Neovim with this config and args. Returns a function that waits for the child and returns the filetype
+-- of its current buffer and true or false for treesitter highlighting, such as "ruby true".
+local function child_highlight(args)
+  return child_stdout(vim.list_extend(args, {
+    '+lua io.stdout:write(vim.bo.filetype .. " " .. tostring(vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] ~= nil))',
+    '+qa!',
+  }))
+end
+
 local ruby_file = vim.fn.tempname() .. '.rb'
 vim.fn.writefile({ 'class Greeter', '  def hello', '  end', 'end' }, ruby_file)
+local first_buffers = {
+  { 'a ruby file as the argument gets treesitter highlighting', child_highlight({ ruby_file }), 'ruby true' },
+  { ':help as the first buffer gets treesitter highlighting', child_highlight({ '+help' }), 'help true' },
+  { ':setf ruby in the empty first buffer gets treesitter highlighting', child_highlight({ '+setf ruby' }), 'ruby true' },
+}
+for _, first in ipairs(first_buffers) do
+  report.equals(first[1], first[2](), first[3])
+end
 vim.cmd('silent edit ' .. vim.fn.fnameescape(ruby_file))
 local ruby_buf = vim.api.nvim_get_current_buf()
 local treesitter_indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
