@@ -5,6 +5,7 @@ local child = dofile(tests_dir .. '/support/editor.lua')
 local stub = dofile(tests_dir .. '/support/stub.lua')
 local mason = dofile(tests_dir .. '/support/mason.lua')
 local rpc = dofile(tests_dir .. '/support/rpc.lua')
+local tasks = dofile(tests_dir .. '/support/tasks.lua')
 local equals = report.equals
 
 local terminal = 'test-terminal'
@@ -54,57 +55,73 @@ local function exists(path)
   return vim.uv.fs_stat(path) ~= nil
 end
 
-local home = new_home()
-local run, job = start(home)
-run([[vim.cmd('split')]])
-equals('in Herdr, a split writes the session file', vim.wait(5000, function() return exists(home.session) end), true)
--- The stub creates its file a moment before it writes the call, so the test waits for the call itself.
-vim.wait(2000, function() return #stub.calls(home.calls) > 0 end, 10)
-equals('at start, nvim labels its terminal with the session file', stub.calls(home.calls), {
-  'label ' .. terminal .. ' restore.nvim=' .. home.session,
-})
-vim.fn.jobstop(job)
+-- Each case below runs at the same time as the others, in a home of its own. It returns what it saw, and the checks
+-- come after all of them, in the order of the cases.
 
--- Splits the window in the child, and returns whether it saves the session within 400 milliseconds. That is more than
--- quiet_ms and less than the default of 500, so the result shows which quiet time the child uses.
-local function saved_soon(run)
-  local writes = run('return vim.g.session_writes')
+local function label_case()
+  local home = new_home()
+  local run, job = start(home)
   run([[vim.cmd('split')]])
-  return vim.wait(400, function() return run('return vim.g.session_writes') > writes end)
+  local written = tasks.wait(5000, function() return exists(home.session) end)
+  -- The stub creates its file a moment before it writes the call, so the test waits for the call itself.
+  tasks.wait(2000, function() return #stub.calls(home.calls) > 0 end)
+  vim.fn.jobstop(job)
+  return { written = written, calls = stub.calls(home.calls), session = home.session }
 end
 
-run, job = start(new_home())
-equals('with g:herdr_session_quiet_ms at 50, a split saves the session within 400 ms', saved_soon(run), true)
-vim.fn.jobstop(job)
-run, job = start(new_home(), {}, { '--cmd', 'unlet g:herdr_session_quiet_ms' })
-equals('by default, a split waits 500 ms before it saves the session', saved_soon(run), false)
-vim.fn.jobstop(job)
+-- Splits the window in the child, and returns whether it saves the session within 400 milliseconds. That is more than
+-- quiet_ms and less than the default of 500, so the result shows which quiet time the child uses. The child measures
+-- the time itself, so a late check of the test cannot change the result.
+local function saved_soon(run)
+  run([[
+    local split_at = vim.uv.hrtime()
+    vim.api.nvim_create_autocmd('SessionWritePost', {
+      once = true,
+      callback = function() vim.g.save_delay_ms = (vim.uv.hrtime() - split_at) / 1e6 end,
+    })
+    vim.cmd('split')
+  ]])
+  tasks.wait(2000, function() return run('return vim.g.save_delay_ms ~= nil') end)
+  local delay = run('return vim.g.save_delay_ms or false')
+  return delay ~= false and delay <= 400
+end
+
+local function quiet_case()
+  local run, job = start(new_home())
+  local saved = saved_soon(run)
+  vim.fn.jobstop(job)
+  return saved
+end
+
+local function default_quiet_case()
+  local run, job = start(new_home(), {}, { '--cmd', 'unlet g:herdr_session_quiet_ms' })
+  local saved = saved_soon(run)
+  vim.fn.jobstop(job)
+  return saved
+end
 
 -- Splits the window and waits longer than a save takes. Returns whether the file exists, and the calls to the stub.
 local function after_split(home, env)
   local run, job = start(home, env)
   run([[vim.cmd('split')]])
-  vim.wait(no_save_ms)
+  tasks.wait(no_save_ms)
   vim.fn.jobstop(job)
   return { file = exists(home.session), calls = stub.calls(home.calls) }
 end
-
-equals(
-  'an nvim inside nvim writes no file and calls no hc',
-  after_split(new_home(), { NVIM = '/tmp/parent-nvim' }),
-  { file = false, calls = {} }
-)
-equals(
-  'outside Herdr, nvim writes no file and calls no hc',
-  after_split(new_home(), { HC_TERMINAL_ID = false }),
-  { file = false, calls = {} }
-)
 
 -- Calls action, and waits until the child writes the session again.
 local function until_saved(run, action)
   local writes = run('return vim.g.session_writes')
   action()
-  vim.wait(5000, function() return run('return vim.g.session_writes') > writes end)
+  tasks.wait(5000, function() return run('return vim.g.session_writes') > writes end)
+end
+
+-- Starts nvim -S with a copy of the session file of the child that run reaches. The child can save again while a new
+-- nvim reads the file, so the child reads the file itself, between two of its saves, and the copy is complete.
+local function start_restore(run, home)
+  local copy = home.dir .. '/restore.vim'
+  vim.fn.writefile(run([[return vim.fn.readfile(..., 'b')]], home.session), copy, 'b')
+  return start(home, { HC_TERMINAL_ID = false }, { '-S', copy })
 end
 
 -- Returns the file name and the cursor line of each window in the tab of the child.
@@ -117,36 +134,37 @@ local layout = [[
   return found
 ]]
 
-home = new_home()
-for _, name in ipairs({ 'a.txt', 'b.txt' }) do
-  vim.fn.writefile({ '1', '2', '3', '4', '5' }, home.work .. '/' .. name)
+local function layout_case()
+  local home = new_home()
+  for _, name in ipairs({ 'a.txt', 'b.txt' }) do
+    vim.fn.writefile({ '1', '2', '3', '4', '5' }, home.work .. '/' .. name)
+  end
+  local run, job, editor = start(home, {}, { 'a.txt' })
+  until_saved(run, function() run([[vim.cmd('3 | vsplit b.txt')]]) end)
+  until_saved(run, function() vim.rpcrequest(editor, 'nvim_input', '4G') end)
+  local restore_run, restore_job = start_restore(run, home)
+  local splits = { restored = restore_run(layout), saved = run(layout) }
+  vim.fn.jobstop(restore_job)
+  until_saved(run, function() run([[vim.cmd('only')]]) end)
+  restore_run, restore_job = start_restore(run, home)
+  local closed = { restored = restore_run(layout), saved = run(layout) }
+  vim.fn.jobstop(restore_job)
+  local writes = run('return vim.g.session_writes')
+  run([[vim.api.nvim_exec_autocmds('VimResized', {})]])
+  local resized = tasks.wait(5000, function() return run('return vim.g.session_writes') > writes end)
+  vim.fn.jobstop(job)
+  return { splits = splits, closed = closed, resized = resized }
 end
-local editor
-run, job, editor = start(home, {}, { 'a.txt' })
-until_saved(run, function() run([[vim.cmd('3 | vsplit b.txt')]]) end)
-until_saved(run, function() vim.rpcrequest(editor, 'nvim_input', '4G') end)
-local restore_run, restore_job = start(home, { HC_TERMINAL_ID = false }, { '-S', home.session })
-equals('nvim -S brings back the splits and the cursors', restore_run(layout), run(layout))
-vim.fn.jobstop(restore_job)
-until_saved(run, function() run([[vim.cmd('only')]]) end)
-restore_run, restore_job = start(home, { HC_TERMINAL_ID = false }, { '-S', home.session })
-equals('closing a split saves the session', restore_run(layout), run(layout))
-vim.fn.jobstop(restore_job)
-local writes = run('return vim.g.session_writes')
-run([[vim.api.nvim_exec_autocmds('VimResized', {})]])
-equals(
-  'a resize of the terminal saves the session',
-  vim.wait(5000, function() return run('return vim.g.session_writes') > writes end),
-  true
-)
-vim.fn.jobstop(job)
 
-home = new_home()
-run, job, editor = start(home)
-until_saved(run, function() run([[vim.cmd('split')]]) end)
-vim.rpcnotify(editor, 'nvim_command', 'qall')
-vim.fn.jobwait({ job }, 5000)
-equals('a clean quit removes the session file', exists(home.session), false)
+local function quit_case()
+  local home = new_home()
+  local run, job, editor = start(home)
+  until_saved(run, function() run([[vim.cmd('split')]]) end)
+  vim.rpcnotify(editor, 'nvim_command', 'qall')
+  tasks.wait(5000, function() return vim.fn.jobwait({ job }, 0)[1] ~= -1 end)
+  vim.fn.jobstop(job)
+  return exists(home.session)
+end
 
 -- Starts nvim with its terminal interface on a pseudo terminal, as in a Herdr pane. It waits until nvim labels the terminal.
 local function start_in_terminal(home)
@@ -160,28 +178,26 @@ local function start_in_terminal(home)
     env = home.env,
   })
   local editor
-  assert(vim.wait(5000, function()
+  assert(tasks.wait(5000, function()
     editor = rpc.connect(socket)
     return editor ~= nil
   end), 'the nvim in the terminal opened no socket')
-  assert(vim.wait(5000, function() return exists(home.calls) end), 'the nvim in the terminal did not label it')
+  assert(tasks.wait(5000, function() return exists(home.calls) end), 'the nvim in the terminal did not label it')
   return editor, job
 end
 
-home = new_home()
-vim.fn.writefile({ 'x' }, home.work .. '/hangup.txt')
-editor, job = start_in_terminal(home)
-vim.rpcrequest(editor, 'nvim_command', 'edit hangup.txt')
--- Closing the pseudo terminal hangs up nvim, as when Herdr stops.
-vim.fn.jobstop(job)
--- jobwait() returns at once for a stopped job on a pseudo terminal, so wait for the file.
-equals(
-  'a hang-up of the terminal saves the session file',
-  vim.wait(5000, function()
+local function hangup_case()
+  local home = new_home()
+  vim.fn.writefile({ 'x' }, home.work .. '/hangup.txt')
+  local editor, job = start_in_terminal(home)
+  vim.rpcrequest(editor, 'nvim_command', 'edit hangup.txt')
+  -- Closing the pseudo terminal hangs up nvim, as when Herdr stops.
+  vim.fn.jobstop(job)
+  -- jobwait() returns at once for a stopped job on a pseudo terminal, so wait for the file.
+  return tasks.wait(5000, function()
     return exists(home.session) and vim.fn.join(vim.fn.readfile(home.session), '\n'):find('hangup.txt', 1, true) ~= nil
-  end),
-  true
-)
+  end)
+end
 
 -- Returns the file name of each listed buffer of the child.
 local listed = [[
@@ -194,67 +210,112 @@ local listed = [[
   return found
 ]]
 
-home = new_home()
-vim.fn.writefile({ 'x' }, home.work .. '/a.txt')
-run, job = start(home, {}, { 'a.txt' })
-until_saved(run, function()
+local function side_windows_case()
+  local home = new_home()
+  vim.fn.writefile({ 'x' }, home.work .. '/a.txt')
+  local run, job = start(home, {}, { 'a.txt' })
+  until_saved(run, function()
+    run([[
+      vim.cmd('NvimTreeOpen')
+      vim.cmd('help')
+      vim.cmd('botright new')
+      vim.cmd('botright split | terminal')
+      vim.cmd('copen')
+      vim.keymap.set('n', '<F12>', ':echo 1<CR>')
+      vim.o.report = 7
+    ]])
+  end)
+  local windows = run('return #vim.api.nvim_list_wins()')
+  local restore_run, restore_job = start_restore(run, home)
+  local restored = {
+    windows = restore_run(layout),
+    buffers = restore_run(listed),
+    globals = restore_run([[return { map = vim.fn.maparg('<F12>', 'n'), report = vim.o.report }]]),
+  }
+  vim.fn.jobstop(restore_job)
+  vim.fn.jobstop(job)
+  return { windows = windows, restored = restored }
+end
+
+local function burst_case()
+  local run, job = start(new_home())
+  tasks.wait(no_save_ms)
+  local writes = run('return vim.g.session_writes')
   run([[
-    vim.cmd('NvimTreeOpen')
-    vim.cmd('help')
-    vim.cmd('botright new')
-    vim.cmd('botright split | terminal')
-    vim.cmd('copen')
-    vim.keymap.set('n', '<F12>', ':echo 1<CR>')
-    vim.o.report = 7
+    for _ = 1, 20 do
+      vim.cmd('split')
+      vim.cmd('close')
+    end
   ]])
-end)
-equals('saving the session keeps every window open', run('return #vim.api.nvim_list_wins()'), 6)
-restore_run, restore_job = start(home, { HC_TERMINAL_ID = false }, { '-S', home.session })
+  tasks.wait(5000, function() return run('return vim.g.session_writes') > writes end)
+  tasks.wait(no_save_ms)
+  writes = run('return vim.g.session_writes') - writes
+  vim.fn.jobstop(job)
+  return writes
+end
+
+local function command_window_case()
+  local run, job, editor = start(new_home())
+  vim.rpcrequest(editor, 'nvim_input', 'q:')
+  tasks.wait(5000, function() return run('return vim.fn.getcmdwintype()') == ':' end)
+  run([[vim.v.errmsg = '' vim.api.nvim_exec_autocmds('VimResized', {})]])
+  tasks.wait(no_save_ms, function() return run('return vim.v.errmsg') ~= '' end)
+  local error = run('return vim.v.errmsg')
+  vim.fn.jobstop(job)
+  return error
+end
+
+local function headless_case()
+  local home = new_home()
+  local done = false
+  vim.system(
+    vim.list_extend({ 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--headless', '-c', 'split', '-c', 'sleep ' .. no_save_ms .. 'm', '-c', 'cquit' }, home.args),
+    { cwd = home.work, env = home.env, timeout = 10000 },
+    function() done = true end
+  )
+  tasks.wait(10000, function() return done end)
+  return { file = exists(home.session), calls = stub.calls(home.calls) }
+end
+
+local cases = {
+  label_case,
+  quiet_case,
+  default_quiet_case,
+  function() return after_split(new_home(), { NVIM = '/tmp/parent-nvim' }) end,
+  function() return after_split(new_home(), { HC_TERMINAL_ID = false }) end,
+  layout_case,
+  quit_case,
+  hangup_case,
+  side_windows_case,
+  burst_case,
+  command_window_case,
+  headless_case,
+}
+local label, quiet, default_quiet, nested, outside, layout_result, quit, hangup, side, burst, command_window, headless =
+  unpack(tasks.all(cases), 1, #cases)
+
+equals('in Herdr, a split writes the session file', label.written, true)
+equals('at start, nvim labels its terminal with the session file', label.calls, {
+  'label ' .. terminal .. ' restore.nvim=' .. label.session,
+})
+equals('with g:herdr_session_quiet_ms at 50, a split saves the session within 400 ms', quiet, true)
+equals('by default, a split waits 500 ms before it saves the session', default_quiet, false)
+equals('an nvim inside nvim writes no file and calls no hc', nested, { file = false, calls = {} })
+equals('outside Herdr, nvim writes no file and calls no hc', outside, { file = false, calls = {} })
+equals('nvim -S brings back the splits and the cursors', layout_result.splits.restored, layout_result.splits.saved)
+equals('closing a split saves the session', layout_result.closed.restored, layout_result.closed.saved)
+equals('a resize of the terminal saves the session', layout_result.resized, true)
+equals('a clean quit removes the session file', quit, false)
+equals('a hang-up of the terminal saves the session file', hangup, true)
+equals('saving the session keeps every window open', side.windows, 6)
 equals(
   'nvim -S brings back no side window, help, terminal or empty window',
-  { windows = restore_run(layout), buffers = restore_run(listed) },
+  { windows = side.restored.windows, buffers = side.restored.buffers },
   { windows = { { 'a.txt', 1 } }, buffers = { 'a.txt' } }
 )
-equals(
-  'nvim -S brings back no global option or map',
-  restore_run([[return { map = vim.fn.maparg('<F12>', 'n'), report = vim.o.report }]]),
-  { map = '', report = 2 }
-)
-vim.fn.jobstop(restore_job)
-vim.fn.jobstop(job)
-
-run, job = start(new_home())
-vim.wait(no_save_ms)
-writes = run('return vim.g.session_writes')
-run([[
-  for _ = 1, 20 do
-    vim.cmd('split')
-    vim.cmd('close')
-  end
-]])
-vim.wait(5000, function() return run('return vim.g.session_writes') > writes end)
-vim.wait(no_save_ms)
-writes = run('return vim.g.session_writes') - writes
-report.check('a burst of 20 splits and closes writes the session once or twice', writes >= 1 and writes <= 2, writes .. ' writes')
-vim.fn.jobstop(job)
-
-run, job, editor = start(new_home())
-vim.rpcrequest(editor, 'nvim_input', 'q:')
-vim.wait(5000, function() return run('return vim.fn.getcmdwintype()') == ':' end)
-run([[vim.v.errmsg = '' vim.api.nvim_exec_autocmds('VimResized', {})]])
-vim.wait(no_save_ms, function() return run('return vim.v.errmsg') ~= '' end)
-equals('a save while the command-line window is open shows no error', run('return vim.v.errmsg'), '')
-vim.fn.jobstop(job)
-
-home = new_home()
-vim.system(
-  vim.list_extend({ 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--headless', '-c', 'split', '-c', 'sleep ' .. no_save_ms .. 'm', '-c', 'cquit' }, home.args),
-  { cwd = home.work, env = home.env }
-):wait(10000)
-equals(
-  'a headless nvim, such as a script, writes no file and calls no hc',
-  { file = exists(home.session), calls = stub.calls(home.calls) },
-  { file = false, calls = {} }
-)
+equals('nvim -S brings back no global option or map', side.restored.globals, { map = '', report = 2 })
+report.check('a burst of 20 splits and closes writes the session once or twice', burst >= 1 and burst <= 2, burst .. ' writes')
+equals('a save while the command-line window is open shows no error', command_window, '')
+equals('a headless nvim, such as a script, writes no file and calls no hc', headless, { file = false, calls = {} })
 
 report.finish()
