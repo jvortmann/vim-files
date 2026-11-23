@@ -222,6 +222,11 @@ In the quickfix window (mode n):
 | `<Leader>fw` | n, v, o | Grep the word under the cursor |
 | `<Leader>fh` | n, v, o | Find recent files and the open buffers |
 | `<F2>` | n, v, o | Toggle the file tree (nvim-tree) |
+| `<CR>`, `o` | n | Open the file in the last window (nvim-tree key, in the tree window) |
+| `<C-v>` | n | Open the file in a vertical split (nvim-tree key, in the tree window) |
+| `<C-x>` | n | Open the file in a horizontal split (nvim-tree key, in the tree window) |
+| `<C-t>` | n | Open the file in a new tab (nvim-tree key, in the tree window) |
+| `<Tab>` | n | Open the file and keep the cursor in the tree (nvim-tree key, in the tree window) |
 | `H` | n | Toggle the dotfiles (nvim-tree key, in the tree window) |
 | `I` | n | Toggle the files that git ignores (nvim-tree key, in the tree window) |
 | `<C-]>` | n | Make the folder under the cursor the root (nvim-tree key, in the tree window) |
