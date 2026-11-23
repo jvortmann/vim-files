@@ -120,11 +120,12 @@ assert(vim.wait(5000, function()
   local split = pane.run([[return { #vim.api.nvim_tabpage_list_wins(0), vim.fn.winlayout()[1], vim.fn.expand('%:t') }]])
   return vim.deep_equal(split, { 2, 'row', 'other.txt' })
 end), 'ctrl-v did not open other.txt from the files picker')
-equals(
-  'the files picker keeps its query in the files history of g:fzf_history_dir',
-  vim.fn.filereadable(history_dir .. '/files') == 1 and vim.fn.readfile(history_dir .. '/files') or {},
-  { 'otx' }
-)
+local function files_history()
+  return vim.fn.filereadable(history_dir .. '/files') == 1 and vim.fn.readfile(history_dir .. '/files') or {}
+end
+-- fzf writes the history in its own process, and it can finish after other.txt opens. So the check waits for the query.
+vim.wait(2000, function() return vim.deep_equal(files_history(), { 'otx' }) end, 10)
+equals('the files picker keeps its query in the files history of g:fzf_history_dir', files_history(), { 'otx' })
 
 pane.stop()
 report.finish()

@@ -270,16 +270,25 @@ local function command_window_case()
   return error
 end
 
+-- Nvim runs `-c` commands before VimEnter, so a quit there ends nvim first. A session module that starts on VimEnter
+-- then passed the check. The split and the quit run after VimEnter. The exit code 1 of cquit shows that they ran.
+local headless_script = ([[
+  lua vim.api.nvim_create_autocmd('VimEnter', { once = true, callback = function()
+    vim.cmd('split')
+    vim.defer_fn(function() vim.cmd('cquit') end, %d)
+  end })
+]]):format(no_save_ms)
+
 local function headless_case()
   local home = new_home()
-  local done = false
+  local exit
   vim.system(
-    vim.list_extend({ 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--headless', '-c', 'split', '-c', 'sleep ' .. no_save_ms .. 'm', '-c', 'cquit' }, home.args),
+    vim.list_extend({ 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--headless', '-c', headless_script }, home.args),
     { cwd = home.work, env = home.env, timeout = 10000 },
-    function() done = true end
+    function(result) exit = result.code end
   )
-  tasks.wait(10000, function() return done end)
-  return { file = exists(home.session), calls = stub.calls(home.calls) }
+  tasks.wait(10000, function() return exit ~= nil end)
+  return { file = exists(home.session), calls = stub.calls(home.calls), exit = exit }
 end
 
 local cases = {
@@ -321,6 +330,10 @@ equals(
 equals('nvim -S brings back no global option or map', side.restored.globals, { map = '', report = 2 })
 report.check('a burst of 20 splits and closes writes the session once or twice', burst >= 1 and burst <= 2, burst .. ' writes')
 equals('a save while the command-line window is open shows no error', command_window, '')
-equals('a headless nvim, such as a script, writes no file and calls no hc', headless, { file = false, calls = {} })
+equals(
+  'a headless nvim, such as a script, writes no file and calls no hc',
+  headless,
+  { file = false, calls = {}, exit = 1 }
+)
 
 report.finish()
