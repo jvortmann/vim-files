@@ -34,7 +34,7 @@ return {
         map('n', '<leader>gr', gitsigns.reset_hunk, 'Reset the git hunk')
         map('x', '<leader>gr', function() gitsigns.reset_hunk(selected_lines()) end, 'Reset the selected lines of the git hunk')
         map('n', '<leader>gp', gitsigns.preview_hunk, 'Preview the git hunk')
-        map('n', '<leader>gb', function() gitsigns.blame_line({ full = true }) end, 'Show the git blame of the line')
+        map('n', '<leader>gb', function() gitsigns.blame_line() end, 'Show the git blame of the line')
         map({ 'o', 'x' }, 'ih', gitsigns.select_hunk, 'Git hunk')
       end,
     },

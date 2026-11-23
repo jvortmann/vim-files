@@ -234,7 +234,7 @@ In the quickfix window (mode n):
 | `<Leader>gs` | n, v | Stage the hunk, or the selected lines |
 | `<Leader>gr` | n, v | Reset the hunk, or the selected lines |
 | `<Leader>gp` | n | Preview the hunk |
-| `<Leader>gb` | n | Show the git blame of the line |
+| `<Leader>gb` | n | Show the blame of the line: hash, author, date and summary. Press again to go into the popup, `q` closes it |
 | `ih` | o, x | Select the hunk |
 
 In a diff window, `]c` and `[c` keep their built-in jumps.

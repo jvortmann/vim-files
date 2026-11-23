@@ -134,6 +134,26 @@ equals(
   true
 )
 
+-- On a line with no commit, the popup shows only "Not Committed Yet", with or without the full option.
+-- The test repos have no commit, so the test replaces blame_line of gitsigns and reads the option of the call.
+local record_blame = [[
+  _G.blame_call = 'none'
+  require('gitsigns').blame_line = function(opts)
+    _G.blame_call = { full = type(opts) == 'table' and opts.full == true }
+  end
+]]
+equals(
+  '<leader>gb asks for the short blame popup, with no commit body and no diff',
+  after_keys({
+    setup = record_blame,
+    line = 1,
+    keys = '<leader>gb',
+    expected = { full = false },
+    read = function(run) return run('return _G.blame_call') end,
+  }),
+  { full = false }
+)
+
 local function read_line(run)
   return run([[return vim.fn.line('.')]])
 end
