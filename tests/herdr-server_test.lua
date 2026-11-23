@@ -97,17 +97,25 @@ local function start_and_quit(env)
   return stub.calls(home.calls)
 end
 
+-- Nvim runs `-c` commands before VimEnter, so a quit there ends nvim first. Under the old check, a label module that
+-- starts on VimEnter passed. The wait and the quit run after VimEnter. The exit code 1 of cquit shows that they ran.
+local headless_script = ([[
+  lua vim.api.nvim_create_autocmd('VimEnter', { once = true, callback = function()
+    vim.defer_fn(function() vim.cmd('cquit') end, %d)
+  end })
+]]):format(no_call_ms)
+
 local function headless_case()
   local home = new_home()
-  local done = false
+  local exit
   vim.system(
-    vim.list_extend({ 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--headless', '-c', 'sleep ' .. no_call_ms .. 'm', '-c', 'qall' }, home.args),
+    vim.list_extend({ 'env', '-u', 'NVIM', vim.v.progpath, '-i', 'NONE', '--headless', '-c', headless_script }, home.args),
     { cwd = home.dir, env = home.env, timeout = 10000 },
-    function() done = true end
+    function(result) exit = result.code end
   )
-  tasks.wait(10000, function() return done end)
+  tasks.wait(10000, function() return exit ~= nil end)
   tasks.wait(no_call_ms)
-  return stub.calls(home.calls)
+  return { calls = stub.calls(home.calls), exit = exit }
 end
 
 local cases = {
@@ -123,7 +131,7 @@ local label, headless, nested, outside, quit, no_server = unpack(tasks.all(cases
 equals('at start, nvim labels its terminal with its server address', label.calls, {
   'label ' .. terminal .. ' nvim.server=' .. label.server,
 })
-equals('a headless nvim, such as a script, calls no hc', headless, {})
+equals('a headless nvim, such as a script, calls no hc', headless, { calls = {}, exit = 1 })
 equals('an nvim inside nvim calls no hc', nested, {})
 equals('outside Herdr, nvim calls no hc', outside, {})
 equals('a quit removes the label', quit.calls, {
