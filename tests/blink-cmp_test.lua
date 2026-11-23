@@ -208,6 +208,28 @@ type_keys('<Up>')
 local recalled_with_up = wait_for(function() return call('return vim.fn.getcmdline()') end, 'let g:typed = 1')
 type_keys('<Esc>')
 wait_for_mode('n')
+-- Returns the cursor position on the command line, the command line, and the label of the selected item or false.
+local function cmdline_cursor()
+  return call([[
+    local item = require('blink.cmp').get_selected_item()
+    return { vim.fn.getcmdpos(), vim.fn.getcmdline(), item and item.label or false }
+  ]])
+end
+type_keys(':ech')
+wait_for(cmdline_menu, { visible = true, echo = true })
+type_keys('<Left>')
+local moved_left = wait_for(cmdline_cursor, { 3, 'ech', false })
+local menu_after_left = wait_for(cmdline_menu, { visible = true, echo = true })
+type_keys('<Right>')
+local moved_right = wait_for(cmdline_cursor, { 4, 'ech', false })
+type_keys('<Esc>')
+wait_for_mode('n')
+type_keys(':ech')
+wait_for(cmdline_menu, { visible = true, echo = true })
+type_keys('<C-n>')
+local selected_with_ctrl_n = wait_for(cmdline_cursor, { 5, 'echo', 'echo' })
+type_keys('<Esc>')
+wait_for_mode('n')
 
 vim.fn.jobstop(job)
 
@@ -231,5 +253,8 @@ equals('typing on the command line opens the menu of blink.cmp, with the matchin
 equals('<Tab> on the command line completes the command with the first item of the menu', completed_with_tab, { 'echo', 'echo' })
 equals('<CR> on the command line with no selected item runs the typed command', ran_with_enter, 1)
 equals('<Up> on the command line with the menu open recalls the last command', recalled_with_up, 'let g:typed = 1')
+equals('<Left> on the command line with the menu open moves the cursor left, and selects no item', moved_left, { 3, 'ech', false })
+equals('<Right> on the command line with the menu open moves the cursor right, and selects no item', { menu_after_left, moved_right }, { { visible = true, echo = true }, { 4, 'ech', false } })
+equals('<C-n> on the command line selects the next item, and puts it in the line', selected_with_ctrl_n, { 5, 'echo', 'echo' })
 
 report.finish()

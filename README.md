@@ -288,7 +288,8 @@ buffer.
 | `<Tab>`, `<S-Tab>` | i, s | Go to the next or previous field of a snippet |
 | `<C-k>` | i | Show or hide the signature of the function. When no language server of the buffer gives signatures, start a digraph |
 | `<Tab>`, `<S-Tab>` | c | Select the next or previous item, and insert it |
-| `<C-n>`, `<C-p>`, `<Right>`, `<Left>` | c | Select the next or previous item |
+| `<C-n>`, `<C-p>` | c | Select the next or previous item |
+| `<Left>`, `<Right>` | c | Move the cursor in the line, also with the menu open |
 | `<C-y>` | c | Accept the selected item |
 | `<C-e>` | c | Close the menu |
 

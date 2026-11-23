@@ -19,6 +19,7 @@ return {
       },
       completion = { list = { selection = { preselect = false } } },
       cmdline = {
+        keymap = { preset = 'cmdline', ['<Left>'] = false, ['<Right>'] = false },
         completion = { list = { selection = { preselect = false } }, menu = { auto_show = true } },
       },
       signature = { enabled = true },
