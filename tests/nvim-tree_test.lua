@@ -96,4 +96,87 @@ equals(
 )
 equals('the tree lists a dotfile', listed['.hidden'], true)
 vim.fn.jobstop(job)
+
+local opening = vim.fn.resolve(vim.fn.tempname())
+vim.fn.mkdir(opening, 'p')
+git_repo.write(opening, { ['file.txt'] = { 'file' }, ['other.txt'] = { 'other' } })
+
+-- Starts an editor on file.txt, runs the Lua of case.setup, opens the tree and types case.keys on the line of
+-- other.txt. Then it runs the Lua of case.read, with the result of case.setup, until it returns case.expected or 3
+-- seconds pass. It returns the last result of case.read.
+local function open_from_tree(case)
+  editor, job = child.start({ cwd = opening, files = { 'file.txt' } })
+  local before = case.setup and run(case.setup)
+  after_keys('<F2>', 'left')
+  vim.wait(3000, function()
+    return run([[
+      for number, line in ipairs(vim.api.nvim_buf_get_lines(0, 0, -1, false)) do
+        if line:find('%sother%.txt$') then
+          vim.api.nvim_win_set_cursor(0, { number, 0 })
+          return true
+        end
+      end
+      return false
+    ]])
+  end)
+  vim.rpcrequest(editor, 'nvim_input', case.keys)
+  local got
+  vim.wait(3000, function()
+    got = run(case.read, before)
+    return vim.deep_equal(got, case.expected)
+  end)
+  vim.fn.jobstop(job)
+  return got
+end
+
+-- Lua code that returns the number of windows, the kind of split that holds the current window ('row' or 'col'),
+-- and the name of the file in that window.
+local split = [[
+  local function parent(node, win, kind)
+    if node[1] == 'leaf' then
+      return node[2] == win and kind or nil
+    end
+    for _, child in ipairs(node[2]) do
+      local found = parent(child, win, node[1])
+      if found then
+        return found
+      end
+    end
+  end
+  return {
+    windows = #vim.api.nvim_tabpage_list_wins(0),
+    split = parent(vim.fn.winlayout(), vim.api.nvim_get_current_win()),
+    file = vim.fn.expand('%:t'),
+  }
+]]
+
+local horizontal = { windows = 3, split = 'col', file = 'other.txt' }
+equals(
+  '<C-s> in the tree opens the file in a horizontal split',
+  open_from_tree({ keys = '<C-s>', read = split, expected = horizontal }),
+  horizontal
+)
+local described = 'nvim-tree: Open: Horizontal Split'
+equals(
+  '<C-s> in the tree has a description in the form of the default keys of nvim-tree',
+  open_from_tree({ keys = '', read = [[return vim.fn.maparg('<C-s>', 'n', false, true).desc]], expected = described }),
+  described
+)
+local vertical = { windows = 3, split = 'row', file = 'other.txt' }
+equals(
+  '<C-v>, a default key of the tree, still opens the file in a vertical split',
+  open_from_tree({ keys = '<C-v>', read = split, expected = vertical }),
+  vertical
+)
+
+equals(
+  '<CR> in the tree, with two windows open, opens the file in the last window and asks for no window',
+  open_from_tree({
+    setup = [[vim.cmd('vsplit') return vim.api.nvim_get_current_win()]],
+    keys = '<CR>',
+    read = [[return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(...)), ':t')]],
+    expected = 'other.txt',
+  }),
+  'other.txt'
+)
 report.finish()

@@ -225,6 +225,7 @@ In the quickfix window (mode n):
 | `<CR>`, `o` | n | Open the file in the last window (nvim-tree key, in the tree window) |
 | `<C-v>` | n | Open the file in a vertical split (nvim-tree key, in the tree window) |
 | `<C-x>` | n | Open the file in a horizontal split (nvim-tree key, in the tree window) |
+| `<C-s>` | n | Open the file in a horizontal split (key of this config, in the tree window) |
 | `<C-t>` | n | Open the file in a new tab (nvim-tree key, in the tree window) |
 | `<Tab>` | n | Open the file and keep the cursor in the tree (nvim-tree key, in the tree window) |
 | `H` | n | Toggle the dotfiles (nvim-tree key, in the tree window) |
@@ -234,6 +235,7 @@ In the quickfix window (mode n):
 | `g?` | n | Show all keys of the tree (nvim-tree key, in the tree window) |
 
 The tree lists the whole folder, also the files that git ignores.
+A file opens in the last window, with no prompt to pick a window.
 `:e .` still opens netrw, because nvim-tree does not take over folders.
 
 ### Git hunks
