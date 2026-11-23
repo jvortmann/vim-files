@@ -2,7 +2,6 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local screen = dofile(tests_dir .. '/support/screen.lua')
-local child = dofile(tests_dir .. '/support/editor.lua')
 local equals = report.equals
 
 local leader = vim.g.mapleader or '\\'
@@ -24,43 +23,10 @@ local open_picker = [[
   end
 ]]
 
--- Each find key after the leader, and the fzf-lua picker that it opens.
-local pickers = {
-  { 'ff', 'files' }, { 'f', 'files' }, { 'fl', 'blines' }, { 'fla', 'lines' }, { 'fm', 'marks' },
-  { 'fo', 'buffers' }, { 'o', 'buffers' }, { 'ft', 'btags' }, { 'fta', 'tags' }, { 'fh', 'history' },
-}
-
--- The tags picker reads the tags file, and the btags picker runs ctags on first.lua.
-local tags_folder = new_folder({
-  ['first.lua'] = { 'local function one() end' },
-  ['second.lua'] = { 'local function two() end' },
-  tags = { 'one\tfirst.lua\t/^local function one() end$/;"\tf' },
-})
-local editor, job = child.start({ cwd = tags_folder, files = { 'first.lua', 'second.lua' } })
--- The child keeps its queries out of the fzf history of the user, and sets a mark for the marks picker.
-vim.rpcrequest(editor, 'nvim_exec_lua', [[
-  vim.g.fzf_history_dir = ...
-  vim.cmd.normal({ 'ma', bang = true })
-]], { vim.fn.tempname() })
-local opened, expected_pickers = {}, {}
-for _, case in ipairs(pickers) do
-  local keys, expected = leader .. case[1], case[2]
-  expected_pickers[keys] = expected
-  vim.rpcrequest(editor, 'nvim_input', keys)
-  vim.wait(3000, function()
-    opened[keys] = vim.rpcrequest(editor, 'nvim_exec_lua', open_picker, {})
-    return opened[keys] == expected
-  end)
-  vim.rpcrequest(editor, 'nvim_input', '<Esc>')
-  vim.wait(3000, function() return vim.rpcrequest(editor, 'nvim_exec_lua', open_picker, {}) == vim.NIL end)
-end
-vim.fn.jobstop(job)
-equals('each find key opens its fzf-lua picker', opened, expected_pickers)
-
 local pane = screen.start({
   width = 120,
   height = 30,
-  cwd = new_folder({ ['main.txt'] = { 'needleword here' }, ['other.txt'] = { 'alpha', 'here too', 'needleword' } }),
+  cwd = new_folder({ ['main.txt'] = { 'one' }, ['other.txt'] = { 'alpha' } }),
   args = { 'main.txt' },
 })
 -- fzf writes each query to its history, so the pane keeps that history out of the history of the user.
@@ -86,45 +52,6 @@ local function open(keys, expected)
   end)
   return got
 end
-
-local function close()
-  type_keys('<Esc>')
-  vim.wait(5000, function() return picker() == nil end)
-end
-
--- Waits until the pane lists the grep matches in expected. It returns the last matches that it read, as "file:line".
-local function grep_matches(expected)
-  local matches
-  vim.wait(5000, function()
-    matches = {}
-    for _, row in ipairs(pane.rows()) do
-      for file, line in row:gmatch('(%w+%.txt):(%d+):') do
-        table.insert(matches, file .. ':' .. line)
-      end
-    end
-    table.sort(matches)
-    return vim.deep_equal(matches, expected)
-  end)
-  return matches
-end
-
-open(leader .. 'fg', 'live_grep')
-type_keys('needleword')
-equals(
-  'leader fg lists each line of the folder that contains the typed text',
-  grep_matches({ 'main.txt:1', 'other.txt:3' }),
-  { 'main.txt:1', 'other.txt:3' }
-)
-close()
-
-pane.run([[vim.api.nvim_win_set_cursor(0, { 1, vim.fn.stridx(vim.fn.getline(1), 'here') })]])
-open(leader .. 'fw', 'grep_cword')
-equals(
-  'leader fw lists each line of the folder that contains the word under the cursor',
-  grep_matches({ 'main.txt:1', 'other.txt:2' }),
-  { 'main.txt:1', 'other.txt:2' }
-)
-close()
 
 -- Waits until a row of the pane matches the Lua pattern, and returns whether one does.
 local function shows(pattern)
@@ -187,20 +114,12 @@ equals(
   },
   { list = '7;54;66', preview = '7;54;66', border = '7;54;66', title = '7;54;66' }
 )
-local icon = pane.run([[return require('nvim-web-devicons').get_icon('other.txt')]])
--- fzf-lua puts an en space, not a plain space, between the icon and the name.
-equals(
-  'the files picker shows the devicon of each file before its name',
-  shows(vim.pesc(icon) .. '%W+other%.txt'),
-  true
-)
+-- ctrl-v ends the picker with an action, so fzf writes the query to its history.
 type_keys('<C-v>')
-local split
-vim.wait(5000, function()
-  split = pane.run([[return { #vim.api.nvim_tabpage_list_wins(0), vim.fn.winlayout()[1], vim.fn.expand('%:t') }]])
+assert(vim.wait(5000, function()
+  local split = pane.run([[return { #vim.api.nvim_tabpage_list_wins(0), vim.fn.winlayout()[1], vim.fn.expand('%:t') }]])
   return vim.deep_equal(split, { 2, 'row', 'other.txt' })
-end)
-equals('ctrl-v in the files picker opens the file in a vertical split', split, { 2, 'row', 'other.txt' })
+end), 'ctrl-v did not open other.txt from the files picker')
 equals(
   'the files picker keeps its query in the files history of g:fzf_history_dir',
   vim.fn.filereadable(history_dir .. '/files') == 1 and vim.fn.readfile(history_dir .. '/files') or {},

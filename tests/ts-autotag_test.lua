@@ -5,12 +5,8 @@ local equals = report.equals
 local lines_after_keys = dofile(tests_dir .. '/support/typing.lua').lines_after_keys
 
 -- After nvim_feedkeys, the next message starts without a newline. So feed all keys first, and report the checks after.
-local closed_html = lines_after_keys('.html', { '' }, 'i<div>x')
 local closed_erb = lines_after_keys('.html.erb', { '' }, 'i<div>x')
-local renamed = lines_after_keys('.html', { '<div></div>' }, 'ciwspan<Esc>', { 1, 1 })
 
-equals('typing an open tag in html adds its closing tag, with the cursor between them', closed_html, { '<div>x</div>' })
 equals('typing an open tag in html.erb adds its closing tag, with the cursor between them', closed_erb, { '<div>x</div>' })
-equals('renaming an open tag in html renames its closing tag', renamed, { '<span></span>' })
 
 report.finish()

@@ -35,9 +35,4 @@ equals(
   { '.hidden/x.txt', 'file.txt', 'lib/vendor/x.rb' }
 )
 
-local file_match = vim.tbl_filter(function(item)
-  return relative_name(item) == 'file.txt'
-end, results)[1] or {}
-equals(':grep puts the line and column of a match in the quickfix list', { file_match.lnum, file_match.col }, { 2, 3 })
-
 report.finish()

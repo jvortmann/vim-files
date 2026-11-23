@@ -149,8 +149,8 @@ equals('run.sh prints no tab, not even from the stack trace of a Lua error', sui
 
 equals(
   'a file in the repo shows by its path from the root of the repo',
-  run_suite({ tests_dir .. '/comment_test.lua' }).stdout:match('\nok 1 %- (%S+) # time='),
-  'tests/comment_test.lua'
+  run_suite({ tests_dir .. '/keymaps_test.lua' }).stdout:match('\nok 1 %- (%S+) # time='),
+  'tests/keymaps_test.lua'
 )
 
 local slow = report_file({ 'vim.wait(1000)', "report.check('slow', true)", 'report.finish()' })

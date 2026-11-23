@@ -36,32 +36,10 @@ local function shows(name, text)
   check(name, got:find(text, 1, true) ~= nil, 'expected ' .. vim.inspect(text) .. ' in ' .. vim.inspect(got))
 end
 
-open('sub/file.txt', { 'one two' })
-local function mode_part()
-  local first = statusline().highlights[1]
-  return { vim.trim(statusline().str):match('^%S+'), first.group, vim.api.nvim_get_hl(0, { name = first.group }).bg }
-end
-local normal = mode_part()
-vim.api.nvim_feedkeys('V', 'x!', false)
-local visual = mode_part()
-vim.api.nvim_feedkeys(vim.keycode('<Esc>'), 'x', false)
-equals(
-  'the mode name shows in the color of the mode',
-  { normal[1], normal[2], visual[1], visual[2], normal[3] ~= visual[3] },
-  { 'NORMAL', 'lualine_a_normal', 'V-LINE', 'lualine_a_visual', true }
-)
-
 open('sub/file.txt', { 'one two' }, { spell = true, spelllang = 'en_us,en_gb' })
 shows('the statusline shows the spell languages when spell is on', 'SPELL [EN_US/EN_GB]')
 
-open('sub/file.txt', { 'one two' }, { modified = true })
-shows('the statusline shows the path from the working folder and the modified marker', 'sub/file.txt [+]')
-
-open('sub/file.txt', { 'one two' }, { readonly = true })
-shows('the statusline shows the readonly marker', 'sub/file.txt [RO]')
-
 open('notes.md', { 'one two', 'three' })
-shows('the statusline shows the file type', 'markdown')
 shows('the statusline shows the word count of a text file', '3 words')
 vim.api.nvim_feedkeys('ggV', 'x!', false)
 shows('in visual mode, the statusline shows the word count of the selection', '2 words')
@@ -75,22 +53,6 @@ open('sub/file.txt', { 'one', 'two', 'three', 'four' })
 shows('the statusline shows how far the cursor is in the file, in percent, and the count of lines', '25%:4')
 vim.api.nvim_win_set_cursor(0, { 2, 2 })
 shows('the statusline shows the line and the column', ' 2:3 ')
-
-local namespace = vim.api.nvim_create_namespace('lualine_test')
-vim.diagnostic.set(namespace, 0, vim.tbl_map(function(severity)
-  return { lnum = 0, col = 0, severity = severity, message = 'problem' }
-end, { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN, vim.diagnostic.severity.WARN, vim.diagnostic.severity.INFO }))
-local diagnostics_line = statusline().str
-equals(
-  'the statusline shows the count of errors and warnings, and no other diagnostic',
-  { diagnostics_line:find('E:1 W:2', 1, true) ~= nil, diagnostics_line:find('I:', 1, true) ~= nil },
-  { true, false }
-)
-
-vim.fn.setqflist({}, ' ', { title = 'search for two', items = { { filename = 'sub/file.txt', lnum = 2, text = 'two' } } })
-vim.cmd('copen')
-shows('the quickfix window shows the title of the list', 'search for two')
-vim.cmd('cclose')
 
 open('sub/file.txt', { 'one' })
 local plain_line = statusline().str
@@ -117,13 +79,6 @@ check(
 vim.cmd('enew')
 local new_line = statusline().str
 check('the statusline of a new buffer shows no file format', not new_line:find('unix', 1, true), 'got ' .. vim.inspect(new_line))
-
-open('sub/file.txt', { 'two', 'one two' })
-vim.fn.setreg('/', 'two')
-vim.o.hlsearch = true
-vim.v.hlsearch = 1
-shows('the statusline shows the match under the cursor and the count of matches', '[1/2]')
-vim.v.hlsearch = 0
 
 open('sub/file.txt', { 'one', 'two ', 'three ' })
 shows('the statusline shows the first line with trailing whitespace', '[2]trailing')

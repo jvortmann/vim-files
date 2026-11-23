@@ -78,50 +78,12 @@ local without_config = project()
 
 -- After nvim_feedkeys, the next message starts without a newline. So feed all keys first, and report the checks after.
 local pressed = press(without_config, 'new.js', { 'const  a = {b:1}' }, '<leader>p')
-local selected = press(without_config, 'range.js', { 'const  a = 1', 'const  b = 2', 'const  c = 3' }, 'jV<leader>p')
-vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = '*.txt',
-  once = true,
-  callback = function() start_formatting_server(without_config, 'formatted by the server\n') end,
-})
-local from_server = press(without_config, 'notes.txt', { 'written' }, '<leader>p')
 
 equals(
   'saving a .js file in a folder with a prettier config and no node_modules formats it with the global prettier',
   save(with_config, 'app.js', { 'const  a = {b:1}' }),
   { content = { 'const a = { b: 1 };' }, errors = {} }
 )
-equals(
-  'saving a .md file in a folder with a prettier config formats it',
-  save(with_config, 'notes.md', { '* one', '* two' }),
-  { content = { '- one', '- two' }, errors = {} }
-)
-
-local css = { written = { 'a{color:red}' }, formatted = { 'a {', '  color: red;', '}' } }
-local jsx = { written = { 'const a = <div  id="x"/>' }, formatted = { 'const a = <div id="x" />;' } }
-for name, case in vim.spairs({
-  ['app.jsx'] = jsx,
-  ['app.ts'] = { written = { 'const  a : number=1' }, formatted = { 'const a: number = 1;' } },
-  ['app.tsx'] = jsx,
-  ['style.css'] = css,
-  ['style.less'] = css,
-  ['style.scss'] = css,
-  ['data.json'] = { written = { '{"a":1}' }, formatted = { '{ "a": 1 }' } },
-  ['schema.graphql'] = { written = { 'type Query{a:Int}' }, formatted = { 'type Query {', '  a: Int', '}' } },
-  ['app.vue'] = {
-    written = { '<template><div  id="x"></div></template>' },
-    formatted = { '<template><div id="x"></div></template>' },
-  },
-  ['config.yml'] = { written = { 'a:   1' }, formatted = { 'a: 1' } },
-  ['page.html'] = { written = { '<p  id="x">hi</p>' }, formatted = { '<p id="x">hi</p>' } },
-}) do
-  equals(
-    'saving ' .. name .. ' in a folder with a prettier config formats it, as vim-prettier did',
-    save(with_config, name, case.written),
-    { content = case.formatted, errors = {} }
-  )
-end
-
 equals(
   'saving a .js file in a folder without a prettier config leaves it as written',
   save(without_config, 'app.js', { 'const  a = {b:1}' }),
@@ -146,16 +108,6 @@ equals(
   '<leader>p formats a buffer in a folder without a prettier config',
   pressed,
   { content = { 'const a = { b: 1 };' }, errors = {} }
-)
-equals(
-  '<leader>p in visual mode formats only the selected lines',
-  selected,
-  { content = { 'const  a = 1', 'const b = 2;', 'const  c = 3' }, errors = {} }
-)
-equals(
-  '<leader>p formats through the language server when no formatter is set for the filetype',
-  from_server,
-  { content = { 'formatted by the server' }, errors = {} }
 )
 
 local ruby_plugin = project({

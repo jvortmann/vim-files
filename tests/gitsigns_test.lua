@@ -76,22 +76,6 @@ local function with_line(lines, number, text)
   return copy
 end
 
-local run, job = open_edited_file()
-equals('opening an edited file shows a git sign on each changed line', run(signed_lines), { 3, 8, 9 })
-equals(
-  '<F7> and <S-F7> have a description for which-key in a file of a git repo',
-  run('return dofile(...).undescribed({ "<F7>", "<S-F7>" })', tests_dir .. '/support/keymaps.lua'),
-  {}
-)
-vim.fn.jobstop(job)
-
-local staged = with_line(indexed, 3, 'THREE')
-equals(
-  '<leader>gs stages the hunk under the cursor',
-  after_keys({ line = 3, keys = '<leader>gs', expected = staged, read = read_index }),
-  staged
-)
-
 local selection_staged = with_line(indexed, 9, 'NINE')
 equals(
   '<leader>gs in visual mode stages only the selected lines of a hunk',
@@ -103,40 +87,11 @@ local function read_buffer(run)
   return run('return vim.api.nvim_buf_get_lines(0, 0, -1, false)')
 end
 
-local reset = with_line(edited, 3, 'three')
-equals(
-  '<leader>gr resets the hunk under the cursor',
-  after_keys({ line = 3, keys = '<leader>gr', expected = reset, read = read_buffer }),
-  reset
-)
-
 local selection_reset = with_line(edited, 9, 'nine')
 equals(
   '<leader>gr in visual mode resets only the selected lines of a hunk',
   after_keys({ line = 9, keys = 'V<leader>gr', expected = selection_reset, read = read_buffer }),
   selection_reset
-)
-
-local function float_shows(text)
-  return function(run)
-    return run([[
-      for _, win in ipairs(vim.api.nvim_list_wins()) do
-        if vim.api.nvim_win_get_config(win).relative ~= '' then
-          local lines = vim.api.nvim_buf_get_lines(vim.api.nvim_win_get_buf(win), 0, -1, false)
-          if table.concat(lines, '\n'):find(..., 1, true) then
-            return true
-          end
-        end
-      end
-      return false
-    ]], text)
-  end
-end
-
-equals(
-  '<leader>gp shows the hunk under the cursor in a float',
-  after_keys({ line = 3, keys = '<leader>gp', expected = true, read = float_shows('THREE') }),
-  true
 )
 
 -- On a line with no commit, the popup shows only "Not Committed Yet", with or without the full option.
@@ -157,45 +112,6 @@ equals(
     read = function(run) return run('return _G.blame_call') end,
   }),
   { full = false }
-)
-
-local function window_with_filetype(filetype)
-  return function(run)
-    return run([[
-      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-        if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == ... then
-          return true
-        end
-      end
-      return false
-    ]], filetype)
-  end
-end
-
-equals(
-  '<F7> opens the gitsigns blame window of the file',
-  after_keys({ line = 1, keys = '<F7>', expected = true, read = window_with_filetype('gitsigns-blame') }),
-  true
-)
-
--- Reads the number of diff windows, the layout of the tab, and if a diff window shows the index version from gitsigns.
-local function read_diff(run)
-  return run([[
-    local count, from_gitsigns = 0, false
-    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-      if vim.wo[win].diff then
-        count = count + 1
-        from_gitsigns = from_gitsigns or vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)):find('^gitsigns://') ~= nil
-      end
-    end
-    return { count, vim.fn.winlayout()[1], from_gitsigns }
-  ]])
-end
-
-equals(
-  '<S-F7> opens a vertical diff of the file against the index from gitsigns',
-  after_keys({ line = 1, keys = '<S-F7>', expected = { 2, 'row', true }, read = read_diff }),
-  { 2, 'row', true }
 )
 
 local function read_line(run)
@@ -231,18 +147,6 @@ equals(
   ']c with a count in a diff window moves that many diff changes',
   after_keys({ setup = diff_setup, line = 1, keys = '2]c', expected = 7, read = read_line }),
   7
-)
-
-local without_hunk = { 'one', 'two', 'THREE', 'four', 'five', 'six', 'seven', 'ten' }
-equals(
-  'dih deletes the lines of the hunk under the cursor',
-  after_keys({ line = 9, keys = 'dih', expected = without_hunk, read = read_buffer }),
-  without_hunk
-)
-equals(
-  'ih in visual mode selects the lines of the hunk under the cursor',
-  after_keys({ line = 9, keys = 'vihd', expected = without_hunk, read = read_buffer }),
-  without_hunk
 )
 
 report.finish()

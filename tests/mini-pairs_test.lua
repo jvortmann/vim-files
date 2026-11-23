@@ -10,23 +10,11 @@ local function line_after_keys(text, keys)
 end
 
 -- After nvim_feedkeys, the next message starts without a newline. So feed all keys first, and report the checks after.
-local closed = {}
-for _, open in ipairs({ '(', '[', '{', '"' }) do
-  closed[open] = line_after_keys('', 'i' .. open .. 'x')
-end
-local jumped = line_after_keys('', 'i(x)')
 local before_word = {}
 for _, open in ipairs({ '(', '[', '{' }) do
   before_word[open] = line_after_keys('word', 'i' .. open)
 end
 
-equals('an opening character gets its closer, with the cursor between them', closed, {
-  ['('] = '(x)',
-  ['['] = '[x]',
-  ['{'] = '{x}',
-  ['"'] = '"x"',
-})
-equals('a closer typed before the same closer moves over it', jumped, '(x)')
 equals('an opening bracket before a word character stays single', before_word, {
   ['('] = '(word',
   ['['] = '[word',

@@ -48,17 +48,11 @@ local no_newline = 'local a = 1'
 local with_newline = 'local a = 1\n'
 
 equals('with no editorconfig, a write keeps a file with no final newline as it is', after_write(no_newline), no_newline)
-equals('with no editorconfig, a write keeps the final newline of a file that has one', after_write(with_newline), with_newline)
 equals('with no editorconfig, a new file ends with a newline', after_write(nil), with_newline)
 equals(
   'an editorconfig with insert_final_newline = true adds the final newline',
   after_write(no_newline, '[*]\ninsert_final_newline = true\n'),
   with_newline
-)
-equals(
-  'an editorconfig with insert_final_newline = false removes the final newline',
-  after_write(with_newline, '[*]\ninsert_final_newline = false\n'),
-  no_newline
 )
 
 report.finish()

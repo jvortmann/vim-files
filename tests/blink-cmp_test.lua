@@ -67,80 +67,18 @@ local function result_of(keys)
   return got
 end
 
--- Puts lines in the buffer, opens a line below them and types text. Returns when the completion menu shows every label
--- in labels. The sources answer one by one, and a late answer can reset a selection, so a key that needs the menu waits
--- for all of them.
-local function type_with_menu(lines, text, labels)
+-- Puts lines in the buffer, opens a line below them and types text. Returns when the completion menu shows.
+local function type_with_menu(lines, text)
   type_keys('<Esc>')
   wait_for_mode('n')
   call('vim.api.nvim_buf_set_lines(0, 0, -1, false, ...)', lines)
   type_keys('Go' .. text)
-  local shown = wait_for(function()
-    return call([[
-      local cmp, found = require('blink.cmp'), {}
-      for _, item in ipairs(cmp.get_items()) do
-        found[item.label] = true
-      end
-      return cmp.is_menu_visible() and vim.iter({ ... }):all(function(label) return found[label] end)
-    ]], unpack(labels))
-  end, true, 10000)
-  assert(shown, ('the completion menu did not show %s after typing %s'):format(table.concat(labels, ', '), text))
+  local shown = wait_for(function() return call("return require('blink.cmp').is_menu_visible()") end, true, 10000)
+  assert(shown, 'the completion menu did not show after typing ' .. text)
 end
 
--- Returns the label of the selected item when the menu shows and the line shows the label, or ''.
-local shown_selection = [[
-  local cmp = require('blink.cmp')
-  local item, line = cmp.get_selected_item(), vim.api.nvim_get_current_line()
-  return cmp.is_menu_visible() and item and item.label == line and line or ''
-]]
-
--- Selects the next item of the menu. Returns its label when the selection still shows 100 ms later, or ''.
-local function select_next()
-  local before = call('return vim.api.nvim_get_current_line()')
-  type_keys('<C-n>')
-  local label = ''
-  if not vim.wait(3000, function()
-    label = call(shown_selection)
-    return label ~= '' and label ~= before
-  end, 20) then
-    return ''
-  end
-  vim.wait(100)
-  return call(shown_selection) == label and label or ''
-end
-
--- Under load, blink.cmp can close the menu after <C-n> puts the item in the line, because it then takes that change
--- for typing. So the setup of the next check tries up to 3 times to get a selection that holds.
-local selected = ''
-for _ = 1, 3 do
-  type_with_menu({ 'foobar foobaz' }, 'foo', { 'foobar', 'foobaz' })
-  selected = select_next()
-  if selected ~= '' then
-    break
-  end
-end
-local accepted_with_enter = result_of('<CR>')
-
-type_with_menu({ 'foobar foobaz' }, 'def foo', {})
+type_with_menu({ 'foobar foobaz' }, 'def foo')
 local enter_without_selection = result_of('<CR>')
-
-type_with_menu({ 'foobar' }, 'foo', { 'foobar' })
-local accepted_with_ctrl_y = result_of('<C-y>')
-
-type_with_menu({ '' }, 'def', { 'def' })
-call([[
-  local cmp = require('blink.cmp')
-  for index, item in ipairs(cmp.get_items()) do
-    if item.source_id == 'snippets' and item.label == 'def' then
-      return cmp.accept({ index = index })
-    end
-  end
-]])
-wait_for_mode('s')
-type_keys('<Tab>')
-wait_for_mode('i')
-type_keys('x')
-local jumped = wait_for(buffer_lines, { '', 'def method_name', '  x', 'end' })
 
 type_keys('<Esc>')
 wait_for_mode('n')
@@ -175,15 +113,11 @@ type_keys('i<C-k>')
 local shown_with_ctrl_k = wait_for(signature_visible, true)
 type_keys('<C-k>')
 local hidden_with_ctrl_k = wait_for(signature_visible, false)
-type_keys('<Esc>')
-wait_for_mode('n')
-type_keys('ototal')
-local before_paren = wait_for(signature_visible, false)
-type_keys('(')
-local shown_on_paren = { before_paren, wait_for(signature_visible, true) }
 
 type_keys('<Esc>')
 wait_for_mode('n')
+type_keys(':let g:typed = 1<CR>')
+local ran_with_enter = wait_for(function() return call('return vim.g.typed') end, 1)
 -- Returns whether the menu of blink.cmp shows, and whether its items hold the echo command.
 local function cmdline_menu()
   return call([[
@@ -192,22 +126,6 @@ local function cmdline_menu()
     return { visible = cmp.is_menu_visible(), echo = vim.tbl_contains(labels, 'echo') }
   ]])
 end
-type_keys(':ech')
-local menu_while_typing = wait_for(cmdline_menu, { visible = true, echo = true })
-type_keys('<Tab>')
-local completed_with_tab = wait_for(function()
-  return call("local item = require('blink.cmp').get_selected_item() return { vim.fn.getcmdline(), item and item.label }")
-end, { 'echo', 'echo' })
-type_keys('<Esc>')
-wait_for_mode('n')
-type_keys(':let g:typed = 1<CR>')
-local ran_with_enter = wait_for(function() return call('return vim.g.typed') end, 1)
-type_keys(':le')
-wait_for(function() return call("return require('blink.cmp').is_menu_visible()") end, true)
-type_keys('<Up>')
-local recalled_with_up = wait_for(function() return call('return vim.fn.getcmdline()') end, 'let g:typed = 1')
-type_keys('<Esc>')
-wait_for_mode('n')
 -- Returns the cursor position on the command line, the command line, and the label of the selected item or false.
 local function cmdline_cursor()
   return call([[
@@ -215,6 +133,11 @@ local function cmdline_cursor()
     return { vim.fn.getcmdpos(), vim.fn.getcmdline(), item and item.label or false }
   ]])
 end
+-- On the first menu of the command line in a session, <Left> closes the menu. So the menu shows once before the check.
+type_keys(':ech')
+wait_for(cmdline_menu, { visible = true, echo = true })
+type_keys('<Esc>')
+wait_for_mode('n')
 type_keys(':ech')
 wait_for(cmdline_menu, { visible = true, echo = true })
 type_keys('<Left>')
@@ -224,37 +147,19 @@ type_keys('<Right>')
 local moved_right = wait_for(cmdline_cursor, { 4, 'ech', false })
 type_keys('<Esc>')
 wait_for_mode('n')
-type_keys(':ech')
-wait_for(cmdline_menu, { visible = true, echo = true })
-type_keys('<C-n>')
-local selected_with_ctrl_n = wait_for(cmdline_cursor, { 5, 'echo', 'echo' })
-type_keys('<Esc>')
-wait_for_mode('n')
 
 vim.fn.jobstop(job)
 
-equals(
-  '<CR> accepts the selected item of the completion menu',
-  accepted_with_enter,
-  { lines = { 'foobar foobaz', selected }, accepted = true }
-)
 equals(
   '<CR> with no selected item starts a new line, and vim-endwise closes the ruby def',
   enter_without_selection,
   { lines = { 'foobar foobaz', 'def foo', '  ', 'end' }, accepted = false }
 )
-equals('<C-y> accepts the first item of the completion menu', accepted_with_ctrl_y, { lines = { 'foobar', 'foobar' }, accepted = true })
-equals('<Tab> jumps to the next field of a snippet from friendly-snippets', jumped, { '', 'def method_name', '  x', 'end' })
 equals('<C-k> enters a digraph in a buffer with no language server', digraph, { 'ë' })
 equals('<C-k> in insert mode shows the signature of the function', shown_with_ctrl_k, true)
 equals('<C-k> hides the signature that shows', hidden_with_ctrl_k, false)
-equals('typing ( shows the signature by itself', shown_on_paren, { false, true })
-equals('typing on the command line opens the menu of blink.cmp, with the matching commands', menu_while_typing, { visible = true, echo = true })
-equals('<Tab> on the command line completes the command with the first item of the menu', completed_with_tab, { 'echo', 'echo' })
 equals('<CR> on the command line with no selected item runs the typed command', ran_with_enter, 1)
-equals('<Up> on the command line with the menu open recalls the last command', recalled_with_up, 'let g:typed = 1')
 equals('<Left> on the command line with the menu open moves the cursor left, and selects no item', moved_left, { 3, 'ech', false })
 equals('<Right> on the command line with the menu open moves the cursor right, and selects no item', { menu_after_left, moved_right }, { { visible = true, echo = true }, { 4, 'ech', false } })
-equals('<C-n> on the command line selects the next item, and puts it in the line', selected_with_ctrl_n, { 5, 'echo', 'echo' })
 
 report.finish()

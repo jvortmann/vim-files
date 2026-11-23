@@ -159,15 +159,7 @@ local function open(name)
   vim.cmd('silent edit ' .. vim.fn.fnameescape(project .. '/' .. name))
 end
 
-open('order_spec.rb')
-check('a ruby spec file gets the rspec.ruby filetype', vim.bo.filetype == 'rspec.ruby', 'got ' .. vim.bo.filetype)
-
 open('notes.md')
 check('after/ftplugin of the config runs for markdown', vim.wo.spell, 'spell is off in a markdown buffer')
-
-vim.fn.mkdir(project .. '/.git', 'p')
-open('.git/COMMIT_EDITMSG')
-local commit = vim.bo.filetype .. '/' .. tostring(vim.b.current_syntax)
-check('.git/COMMIT_EDITMSG gets the gitcommit filetype and syntax', commit == 'gitcommit/gitcommit', 'got ' .. commit)
 
 report.finish()

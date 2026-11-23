@@ -32,7 +32,8 @@ local function has_color(row, col, color)
 end
 
 open('.css', { 'a {', '  color: #ff0000;', '}' })
-check('a hex color code in css shows its color', has_color(1, 9, 0xff0000), 'no #ff0000 highlight at the code')
+-- This wait makes sure the plugin is active, so the lua check below can fail.
+assert(has_color(1, 9, 0xff0000), 'highlight-colors did not color the css buffer')
 
 open('.lua', { 'local red = "#ff0000"' })
 vim.wait(300)

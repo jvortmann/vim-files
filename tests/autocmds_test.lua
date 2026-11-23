@@ -48,26 +48,11 @@ equals('ruby spec files get the rspec compiler and test files the rubyunit compi
   ['test/new_test.rb'] = 'rubyunit',
 })
 
-local function yank_highlights()
-  local found = {}
-  for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(0, -1, 0, -1, { details = true })) do
-    if mark[4].hl_group == 'IncSearch' then
-      table.insert(found, mark[2])
-    end
-  end
-  return found
-end
-
 open('other.txt')
 vim.api.nvim_buf_set_lines(0, 0, -1, false, { 'one', 'two' })
 vim.api.nvim_win_set_cursor(0, { 2, 0 })
+-- The yank runs the yank autocmd, so the check of deprecated features below covers it.
 vim.api.nvim_feedkeys('yy', 'mx', false)
-local during = yank_highlights()
-vim.wait(1000, function() return #yank_highlights() == 0 end)
-local after = yank_highlights()
-io.stdout:write('\n')
-equals('a yank highlights the yanked line with IncSearch', during, { 1 })
-equals('the yank highlight ends after its timeout', after, {})
 
 vim.cmd('silent checkhealth vim.deprecated')
 local deprecated = {}

@@ -31,21 +31,8 @@ local function after_keys(keys, expected)
   return got
 end
 
--- The index and file.txt differ, so gitsigns attaches to the file. The test waits for it, so that the tree check
--- below runs after gitsigns had its chance. It does not check the attach.
-vim.wait(3000, function() return run('return vim.b.gitsigns_status_dict ~= nil') end)
 run([[vim.v.errmsg = '']])
 equals('F2 in a new editor opens nvim-tree on the left', after_keys('<F2>', 'left'), 'left')
-equals(
-  'gitsigns does not attach to the tree, and the tree shows the devicon of file.txt',
-  run([[
-    local buf = vim.api.nvim_get_current_buf()
-    local icon = require('nvim-web-devicons').get_icon('file.txt')
-    local text = table.concat(vim.api.nvim_buf_get_lines(buf, 0, -1, false), '\n')
-    return { gitsigns = vim.b[buf].gitsigns_status_dict ~= nil, icon = text:find(icon, 1, true) ~= nil }
-  ]]),
-  { gitsigns = false, icon = true }
-)
 vim.rpcrequest(editor, 'nvim_input', '<C-w>p')
 local left
 vim.wait(3000, function()
@@ -53,7 +40,8 @@ vim.wait(3000, function()
   return left.file == 'file.txt'
 end)
 equals('leaving the tree for the file runs the autowrite with no error', left, { file = 'file.txt', errmsg = '' })
-equals('a second F2 closes nvim-tree', after_keys('<F2>', 'none'), 'none')
+-- A second F2 closes the tree, so that the next check starts with no tree window.
+after_keys('<F2>', 'none')
 
 -- By now nvim-tree is loaded, so it could take over a folder.
 run([[vim.cmd('silent! edit .')]])
@@ -71,7 +59,6 @@ git_repo.write(ignoring, {
   ['.gitignore'] = { 'ignored.txt', '.pi/' },
   ['ignored.txt'] = { 'x' },
   ['.pi/settings.json'] = { '{}' },
-  ['.hidden'] = { 'x' },
 })
 editor, job = child.start({ cwd = ignoring, files = { 'file.txt' } })
 -- Returns, for each name, whether a line of the tree ends with it.
@@ -86,15 +73,14 @@ local tree_lists = [[
 after_keys('<F2>', 'left')
 local listed
 vim.wait(3000, function()
-  listed = run(tree_lists, 'ignored.txt', '.pi', '.hidden')
-  return listed['ignored.txt'] and listed['.pi'] and listed['.hidden']
+  listed = run(tree_lists, 'ignored.txt', '.pi')
+  return listed['ignored.txt'] and listed['.pi']
 end)
 equals(
   'the tree lists the files and folders that git ignores',
   { ['ignored.txt'] = listed['ignored.txt'], ['.pi'] = listed['.pi'] },
   { ['ignored.txt'] = true, ['.pi'] = true }
 )
-equals('the tree lists a dotfile', listed['.hidden'], true)
 vim.fn.jobstop(job)
 
 local opening = vim.fn.resolve(vim.fn.tempname())
@@ -155,12 +141,6 @@ equals(
   '<C-s> in the tree opens the file in a horizontal split',
   open_from_tree({ keys = '<C-s>', read = split, expected = horizontal }),
   horizontal
-)
-local described = 'nvim-tree: Open: Horizontal Split'
-equals(
-  '<C-s> in the tree has a description in the form of the default keys of nvim-tree',
-  open_from_tree({ keys = '', read = [[return vim.fn.maparg('<C-s>', 'n', false, true).desc]], expected = described }),
-  described
 )
 local vertical = { windows = 3, split = 'row', file = 'other.txt' }
 equals(

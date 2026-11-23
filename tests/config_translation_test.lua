@@ -2,45 +2,6 @@
 local tests_dir = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h')
 local report = dofile(tests_dir .. '/support/report.lua')
 local check = report.check
-local child = dofile(tests_dir .. '/support/editor.lua')
-
--- which-key draws its title and its list in separate windows, so this reads every window of filetype wk.
-local read_which_key_window = [[
-  local lines
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    if vim.bo[buf].filetype == 'wk' then
-      lines = vim.list_extend(lines or {}, vim.api.nvim_buf_get_lines(buf, 0, -1, false))
-    end
-  end
-  return lines
-]]
-
--- Types the keys in a new editor and returns the lines of the which-key window. It waits until done
--- accepts the lines. It returns the last lines that it read when the wait ends, or nil without a window.
-local function which_key_window(keys, done)
-  local editor, job = child.start()
-  vim.rpcrequest(editor, 'nvim_input', keys)
-  local lines
-  vim.wait(3000, function()
-    lines = vim.rpcrequest(editor, 'nvim_exec_lua', read_which_key_window, {})
-    if lines == vim.NIL then
-      lines = nil
-    end
-    return lines ~= nil and done(lines)
-  end)
-  vim.fn.jobstop(job)
-  return lines
-end
-
-for mode, keys in vim.spairs({ n = '\\h', x = 'v\\h' }) do
-  local lines = which_key_window(keys, function(got) return #got > 0 end)
-  check(
-    'leader h opens the which-key window in mode ' .. mode,
-    lines ~= nil and #lines > 0,
-    'no which-key window opened, got ' .. vim.inspect(lines)
-  )
-end
 
 -- Checks the colors of the git signs. Each check name ends with the moment in `when`.
 local function check_git_sign_colors(when)

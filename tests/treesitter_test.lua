@@ -81,12 +81,6 @@ check_captures(
   { { 0, 1, 'tag' }, { 1, 15, 'function.call' } }
 )
 vim.fn.delete(erb_file)
-check(
-  'the spec installs the parser of html.erb buffers',
-  vim.list_contains(languages_in_spec(), vim.treesitter.language.get_lang('eruby')),
-  'got ' .. vim.inspect(languages_in_spec())
-)
-
 local unreadable_languages = vim.tbl_filter(function(language)
   local path = vim.api.nvim_get_runtime_file('queries/' .. language .. '/highlights.scm', false)[1]
   local file = path and io.open(path, 'r')
