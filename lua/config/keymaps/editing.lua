@@ -15,7 +15,7 @@ end
 
 vim.keymap.set('', '<M-S-d>', 'Y`]p', { desc = 'Duplicate the line' })
 vim.keymap.set('', '<leader>d', 'Y`]p', { desc = 'Duplicate the line' })
-vim.keymap.set('', '<M-a>', 'ggVG', { desc = 'Select the whole buffer' })
+vim.keymap.set('', '<M-S-a>', 'ggVG', { desc = 'Select the whole buffer' })
 
 -- Keep the selection after a change of indent.
 vim.keymap.set('v', '>', '>gv', { desc = 'Indent, and keep the selection' })

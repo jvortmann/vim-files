@@ -23,7 +23,7 @@ local function undescribed_maps()
   })
   add({ '<F5>', '<F6>' })
   add({ '<M-S-Down>', '<M-S-j>', '<M-S-Up>', '<M-S-k>' }, { 'n', 'i', 'x', 's' })
-  add({ '<M-S-d>', '<leader>d', '<M-a>' })
+  add({ '<M-S-d>', '<leader>d', '<M-S-a>' })
   add({ '>', '<' }, { 'x', 's' })
   add({ 'Y', '<CR>' }, { 'n' })
   add({ '<F2>' })
@@ -39,6 +39,12 @@ local function undescribed_maps()
   return missing
 end
 equals('every map of the config has a description for which-key', undescribed_maps(), {})
+
+local alt_a = {}
+for _, mode in ipairs({ 'n', 'v', 's', 'o' }) do
+  alt_a[mode] = vim.fn.maparg('<M-a>', mode)
+end
+equals('<M-a> has no map, so it stays free for Herdr', alt_a, { n = '', v = '', s = '', o = '' })
 
 vim.fn.setqflist({ { filename = vim.fn.tempname(), lnum = 1 } })
 vim.cmd('copen')
@@ -96,6 +102,14 @@ equals('<M-S-j> moves the line down in insert mode and stays in insert mode', go
 
 got, expected = typed({ keys = 'Vj<M-S-j>', read = lines, expected = { 'three', 'one', 'two' } })
 equals('<M-S-j> moves the selected lines down in visual mode', got, expected)
+
+got, expected = typed({
+  setup = 'vim.api.nvim_win_set_cursor(0, { 2, 0 })',
+  keys = '<M-S-a>',
+  read = 'return { vim.api.nvim_get_mode().mode, vim.fn.line("v"), vim.fn.line(".") }',
+  expected = { 'V', 1, 3 },
+})
+equals('<M-S-a> selects the whole buffer in visual line mode', got, expected)
 
 got, expected = typed({
   setup = 'vim.o.hlsearch = true',

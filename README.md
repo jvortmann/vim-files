@@ -148,11 +148,13 @@ operator-pending.
 | `<M-S-Up>`, `<M-S-k>` | n, i | Move the line up |
 | `<M-S-Up>`, `<M-S-k>` | v | Move the selected lines up |
 | `<M-S-d>`, `<Leader>d` | n, v, o | Duplicate the line |
-| `<M-a>` | n, v, o | Select the whole buffer |
+| `<M-S-a>` | n, v, o | Select the whole buffer |
 | `>` | v | Indent, and keep the selection |
 | `<` | v | Unindent, and keep the selection |
 | `Y` | n | Yank to the end of the line |
 | `<CR>` | n | Clear the search highlight |
+
+`<M-a>` has no map. Herdr takes it for its agent popup, so it stays free.
 
 ### Movement and windows
 
