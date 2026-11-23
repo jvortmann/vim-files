@@ -7,7 +7,7 @@ local child_stdout = dofile(tests_dir .. '/support/child_stdout.lua')
 local expected_plugins = {
   'nvim-treesitter/nvim-treesitter', 'brenoprata10/nvim-highlight-colors', 'keith/rspec.vim',
   'stevearc/conform.nvim',
-  'christoomey/vim-tmux-navigator', 'tpope/vim-fugitive',
+  'christoomey/vim-tmux-navigator',
   'tpope/vim-projectionist', 'ibhagwan/fzf-lua', 'nvim-tree/nvim-web-devicons', 'folke/which-key.nvim',
   'nvim-mini/mini.surround',
   'tpope/vim-endwise',
