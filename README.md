@@ -79,7 +79,8 @@ runs the typed command. `/` and `?` list the words of the buffer.
 ## Herdr
 
 Inside a Herdr terminal, `<C-h>`, `<C-j>`, `<C-k>` and `<C-l>` also move
-across Herdr panes. Neovim saves one session file for each Herdr terminal.
+across Herdr panes. Neovim saves one session file for each Herdr terminal,
+but only when the shell of that terminal started it.
 
 ## Layout
 

@@ -2,9 +2,14 @@ local M = {}
 
 local start, save
 
+-- The session starts only in a Herdr terminal where the shell started nvim, so not in an nvim inside nvim.
+-- The shell sets HERDR_RESTORE_NVIM to 1 for an nvim command. Nvim removes it, so a program that nvim starts, such as
+-- the editor of a commit message, does not get it.
 function M.setup()
   local terminal = vim.env.HC_TERMINAL_ID
-  if not terminal or terminal == '' or (vim.env.NVIM or '') ~= '' then
+  local from_shell = vim.env.HERDR_RESTORE_NVIM == '1'
+  vim.env.HERDR_RESTORE_NVIM = nil
+  if not terminal or terminal == '' or (vim.env.NVIM or '') ~= '' or not from_shell then
     return
   end
   local group = vim.api.nvim_create_augroup('HerdrSession', { clear = true })

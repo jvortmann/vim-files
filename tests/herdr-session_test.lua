@@ -15,7 +15,8 @@ local quiet_ms = 50
 local no_save_ms = 4 * quiet_ms
 
 -- Returns a new home for a child. It has a work folder, a state folder, and a stub of hc that writes each call to a file.
--- home.env is the environment of a Herdr terminal with a fake tmux, and home.args gives the child the stub.
+-- home.env is the environment of a Herdr terminal with a fake tmux. It also says that the shell started nvim.
+-- home.args gives the child the stub.
 -- So a child cannot reach the real tmux, the real hc or the real state folder.
 local function new_home()
   local dir = vim.fn.resolve(vim.fn.tempname())
@@ -27,7 +28,13 @@ local function new_home()
     work = dir .. '/work',
     session = dir .. '/state/nvim/sessions/' .. terminal .. '.vim',
     calls = dir .. '/calls',
-    env = { HC_TERMINAL_ID = terminal, XDG_STATE_HOME = dir .. '/state', TMUX = dir .. '/tmux,1,0', TMUX_PANE = '%0' },
+    env = {
+      HC_TERMINAL_ID = terminal,
+      HERDR_RESTORE_NVIM = '1',
+      XDG_STATE_HOME = dir .. '/state',
+      TMUX = dir .. '/tmux,1,0',
+      TMUX_PANE = '%0',
+    },
     args = { '--cmd', ('let g:herdr_hc = %s | let g:herdr_session_quiet_ms = %d'):format(vim.fn.string(dir .. '/hc'), quiet_ms) },
   }
 end
@@ -298,6 +305,21 @@ local headless_script = ([[
   end })
 ]]):format(no_save_ms)
 
+-- An nvim that the shell did not start, such as the editor of a commit message, has no HERDR_RESTORE_NVIM.
+local function not_from_shell_case()
+  local home = new_home()
+  local result = after_split(home, { HERDR_RESTORE_NVIM = false })
+  return { file = result.file, calls = restore_calls(home) }
+end
+
+-- Returns the value of HERDR_RESTORE_NVIM in a shell that nvim starts, or unset. env changes the environment of nvim.
+local function child_variable_case(env)
+  local run, job = start(new_home(), env)
+  local value = run([[return vim.fn.system({ 'sh', '-c', 'printf %s "${HERDR_RESTORE_NVIM-unset}"' })]])
+  vim.fn.jobstop(job)
+  return value
+end
+
 local function headless_case()
   local home = new_home()
   local exit
@@ -325,8 +347,11 @@ local cases = {
   burst_case,
   command_window_case,
   headless_case,
+  not_from_shell_case,
+  child_variable_case,
+  function() return child_variable_case({ HC_TERMINAL_ID = false }) end,
 }
-local label, quiet, default_quiet, nested, outside, layout_result, quit, cquit, hangup, client_term, side, burst, command_window, headless =
+local label, quiet, default_quiet, nested, outside, layout_result, quit, cquit, hangup, client_term, side, burst, command_window, headless, not_from_shell, child_variable, child_variable_outside =
   unpack(tasks.all(cases), 1, #cases)
 
 equals('in Herdr, a split writes the session file', label.written, true)
@@ -358,5 +383,12 @@ equals(
   headless,
   { file = false, calls = {}, exit = 1 }
 )
+equals(
+  'in Herdr, an nvim that the shell did not start writes no file and does not label the terminal',
+  not_from_shell,
+  { file = false, calls = {} }
+)
+equals('a program that nvim starts does not get HERDR_RESTORE_NVIM', child_variable, 'unset')
+equals('outside Herdr, a program that nvim starts does not get HERDR_RESTORE_NVIM', child_variable_outside, 'unset')
 
 report.finish()
