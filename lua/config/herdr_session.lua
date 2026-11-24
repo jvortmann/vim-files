@@ -30,8 +30,10 @@ function start(terminal, group)
   })
   vim.api.nvim_create_autocmd('VimLeavePre', {
     group = group,
+    -- A quit the user chose, :qa or :cq, removes the file. A signal, a crash or a lost terminal keeps it. A lost
+    -- terminal leaves v:dying at 0, so only the missing UI tells it from :cq.
     callback = function()
-      if vim.v.dying == 0 and vim.v.exiting == 0 then
+      if vim.v.dying == 0 and #vim.api.nvim_list_uis() > 0 then
         os.remove(file)
       else
         save(file)

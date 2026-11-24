@@ -161,16 +161,6 @@ local function layout_case()
   return { splits = splits, closed = closed, resized = resized }
 end
 
-local function quit_case()
-  local home = new_home()
-  local run, job, editor = start(home)
-  until_saved(run, function() run([[vim.cmd('split')]]) end)
-  vim.rpcnotify(editor, 'nvim_command', 'qall')
-  tasks.wait(5000, function() return vim.fn.jobwait({ job }, 0)[1] ~= -1 end)
-  vim.fn.jobstop(job)
-  return exists(home.session)
-end
-
 -- Starts nvim with its terminal interface on a pseudo terminal, as in a Herdr pane. It waits until nvim labels the terminal.
 local function start_in_terminal(home)
   local socket = vim.fn.tempname()
@@ -191,17 +181,46 @@ local function start_in_terminal(home)
   return editor, job
 end
 
-local function hangup_case()
+-- Waits until nvim closes the channel editor. Nvim does that after it runs VimLeavePre.
+local function until_exited(editor)
+  assert(tasks.wait(5000, function() return next(vim.api.nvim_get_chan_info(editor)) == nil end), 'nvim did not exit')
+end
+
+-- Saves a split in nvim on a pseudo terminal, then quits it with command. Returns whether the session file existed
+-- before and after the quit.
+local function quit_case(command)
   local home = new_home()
-  vim.fn.writefile({ 'x' }, home.work .. '/hangup.txt')
   local editor, job = start_in_terminal(home)
-  vim.rpcrequest(editor, 'nvim_command', 'edit hangup.txt')
-  -- Closing the pseudo terminal hangs up nvim, as when Herdr stops.
+  vim.rpcrequest(editor, 'nvim_command', 'split')
+  local before = tasks.wait(5000, function() return exists(home.session) end)
+  vim.rpcnotify(editor, 'nvim_command', command)
+  until_exited(editor)
   vim.fn.jobstop(job)
-  -- jobwait() returns at once for a stopped job on a pseudo terminal, so wait for the file.
-  return tasks.wait(5000, function()
-    return exists(home.session) and vim.fn.join(vim.fn.readfile(home.session), '\n'):find('hangup.txt', 1, true) ~= nil
-  end)
+  return { before = before, after = exists(home.session) }
+end
+
+-- Opens a file in nvim on a pseudo terminal, then calls stop with the job to end it. Returns whether the session file
+-- holds that file after nvim exits.
+local function saved_after(stop)
+  local home = new_home()
+  vim.fn.writefile({ 'x' }, home.work .. '/opened.txt')
+  local editor, job = start_in_terminal(home)
+  vim.rpcrequest(editor, 'nvim_command', 'edit opened.txt')
+  stop(job)
+  until_exited(editor)
+  vim.fn.jobstop(job)
+  return exists(home.session) and vim.fn.join(vim.fn.readfile(home.session), '\n'):find('opened.txt', 1, true) ~= nil
+end
+
+-- Closing the pseudo terminal hangs up nvim, as when Herdr stops.
+local function hangup_case()
+  return saved_after(vim.fn.jobstop)
+end
+
+-- SIGTERM to the terminal interface of nvim, as at a reboot. The server has its own process group and gets no signal,
+-- so it only sees its interface go away.
+local function client_term_case()
+  return saved_after(function(job) vim.uv.kill(vim.fn.jobpid(job), 'sigterm') end)
 end
 
 -- Returns the file name of each listed buffer of the child.
@@ -298,14 +317,16 @@ local cases = {
   function() return after_split(new_home(), { NVIM = '/tmp/parent-nvim' }) end,
   function() return after_split(new_home(), { HC_TERMINAL_ID = false }) end,
   layout_case,
-  quit_case,
+  function() return quit_case('qall') end,
+  function() return quit_case('cquit') end,
   hangup_case,
+  client_term_case,
   side_windows_case,
   burst_case,
   command_window_case,
   headless_case,
 }
-local label, quiet, default_quiet, nested, outside, layout_result, quit, hangup, side, burst, command_window, headless =
+local label, quiet, default_quiet, nested, outside, layout_result, quit, cquit, hangup, client_term, side, burst, command_window, headless =
   unpack(tasks.all(cases), 1, #cases)
 
 equals('in Herdr, a split writes the session file', label.written, true)
@@ -319,8 +340,10 @@ equals('outside Herdr, nvim writes no file and calls no hc', outside, { file = f
 equals('nvim -S brings back the splits and the cursors', layout_result.splits.restored, layout_result.splits.saved)
 equals('closing a split saves the session', layout_result.closed.restored, layout_result.closed.saved)
 equals('a resize of the terminal saves the session', layout_result.resized, true)
-equals('a clean quit removes the session file', quit, false)
+equals('a clean quit removes the session file', quit, { before = true, after = false })
+equals('a quit with an error code, :cquit, removes the session file', cquit, { before = true, after = false })
 equals('a hang-up of the terminal saves the session file', hangup, true)
+equals('a SIGTERM to the terminal interface of nvim saves the session file', client_term, true)
 equals('saving the session keeps every window open', side.windows, 6)
 equals(
   'nvim -S brings back no side window, help, terminal or empty window',
