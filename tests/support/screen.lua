@@ -18,6 +18,7 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
 
 -- Starts Neovim with this config in a tmux pane of opts.width by opts.height cells, and waits for VimEnter.
 -- opts.cwd is the directory of Neovim, and opts.args lists its arguments, such as the files that it opens.
+-- opts.background, such as '#fdf6e3', is the background color of the pane, which tmux gives in its answer to OSC 11.
 -- It returns run(code, ...), which runs Lua in that Neovim, rows(colors), which reads the rows of the pane,
 -- and stop(), which ends the tmux server. With colors true, the rows keep the color escape codes.
 -- The Neovim loads the fake mason registry, so it installs no language server.
@@ -26,11 +27,15 @@ function M.start(opts)
   local server = ('screen_test_%d_%d'):format(vim.fn.getpid(), started)
   local socket = vim.fn.tempname()
   -- The empty HC_TERMINAL_ID keeps the Neovim from saving a Herdr session when the suite runs in Herdr.
-  local command = {
-    'tmux', '-L', server, '-f', '/dev/null', 'new-session', '-d', '-e', 'HC_TERMINAL_ID=',
+  local command = { 'tmux', '-L', server, '-f', '/dev/null' }
+  if opts.background then
+    vim.list_extend(command, { 'set-option', '-g', 'window-style', 'bg=' .. opts.background, ';' })
+  end
+  vim.list_extend(command, {
+    'new-session', '-d', '-e', 'HC_TERMINAL_ID=',
     '-x', tostring(opts.width or 40), '-y', tostring(opts.height or 10), '-c', opts.cwd or vim.fn.getcwd(),
     vim.v.progpath, '-i', 'NONE', '--listen', socket,
-  }
+  })
   vim.list_extend(command, mason.args())
   running[server] = true
   vim.fn.system(vim.list_extend(command, opts.args or {}))

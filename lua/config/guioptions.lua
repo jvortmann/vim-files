@@ -1,7 +1,6 @@
 -- GUI and visual options
 vim.opt.termguicolors = true
 
-vim.opt.background = 'dark'
 -- A colorscheme load replaces these colors. A change of 'background' loads the colorscheme again.
 -- The autocmd sets the colors after each load. It sits before the first `colorscheme` call, so startup sets them too.
 vim.api.nvim_create_autocmd('ColorScheme', {
